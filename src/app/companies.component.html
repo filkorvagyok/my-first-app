@@ -3,6 +3,15 @@
 	<div  class="panel-body">
 		<section >
 			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th></th>
+						<th>Cég</th>
+						<th>Telefon</th>
+						<th>Email</th>
+					</tr>
+				</thead>
 				<tbody *ngFor="let company of companies">
 					<tr>
 						<td rowspan="2">
@@ -36,5 +45,29 @@
 	</div>
 </form>
 <div *ngIf=checked class="botton_right">
-	<button mat-fab color="primary">ASD</button>
+	<button mat-fab [matMenuTriggerFor]="menu" color="primary">
+  		<mat-icon class="fa fa-plus fa-lg" aria-hidden="true"></mat-icon>
+	</button>
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item>
+			<mat-icon class="fa fa-file"></mat-icon>
+			<span>Új feladat</span>
+		</button>
+		<button mat-menu-item>
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Új projekt</span>
+		</button>
+		<button mat-menu-item>
+			<mat-icon class="fa fa-user-plus"></mat-icon>
+			<span>Új felhasználó</span>
+		</button>
+		<button mat-menu-item [disabled]="disabled">
+			<mat-icon class="fa fa-pencil"></mat-icon>
+			<span>Szerkesztés</span>
+		</button>
+		<button mat-menu-item (click)="openDeleteDialog()">
+			<mat-icon class="fa fa-trash"></mat-icon>
+			<span>Törlés</span>
+		</button>
+	</mat-menu>
 </div>

@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.panel{
+	margin: 30px 350px;
+}
+
+.panel-heading{
+  background:  #f5f5f5;
+}
+
+.panel-body{
+	padding: 10px 150px;
+}
+
+.inputpanel{
+	margin-bottom: 20px;
+}
+
+.inputfield	{
+	margin-bottom: 15px;
+}
+
+.btn_primary{
+	float: right;
+}

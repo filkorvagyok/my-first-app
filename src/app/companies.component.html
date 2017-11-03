@@ -1,0 +1,40 @@
+<form class="panel panel-default">
+	<div class="panel-heading" color="primary">Cégek listája</div>
+	<div  class="panel-body">
+		<section >
+			<table class="table">
+				<tbody *ngFor="let company of companies">
+					<tr>
+						<td rowspan="2">
+							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox()"></mat-checkbox>
+							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
+						</td>
+						<td rowspan="2" *ngIf="company.logo!=''">
+							<button mat-fab color="primary">
+								<img src={{company.logo}} class="logo" alt="logo">
+							</button>
+						</td>
+						<td rowspan="2" *ngIf="company.logo==''">
+							<button mat-fab color="primary">
+								{{company.name.slice(0,1)}}
+							</button>
+						</td>
+						<td>
+							<strong class="company_name">{{company.name}}</strong>
+						</td>
+						<td rowspan="2">{{company.phone}}</td>
+						<td rowspan="2">{{company.email}}</td>
+					</tr>
+					<tr>
+						<td class="collapsed">
+							<span class="company_headquarter">{{company.headquarter}}</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</div>
+</form>
+<div *ngIf=checked class="botton_right">
+	<button mat-fab color="primary">ASD</button>
+</div>

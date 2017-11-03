@@ -1,0 +1,47 @@
+<form class="panel panel-default">
+	<div class="panel-heading" color="primary">Regisztráció</div>
+	<div  class="panel-body">
+		<div class="inputpanel">
+			<div class="inputfield">	
+				<mat-form-field>
+				    <input matInput placeholder="Név" [formControl]="nameFormControl">
+				    <mat-error *ngIf="nameFormControl.hasError('required')">
+				      Név megadása <strong>kötelező</strong>
+		    		</mat-error>
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field>
+				    <input matInput placeholder="E-mail cím" [formControl]="emailFormControl">
+				    <mat-error *ngIf="emailFormControl.hasError('pattern')">
+				      Kérjük adjnon meg valós e-mail címet!
+				    </mat-error>
+				    <mat-error *ngIf="emailFormControl.hasError('required')">
+				      Email megadása <strong>kötelező</strong>
+		    		</mat-error>
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-form-field>
+					<input matInput placeholder="Jelszó" [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
+					<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+					<mat-error *ngIf="passwordFormControl.hasError('required')">
+				      Jelszó megadása <strong>kötelező</strong>
+		    		</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-form-field>
+					<input matInput placeholder="Jelszó újra" [type]="hide ? 'password' : 'text'" [formControl]="passwordAgainFormControl">
+					<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+					<mat-error *ngIf="passwordAgainFormControl.hasError('required')">
+				      Jelszó megadása <strong>kötelező</strong>
+		    		</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="btn_primary">
+			<button mat-raised-button color="primary">Regisztráció</button>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,18 @@
+@import url("./companies.component.css");
+
+#narrow {
+  float: right;
+  width: 400px;
+}
+#wide {
+  float: left;
+  width: calc(100% - 400px);
+}
+
+#line{
+	margin-right: 100px;
+}
+
+#back{
+	margin-left: 100px;
+}

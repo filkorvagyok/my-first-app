@@ -15,16 +15,16 @@
 				<tbody *ngFor="let company of companies">
 					<tr>
 						<td rowspan="2">
-							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox()"></mat-checkbox>
+							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox()" (click)="onSelect(company)"></mat-checkbox>
 							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
 						</td>
 						<td rowspan="2" *ngIf="company.logo!=''">
-							<button mat-fab color="primary">
+							<button mat-fab color="primary" (click)="gotoDetail(company)">
 								<img src={{company.logo}} class="logo" alt="logo">
 							</button>
 						</td>
 						<td rowspan="2" *ngIf="company.logo==''">
-							<button mat-fab color="primary">
+							<button mat-fab color="primary" (click)="gotoDetail(company)">
 								{{company.name.slice(0,1)}}
 							</button>
 						</td>
@@ -39,6 +39,7 @@
 							<span class="company_headquarter">{{company.headquarter}}</span>
 						</td>
 					</tr>
+
 				</tbody>
 			</table>
 		</section>
@@ -61,7 +62,7 @@
 			<mat-icon class="fa fa-user-plus"></mat-icon>
 			<span>Új felhasználó</span>
 		</button>
-		<button mat-menu-item [disabled]="disabled">
+		<button mat-menu-item [disabled]="disabled" (click)="gotoEdit()">
 			<mat-icon class="fa fa-pencil"></mat-icon>
 			<span>Szerkesztés</span>
 		</button>

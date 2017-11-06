@@ -1,0 +1,31 @@
+<form *ngIf="company" class="panel panel-default">
+	<div class="panel-heading" color="primary">Cégek listája</div>
+	<div  class="panel-body">
+		<div id="wide">
+			<div>
+				<h3>Projektek</h3>
+			</div>
+			<hr id="line">
+			<div>
+				<h3>Feladatok</h3>
+			</div>
+		</div>
+		<div id="narrow">
+			<div>
+				<img *ngIf="company.logo!=''" src={{company.logo}} alt="logo" width="100" height="100">
+				<h3>{{company.name}}</h3>
+				<p><i class="fa fa-phone"></i> {{company.phone}}</p>
+				<p><i class="fa fa-envelope"></i> {{company.email}}</p>
+				<p><i class="fa fa-map-marker"></i> {{company.headquarter}}</p>
+			</div>
+			<hr>
+			<div>
+				<h3>Névjegyek</h3>
+			</div>
+		</div>
+	</div>
+	
+</form>
+<div id="back">
+	<button mat-raised-button color="primary" (click)="goBack()">Vissza</button>
+</div>

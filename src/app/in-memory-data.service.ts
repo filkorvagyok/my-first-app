@@ -1,7 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const companies = [
+    let companies = [
       {
         id: 1,
         logo: 'http://127.0.0.1:8887/logos/wallmart-logo.png',

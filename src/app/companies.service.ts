@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Company } from './company';
@@ -11,15 +11,19 @@ export class CompaniesService {
   getCompanies(): Promise<Company[]> {
     return Promise.resolve(COMPANIES);
   }
-}
+}*/
 
 
 // FOLYTATNI!!! MEMORY WEB API
-/*import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Company } from './company';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
+const cudOptions = { headers: new Headers({ 'Content-Type': 'application/json' })};
 
 @Injectable()
 
@@ -30,23 +34,46 @@ export class CompaniesService {
 
 	constructor(private http: Http){}
 
-	getCompanies(): Promise<Company[]> {
+
+
+	getCompanies (): Observable<Company[]> {
 		return this.http.get(this.companiesUrl)
-			.toPromise()
-			.then(response => response.json().data as Company[])
+			.map(res => res.json())
 			.catch(this.handleError);
 	}
 
-	getCompany(id: number): Promise<Company[]>{
-		const url = `${this.companiesUrl}/${id}`;
-		return this.http.get(url)
-			.toPromise()
-			.then(response => response.json().data as Company)
-			.catch(this.handleError);
-	}
+  getCompany(company: Company | number): Observable<Company> {
+    const id = typeof company === 'number' ? company : company.id;
+    const url = `${this.companiesUrl}/${id}`;
+    return this.http.get(url)
+      .map((r: Response) => r.json() as Company)
+      .catch(this.handleError);
+  }
 
-	private handleError(error: any): Promise<any> {
-		console.error('An error occurred', error); // for demo purposes only
-		return Promise.reject(error.message || error);
-	}
-}*/
+  delete(company: Company | number): Promise<void> {
+    const id = typeof company === 'number' ? company : company.id;
+    const url = `${this.companiesUrl}/${id}`;
+    return this.http.delete(url, {headers: this.headers})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
+
+	deleteCompany (company: Company | number): Observable<Company> {
+    const id = typeof company === 'number' ? company : company.id;
+    const url = `${this.companiesUrl}/${id}`;
+
+    return this.http.delete(url, cudOptions)
+      .map(()=>null)
+      .catch(this.handleError);
+  }
+
+
+	private handleError (error: any) {
+    // In a real world app, we might send the error to remote logging infrastructure
+    // and reformat for user consumption
+    console.error(error); // log to console instead
+    return Observable.throw(error);
+  }
+}

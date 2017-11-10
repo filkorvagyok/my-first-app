@@ -1,9 +1,9 @@
 .panel{
-	margin: 30px 100px;
+	margin: 2% 6%;
 }
 
 .panel-body{
-	padding: 10px 10px;
+	width: 100%
 }
 
 .table > tbody > tr > td {

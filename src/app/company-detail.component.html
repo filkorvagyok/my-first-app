@@ -16,7 +16,21 @@
 				<h3>{{company.name}}</h3>
 				<p><i class="fa fa-phone"></i> {{company.phone}}</p>
 				<p><i class="fa fa-envelope"></i> {{company.email}}</p>
-				<p><i class="fa fa-map-marker"></i> {{company.headquarter}}</p>
+				<p>
+					<i class="fa fa-map-marker"></i>
+					{{company.hq_country}} {{company.hq_zipcode}} {{company.hq_settlement}}, 
+					{{company.hq_address}}
+				</p>
+				<p>
+					<i class="fa fa-usd"></i>
+					{{company.bi_country}} {{company.bi_zipcode}} {{company.bi_settlement}}, 
+					{{company.bi_address}}
+				</p>
+				<p>
+					<i class="fa fa-envelope"></i>
+					{{company.mail_country}} {{company.mail_zipcode}} {{company.mail_settlement}}, 
+					{{company.mail_address}}
+				</p>
 			</div>
 			<hr>
 			<div>

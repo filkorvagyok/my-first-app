@@ -12,7 +12,8 @@ import { InMemoryDataService } from './in-memory-data.service';
 import {
   MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,
   MatInputModule, MatIconModule, MatCheckboxModule, MatButtonModule,
-  MatTableModule, MatRadioModule, MatMenuModule, MatDialogModule
+  MatTableModule, MatRadioModule, MatMenuModule, MatDialogModule,
+  MatSelectModule
 } from '@angular/material';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -60,6 +61,7 @@ import { AppRoutingModule }     from './app-routing.module';
     MatRadioModule,
     MatMenuModule,
     MatDialogModule,
+    MatSelectModule
   ],
   providers: [CompaniesService],
   bootstrap: [AppComponent],

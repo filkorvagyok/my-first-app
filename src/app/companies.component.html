@@ -15,7 +15,7 @@
 				<tbody *ngFor="let company of companies">
 					<tr>
 						<td rowspan="2">
-							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox()" (click)="onSelect(company)"></mat-checkbox>
+							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox()" (click)="company.selected=true"></mat-checkbox>
 							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
 						</td>
 						<td rowspan="2" *ngIf="company.logo!=''">
@@ -36,7 +36,10 @@
 					</tr>
 					<tr>
 						<td class="collapsed">
-							<span class="company_headquarter">{{company.headquarter}}</span>
+							<span class="company_headquarter">
+								{{company.country_code}}-{{company.hq_zipcode}} {{company.hq_settlement}}, 
+								{{company.hq_address}}
+							</span>
 						</td>
 					</tr>
 

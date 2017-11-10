@@ -3,7 +3,7 @@
 	<div  class="panel-body">
 		<div class="inputpanel">
 			<div class="inputfield">	
-				<mat-form-field>
+				<mat-form-field class="matffield">
 				    <input matInput placeholder="Név" [formControl]="nameFormControl">
 				    <mat-error *ngIf="nameFormControl.hasError('required')">
 				      Név megadása <strong>kötelező</strong>
@@ -11,7 +11,7 @@
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">	
-				<mat-form-field>
+				<mat-form-field class="matffield">
 				    <input matInput placeholder="E-mail cím" [formControl]="emailFormControl">
 				    <mat-error *ngIf="emailFormControl.hasError('pattern')">
 				      Kérjük adjnon meg valós e-mail címet!
@@ -22,7 +22,7 @@
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">
-				<mat-form-field>
+				<mat-form-field class="matffield">
 					<input matInput placeholder="Jelszó" [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
 					<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 					<mat-error *ngIf="passwordFormControl.hasError('required')">
@@ -31,7 +31,7 @@
 				</mat-form-field>
 			</div>
 			<div class="inputfield">
-				<mat-form-field>
+				<mat-form-field class="matffield">
 					<input matInput placeholder="Jelszó újra" [type]="hide ? 'password' : 'text'" [formControl]="passwordAgainFormControl">
 					<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 					<mat-error *ngIf="passwordAgainFormControl.hasError('required')">

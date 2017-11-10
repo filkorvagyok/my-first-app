@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Company } from './company';
 import { CompaniesService } from './companies.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { HttpClient} from '@angular/common/http';
+import 'rxjs/add/operator/map';
 
 
 
@@ -13,17 +15,16 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 
 export class CompaniesComponent implements OnInit{
-	constructor(private companiesService: CompaniesService,
+	constructor(private http: HttpClient, private companiesService: CompaniesService,
 		private router: Router, public dialog: MatDialog){}
 
 	checked: boolean = false;
 	companies: Company[] = [];
 	selectedCompany: Company;
-	selectedCompanies: Company[] = [];
+	selectedCompanies = [];
 
 
 	disabled = false;
-
 
 	getCompanies(): void{
 		this.companiesService
@@ -55,38 +56,35 @@ export class CompaniesComponent implements OnInit{
 	    	console.log('The dialog was closed');
 	      	if(dialogRef.componentInstance.delete)
 	      	{
-	      		this.delete();
+	      		this.companies=this.delete();
 	      	}
 	    });
 	    
 	}
 
-	/*delete(): void {
-		var array: Company[] = this.selectedCompanies;
-		for (var i = 0; i < array.length; i++) {
-			this.companiesService
-				.delete(array[i].id)
-				.then(() => {
-					this.companies = this.companies.filter(h => h !== array[i]);
-				});
+	delete(): Company[] {
+		for (var i = 0;  i < this.companies.length; i++) {
+			if(this.companies[i].selected)
+			{
+				this.companiesService
+				.delete(this.companies[i].id);
+				//this.companies = this.companies.filter(h => h !== this.companies[i]);
+			}
 		}
-	}*/
-
-	delete(): void {
-		this.companiesService
-			.delete(this.selectedCompany.id)
-			.then(() => {
-				this.companies = this.companies.filter(h => h !== this.selectedCompany);
-			});
+		return this.companies
 	}
+
+	/*delete(company: Company): void {
+		this.companies = this.companies.filter(h => h !== company);
+    	this.companiesService.delete(company).subscribe();
+	}*/
 
 	ngOnInit(): void{
 		this.getCompanies();
 	}
 
 	onSelect(company: Company): void {
-    	//this.selectedCompanies.push(company);
-    	this.selectedCompany = company;
+    	this.companies
   	}
 
   	gotoDetail(company: Company): void{

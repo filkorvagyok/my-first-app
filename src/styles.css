@@ -2,7 +2,7 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .panel{
-	margin: 30px 350px;
+	margin: 2% 22%;
 }
 
 .panel-heading{
@@ -10,8 +10,10 @@
 }
 
 .panel-body{
-	padding: 10px 150px;
+	margin: auto;
+	width: 75%;
 }
+
 
 .inputpanel{
 	margin-bottom: 20px;
@@ -23,4 +25,9 @@
 
 .btn_primary{
 	float: right;
+	padding: 5px;
+}
+
+.matffield{
+  width: 100%;
 }

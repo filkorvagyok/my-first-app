@@ -1,5 +1,5 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit }        from '@angular/core';
+import { Component, OnInit, Input }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
@@ -12,7 +12,7 @@ import { CompaniesService } from './companies.service';
   styleUrls: [ './company-detail.component.css' ]
 })
 export class CompanyDetailComponent implements OnInit {
-  company: Company;
+  @Input() company: Company;
 
   constructor(
     private companiesService: CompaniesService,
@@ -23,6 +23,12 @@ export class CompanyDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap
       .switchMap((params: ParamMap) => this.companiesService.getCompany(+params.get('id')))
+      .subscribe(company => this.company = company);
+  }
+
+  getCompany(): void{
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.companiesService.getCompany(id)
       .subscribe(company => this.company = company);
   }
 

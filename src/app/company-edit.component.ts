@@ -17,6 +17,10 @@ import { CompaniesService } from './companies.service';
 })
 export class CompanyEditComponent implements OnInit {
   @Input() company: Company;
+  @Input() billing: boolean;
+  @Input() mail: boolean;
+  @Input() edit: boolean;
+  companies: Company[];
   countries: Country[] = [];
   industries: Industry[] = [];
   employeesnums: Employeesnum[] = [];
@@ -29,14 +33,17 @@ export class CompanyEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap
-      .switchMap((params: ParamMap) => this.companiesService.getCompany(+params.get('id')))
-      .subscribe(company => this.company = company);
+    this.getCompanies();
     this.getCountries();
     this.getIndustries();
     this.getEmployeesnums();
     this.getYearlyincomes();
-    console.log(this.route);
+  }
+
+  getCompanies(): void{
+    this.companiesService
+        .getCompanies()
+        .subscribe(companies => this.companies = companies);
   }
 
   getCountries(): void{
@@ -78,7 +85,31 @@ export class CompanyEditComponent implements OnInit {
   }
 
   save(): void {
-    this.companiesService.updateHero(this.company)
-      .subscribe(() => this.goBack());
+      this.companiesService.updateHero(this.company)
+        .subscribe(() => this.goBack());
+  }
+
+  add(company: Company): void{
+    this.companiesService.addCompany(company)
+      .subscribe(company => {
+        this.companies.push(company);
+      });
+    this.goBack();
+  }
+
+  billing_datas(company: Company): void{
+    this.company.bi_address = company.hq_address;
+    this.company.bi_country = company.hq_country;
+    this.company.bi_name = company.name;
+    this.company.bi_settlement = company.hq_settlement;
+    this.company.bi_zipcode = company.hq_zipcode;
+  }
+
+  mail_datas(company: Company): void{
+    this.company.mail_address = company.hq_address;
+    this.company.mail_country = company.hq_country;
+    this.company.mail_name = company.name;
+    this.company.mail_settlement = company.hq_settlement;
+    this.company.mail_zipcode = company.hq_zipcode;
   }
 }

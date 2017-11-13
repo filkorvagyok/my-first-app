@@ -1,6 +1,6 @@
 <form class="panel panel-default">
 	<div class="panel-heading" color="primary">Cégek listája</div>
-	<div  class="panel-body">
+	<div  class="panel-body" *ngIf="companies">
 		<section >
 			<table class="table">
 				<colgroup>
@@ -47,16 +47,31 @@
 						</td>
 					</tr>
 				</tbody>
-				<tr class="newcompany-tr">
-					<td></td>
-					<td>
-						<button mat-fab class="newcompany_btn" color="primary" (click)="gotoNew()">
-							Új cég
-						</button>
-					</td>
-				</tr>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td class="newcompany_btn">
+							<button  mat-raised-button color="primary" (click)="gotoNew()">
+								<i class="fa fa-plus"></i> Új cég hozzáadása
+							</button>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tfoot>
 			</table>
 		</section>
+	</div>
+	<div  class="panel-body" *ngIf="!companies">
+		<div class="nodata_alert">
+			<h1>Nincs megadva egyetlen cég sem</h1>
+			<p>A munka megkezdése előtt ajánlott felvinned legalább egy céget, amihez a rendszer társítani tudja majd a feladatokat, névjegyeket és a többi információt.<br>
+			Nem kötelező, de ajánlott.</p>
+			<button mat-raised-button color="primary" (click)="gotoNew()">
+				<i class="fa fa-plus"></i> Új cég hozzáadása
+			</button>
+		</div>
 	</div>
 </form>
 <div *ngIf=checked class="botton_right">

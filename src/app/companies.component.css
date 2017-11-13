@@ -6,39 +6,10 @@
 	width: 100%
 }
 
-.table > tbody > tr > td {
-     vertical-align: middle;
-}
 td.collapsed{
 	border: none;
 	padding-top: 0px;
 }
-
-th{
-	font-size: 20px;
-}
-
-.logo{
-	height: 25px;
-	width: 25px;
-}
-
-.company_name{
-	font-size: 16px;
-}
-
-.company_headquarter{
-	font-size: 12px;
-}
-
-.botton_right{
-	top: auto;
-	right: 50px;
-	bottom: 50px;
-	left: auto;
-	position: fixed;
-}
-
 
 .iconbutton{
 	cursor: default;
@@ -48,7 +19,15 @@ th{
 	cursor: pointer;
 }
 
-.newcompany_btn
-{
-	margin: 20px 0 0 0;
+td.newcompany_btn{
+	padding-top: 50px;
+}
+
+.nodata_alert{
+	text-align: center;
+}
+
+.nodata_alert p{
+	padding: 30px 0 100px 0;
+	font-size: 20px;
 }

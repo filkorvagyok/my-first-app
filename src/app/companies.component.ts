@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Company } from './company';
+import { DeleteDialog } from './delete-dialog';
 import { CompaniesService } from './companies.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { HttpClient} from '@angular/common/http';
@@ -15,11 +16,15 @@ import 'rxjs/add/operator/map';
 })
 
 export class CompaniesComponent implements OnInit{
-	constructor(private http: HttpClient, private companiesService: CompaniesService,
-		private router: Router, public dialog: MatDialog){}
+	constructor(
+		private http: HttpClient,
+		private companiesService: CompaniesService,
+		private router: Router,
+		public dialog: MatDialog
+	){}
 
 	checked: boolean = false;
-	companies: Company[] = [];
+	companies: Company[];
 	selectedCompany: Company;
 	selectedCompanies = [];
 
@@ -109,26 +114,3 @@ export class CompaniesComponent implements OnInit{
 
 }
 
-
-@Component({
-  selector: 'delete-dialog',
-  templateUrl: 'delete-dialog.html',
-})
-export class DeleteDialog{
-
-  constructor(private companiesService: CompaniesService,
-    public dialogRef: MatDialogRef<DeleteDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  public delete: boolean = false;
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onYesClick(): void {
-  	this.delete = true;
-    this.dialogRef.close();
-  }
-
-}

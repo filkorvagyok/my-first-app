@@ -2,9 +2,12 @@ import 'rxjs/add/operator/switchMap';
 import { Component, OnInit, Input }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
+import { Router } from '@angular/router';
 
 import { Company }        from './company';
 import { CompaniesService } from './companies.service';
+import { DeleteDialog } from './delete-dialog';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'company-detail',
@@ -13,12 +16,14 @@ import { CompaniesService } from './companies.service';
 })
 export class CompanyDetailComponent implements OnInit {
   @Input() company: Company;
-  
+
 
   constructor(
     private companiesService: CompaniesService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -35,5 +40,25 @@ export class CompanyDetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  gotoEdit(): void{
+    this.router.navigate(['/company/edit', this.company.id]);
+  }
+
+  openDeleteDialog(): void{
+    let dialogRef = this.dialog.open(DeleteDialog);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+          if(dialogRef.componentInstance.delete)
+          {
+            this.delete(this.company);
+          }
+      });
+  }
+
+  delete(company: Company): void {
+      this.companiesService.delete(company).subscribe();
+      this.location.back();
   }
 }

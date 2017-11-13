@@ -22,10 +22,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent }   from './login.component';
 import { RegisterComponent }   from './register.component';
 import { ResetPasswordComponent }   from './reset-password.component';
-import { CompaniesComponent, DeleteDialog }   from './companies.component';
+import { CompaniesComponent}   from './companies.component';
+import { DeleteDialog }   from './delete-dialog';
 import { CompaniesService } from './companies.service';
 import { CompanyDetailComponent } from './company-detail.component';
 import { CompanyEditComponent } from './company-edit.component';
+import { CompanyCommonComponent }        from './company-common.component';
 
 import { AppRoutingModule }     from './app-routing.module';
 
@@ -38,7 +40,8 @@ import { AppRoutingModule }     from './app-routing.module';
     CompaniesComponent,
     DeleteDialog,
     CompanyDetailComponent,
-    CompanyEditComponent
+    CompanyEditComponent,
+    CompanyCommonComponent
   ],
   imports: [
     BrowserModule,

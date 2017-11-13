@@ -6,7 +6,7 @@ import { RegisterComponent }   from './register.component';
 import { ResetPasswordComponent }   from './reset-password.component';
 import { CompaniesComponent }   from './companies.component';
 import { CompanyDetailComponent } from './company-detail.component';
-import { CompanyEditComponent } from './company-edit.component';
+import { CompanyCommonComponent } from './company-common.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -15,8 +15,8 @@ const routes: Routes = [
 	{ path: 'password/reset', component:ResetPasswordComponent },
 	{ path: 'company/list', component:CompaniesComponent },
 	{ path: 'company/shown/:id', component:CompanyDetailComponent },
-	{ path: 'company/edit/:id', component:CompanyEditComponent },
-	{ path: 'company/new',  component:CompanyEditComponent }
+	{ path: 'company/edit/:id', component:CompanyCommonComponent },
+	{ path: 'company/new',  component:CompanyCommonComponent }
 ];
 
 @NgModule({

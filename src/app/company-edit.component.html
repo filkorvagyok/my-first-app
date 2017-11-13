@@ -58,41 +58,55 @@
 					<input matInput [(ngModel)]="company.hq_address" name="companyHqaddress" placeholder="Cím">
 				</mat-form-field>
 			</div>
+			<div *ngIf="!edit">
+				<div class="inputfield">
+					<mat-checkbox [checked]="billing" (change)="billing = !billing" color="primary">
+						A számlázási adatok azonosak
+					</mat-checkbox>
+				</div>
+				<div class="inputfield">
+					<mat-checkbox [checked]="mail" (change)="mail = !mail" color="primary">
+						A levelezési adatok azonosak
+					</mat-checkbox>
+				</div>
+			</div>
 			<div class="hr_style">
 				<hr>
 			</div>
 			<div class="address">
 				<h4>Számlázási adatok</h4>
 			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.bi_name" name="companyBiname" placeholder="Számlázási név">
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<mat-select name="companyBicountry" placeholder="Ország"
-					[ngModel]="company.country_code" (ngModelChange)="company.bi_country = onChange($event)">
-						<mat-option *ngFor="let country of countries" [value]="country.code">
-							{{country.country}}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.bi_zipcode" name="companyBizipcode" placeholder="Irányítószám">
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.bi_settlement" name="companyBisettlement" placeholder="Település">
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.bi_address" name="companyBiaddress" placeholder="Cím">
-				</mat-form-field>
+			<div *ngIf="!billing else billing_datas(company)">
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.bi_name" name="companyBiname" placeholder="Számlázási név">
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<mat-select name="companyBicountry" placeholder="Ország"
+						[ngModel]="company.country_code" (ngModelChange)="company.bi_country = onChange($event)">
+							<mat-option *ngFor="let country of countries" [value]="country.code">
+								{{country.country}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.bi_zipcode" name="companyBizipcode" placeholder="Irányítószám">
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.bi_settlement" name="companyBisettlement" placeholder="Település">
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.bi_address" name="companyBiaddress" placeholder="Cím">
+					</mat-form-field>
+				</div>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
@@ -102,41 +116,43 @@
 			<div class="hr_style">
 				<hr>
 			</div>
-			<div class="address">
-				<h4>Levelezési adatok</h4>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.mail_name" name="companyMailname" placeholder="Levelezési név">
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<mat-select name="companyMailcountry" placeholder="Ország"
-					[ngModel]="company.country_code" (ngModelChange)="company.mail_country = onChange($event)">
-						<mat-option *ngFor="let country of countries" [value]="country.code">
-							{{country.country}}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.mail_zipcode" name="companyMailzipcode" placeholder="Irányítószám">
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.mail_settlement" name="companyMailsettlement" placeholder="Település">
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.mail_address" name="companyMailaddress" placeholder="Cím">
-				</mat-form-field>
-			</div>
-			<div class="hr_style">
-				<hr>
+			<div *ngIf="!mail else mail_datas(company)">
+				<div class="address">
+					<h4>Levelezési adatok</h4>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.mail_name" name="companyMailname" placeholder="Levelezési név">
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<mat-select name="companyMailcountry" placeholder="Ország"
+						[ngModel]="company.country_code" (ngModelChange)="company.mail_country = onChange($event)">
+							<mat-option *ngFor="let country of countries" [value]="country.code">
+								{{country.country}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.mail_zipcode" name="companyMailzipcode" placeholder="Irányítószám">
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.mail_settlement" name="companyMailsettlement" placeholder="Település">
+					</mat-form-field>
+				</div>
+				<div class="inputfield">
+					<mat-form-field class="matffield">
+						<input matInput [(ngModel)]="company.mail_address" name="companyMailaddress" placeholder="Cím">
+					</mat-form-field>
+				</div>
+				<div class="hr_style">
+					<hr>
+				</div>
 			</div>
 			<div class="address">
 				<h4>Statisztikai adatok</h4>
@@ -178,7 +194,7 @@
 			</div>
 		</div>
 		<div class="btn_primary">
-			<button mat-raised-button color="primary" (click)="save()">Mentés</button>
+			<button mat-raised-button color="primary" (click)="edit? save() : add(company)">Mentés</button>
 		</div>
 		<div class="btn_primary">
 			<button mat-raised-button href="company/list" (click)="goBack()">Mégse</button>

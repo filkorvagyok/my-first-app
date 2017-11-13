@@ -13,6 +13,7 @@ import { CompaniesService } from './companies.service';
 })
 export class CompanyDetailComponent implements OnInit {
   @Input() company: Company;
+  
 
   constructor(
     private companiesService: CompaniesService,

@@ -3,6 +3,10 @@
 	<div  class="panel-body">
 		<section >
 			<table class="table">
+				<colgroup>
+					<col>
+					<col span="4" (click)="gotoDetail(company)" style="color: blue;">
+				</colgroup>
 				<thead>
 					<tr>
 						<th></th>
@@ -12,29 +16,29 @@
 						<th>Email</th>
 					</tr>
 				</thead>
-				<tbody *ngFor="let company of companies">
+				<tbody (click)="gotoDetail(company)" class="clickable-tbody" *ngFor="let company of companies">
 					<tr>
-						<td rowspan="2">
-							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox()" (click)="company.selected=true"></mat-checkbox>
+						<td rowspan="2" (click)="$event.stopPropagation();">
+							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox();company.selected= !company.selected"></mat-checkbox>
 							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
 						</td>
 						<td rowspan="2" *ngIf="company.logo!=''">
-							<button mat-fab color="primary" (click)="gotoDetail(company)">
+							<button (click)="$event.stopPropagation();" class="iconbutton" mat-fab color="primary">
 								<img src={{company.logo}} class="logo" alt="logo">
 							</button>
 						</td>
 						<td rowspan="2" *ngIf="company.logo==''">
-							<button mat-fab color="primary" (click)="gotoDetail(company)">
+							<button (click)="$event.stopPropagation();" class="iconbutton" mat-fab color="primary">
 								{{company.name.slice(0,1)}}
 							</button>
 						</td>
-						<td>
+						<td (click)="gotoDetail(company)">
 							<strong class="company_name">{{company.name}}</strong>
 						</td>
-						<td rowspan="2">{{company.phone}}</td>
-						<td rowspan="2">{{company.email}}</td>
+						<td (click)="gotoDetail(company)" rowspan="2">{{company.phone}}</td>
+						<td (click)="gotoDetail(company)" rowspan="2">{{company.email}}</td>
 					</tr>
-					<tr>
+					<tr (click)="gotoDetail(company)">
 						<td class="collapsed">
 							<span class="company_headquarter">
 								{{company.country_code}}-{{company.hq_zipcode}} {{company.hq_settlement}}, 
@@ -42,15 +46,22 @@
 							</span>
 						</td>
 					</tr>
-
 				</tbody>
+				<tr class="newcompany-tr">
+					<td></td>
+					<td>
+						<button mat-fab class="newcompany_btn" color="primary" (click)="gotoNew()">
+							Új cég
+						</button>
+					</td>
+				</tr>
 			</table>
 		</section>
 	</div>
 </form>
 <div *ngIf=checked class="botton_right">
 	<button mat-fab [matMenuTriggerFor]="menu" color="primary">
-  		<mat-icon class="fa fa-plus fa-lg" aria-hidden="true"></mat-icon>
+  		<mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
 	</button>
 	<mat-menu #menu="matMenu">
 		<button mat-menu-item>

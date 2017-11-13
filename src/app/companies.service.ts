@@ -115,6 +115,12 @@ export class CompaniesService{
     );
   }
 
+  addCompany(company: Company): Observable<Company>{
+    return this.http.post<Company>(this.companiesUrl, company, httpOptions).pipe(
+        catchError(this.handleError<Company>('addHero'))
+      );
+  }
+
 
 	/*deleteCompany (company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;

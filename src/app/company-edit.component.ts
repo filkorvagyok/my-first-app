@@ -36,6 +36,7 @@ export class CompanyEditComponent implements OnInit {
     this.getIndustries();
     this.getEmployeesnums();
     this.getYearlyincomes();
+    console.log(this.route);
   }
 
   getCountries(): void{
@@ -62,8 +63,14 @@ export class CompanyEditComponent implements OnInit {
         .subscribe(yearlyincomes => this.yearlyincomes = yearlyincomes);
   }
 
+  onChangeHqcountry(newValue, asd){
+    this.company.hq_country = this.countries.filter(x=>x.code==newValue)[0].country
+    console.log(newValue, this.countries.filter(x=>x.code==newValue)[0].country, asd);
+    return newValue;
+  }
+
   onChange(newValue){
-    this.company.yearlyincome_id = newValue;
+    return newValue;
   }
 
   goBack(): void {

@@ -24,7 +24,7 @@ export class CompaniesComponent implements OnInit{
 	selectedCompanies = [];
 
 
-	disabled = false;
+	disabled = true;
 
 	getCompanies(): void{
 		this.companiesService
@@ -56,44 +56,55 @@ export class CompaniesComponent implements OnInit{
 	    	console.log('The dialog was closed');
 	      	if(dialogRef.componentInstance.delete)
 	      	{
-	      		this.companies=this.delete();
+	      		let array=this.companies;
+	      		for (var i = 0; i < array.length; i++) {
+	      			if(array[i].selected)
+	      			{
+	      				 this.delete(array[i]);
+	      			}
+	      		}
 	      	}
+	      	this.checked = false;
 	    });
 	    
 	}
 
-	delete(): Company[] {
+	/*delete(): Company[] {
 		for (var i = 0;  i < this.companies.length; i++) {
 			if(this.companies[i].selected)
 			{
-				this.companiesService
-				.delete(this.companies[i].id);
-				//this.companies = this.companies.filter(h => h !== this.companies[i]);
+				//this.companies.splice(i, 1);
+				//console.log(this.companies[i]);
+				this.companies = this.companies.filter(h => h !== this.companies[i]);
 			}
 		}
 		return this.companies
-	}
+	}*/
 
-	/*delete(company: Company): void {
+	delete(company: Company): void {
 		this.companies = this.companies.filter(h => h !== company);
     	this.companiesService.delete(company).subscribe();
-	}*/
+	}
 
 	ngOnInit(): void{
 		this.getCompanies();
 	}
 
 	onSelect(company: Company): void {
-    	this.companies
+    	this.selectedCompany = company;
   	}
 
   	gotoDetail(company: Company): void{
-  		this.selectedCompany = company;
-  		this.router.navigate(['/company/shown', this.selectedCompany.id]);
+  		this.router.navigate(['/company/shown', company.id]);
   	}
 
   	gotoEdit(): void{
+  		this.selectedCompany = this.companies.filter(companie => companie.selected === true)[0];
   		this.router.navigate(['/company/edit', this.selectedCompany.id]);
+  	}
+
+  	gotoNew(): void{
+  		this.router.navigate(["/company/new"]);
   	}
 
 }

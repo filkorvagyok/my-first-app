@@ -15,7 +15,8 @@ const routes: Routes = [
 	{ path: 'password/reset', component:ResetPasswordComponent },
 	{ path: 'company/list', component:CompaniesComponent },
 	{ path: 'company/shown/:id', component:CompanyDetailComponent },
-	{ path: 'company/edit/:id', component:CompanyEditComponent }
+	{ path: 'company/edit/:id', component:CompanyEditComponent },
+	{ path: 'company/new',  component:CompanyEditComponent }
 ];
 
 @NgModule({

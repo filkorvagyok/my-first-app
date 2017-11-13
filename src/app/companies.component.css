@@ -38,3 +38,17 @@ th{
 	left: auto;
 	position: fixed;
 }
+
+
+.iconbutton{
+	cursor: default;
+}
+
+.clickable-tbody{
+	cursor: pointer;
+}
+
+.newcompany_btn
+{
+	margin: 20px 0 0 0;
+}

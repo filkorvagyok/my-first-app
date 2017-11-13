@@ -4,7 +4,7 @@ export class InMemoryDataService implements InMemoryDbService {
     let companies = [
         {
             id: 1,
-            logo: 'http://127.0.0.1:8887/logos/wallmart-logo.png',
+            logo: 'http://atwork.djw.hu/filkortamas/logos/wallmart-logo.png',
             name: 'Walmart',
             phone: '1-800-925-6278',
             email: 'wallmart@wallmart.com',
@@ -64,7 +64,7 @@ export class InMemoryDataService implements InMemoryDbService {
         },
         {
             id: 3,
-            logo: 'http://127.0.0.1:8887/logos/toyota-logo.png',
+            logo: 'http://atwork.djw.hu/filkortamas/logos/toyota-logo.png',
             name: 'Toyota',
             phone: '800-331-4331',
             email: 'toyota@toyota.com',
@@ -124,7 +124,7 @@ export class InMemoryDataService implements InMemoryDbService {
         },
         {
             id: 5,
-            logo: 'http://127.0.0.1:8887/logos/apple-logo.png',
+            logo: 'http://atwork.djw.hu/filkortamas/logos/apple-logo.png',
             name: 'Apple',
             phone: '80-983-435',
             email: 'apple@apple.com',

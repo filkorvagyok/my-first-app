@@ -2,11 +2,11 @@
 
 #narrow {
   float: right;
-  width: 400px;
+  width: 420px;
 }
 #wide {
   float: left;
-  width: calc(100% - 400px);
+  width: calc(100% - 420px);
 }
 
 #line{
@@ -14,5 +14,5 @@
 }
 
 #back{
-	margin-left: 100px;
+	margin-left: 80px;
 }

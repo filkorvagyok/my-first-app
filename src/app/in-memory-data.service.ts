@@ -466,7 +466,9 @@ export class InMemoryDataService implements InMemoryDbService {
         { id:8, amount:'1.000+ M Ft' }
     ];
 
+    let projects=[];
 
-    return {companies, countries, industries, employeesnums, yearlyincomes};
+
+    return {companies, countries, industries, employeesnums, yearlyincomes, projects};
   }
 }

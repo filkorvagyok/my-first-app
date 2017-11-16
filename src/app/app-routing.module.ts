@@ -7,6 +7,8 @@ import { ResetPasswordComponent }   from './reset-password.component';
 import { CompaniesComponent }   from './companies.component';
 import { CompanyDetailComponent } from './company-detail.component';
 import { CompanyCommonComponent } from './company-common.component';
+import { ProjectsComponent } from './projects.component';
+import { ProjectCommonComponent } from './project-common.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,7 +18,10 @@ const routes: Routes = [
 	{ path: 'company/list', component:CompaniesComponent },
 	{ path: 'company/shown/:id', component:CompanyDetailComponent },
 	{ path: 'company/edit/:id', component:CompanyCommonComponent },
-	{ path: 'company/new',  component:CompanyCommonComponent }
+	{ path: 'company/new',  component:CompanyCommonComponent },
+	{ path: 'project/list', component:ProjectsComponent },
+	{ path: 'project/edit/:id', component:ProjectCommonComponent },
+	{ path: 'project/new',  component:ProjectCommonComponent }
 ];
 
 @NgModule({

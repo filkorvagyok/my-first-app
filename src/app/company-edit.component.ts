@@ -85,7 +85,7 @@ export class CompanyEditComponent implements OnInit {
   }
 
   save(): void {
-      this.companiesService.updateHero(this.company)
+      this.companiesService.updateCompany(this.company)
         .subscribe(() => this.goBack());
   }
 

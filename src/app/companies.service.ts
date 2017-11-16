@@ -24,6 +24,7 @@ import { Country } from './country';
 import { Industry } from './industry';
 import { Employeesnum } from './employeesnum';
 import { Yearlyincome } from './yearlyincome';
+import { Project } from './project';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -47,6 +48,7 @@ export class CompaniesService{
   private industriesUrl = 'api/industries';
   private employeesnumsUrl = 'api/employeesnums';
   private yearlyincomesUrl = 'api/yearlyincomes';
+  private projectsUrl = 'api/projects';
 
 	constructor(private http: HttpClient){}
 
@@ -96,12 +98,29 @@ export class CompaniesService{
       );
   }
 
+  getProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>(this.projectsUrl)
+      .pipe(
+        tap(projects => (`fetched projects`)),
+        catchError(this.handleError('getProjects', []))
+      );
+  }
+
   getCompany(company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;
     const url = `${this.companiesUrl}/${id}`;
     return this.http.get<Company>(url).pipe(
       tap(_ => (`fetched company id=${id}`)),
       catchError(this.handleError<Company>(`getCompany id=${id}`))
+    );
+  }
+
+  getProject(project: Project | number): Observable<Project> {
+    const id = typeof project === 'number' ? project : project.id;
+    const url = `${this.projectsUrl}/${id}`;
+    return this.http.get<Project>(url).pipe(
+      tap(_ => (`fetched project id=${id}`)),
+      catchError(this.handleError<Project>(`getProject id=${id}`))
     );
   }
 
@@ -121,6 +140,12 @@ export class CompaniesService{
       );
   }
 
+  addProject(project: Project): Observable<Project>{
+    return this.http.post<Project>(this.projectsUrl, project, httpOptions).pipe(
+        catchError(this.handleError<Project>('addProject'))
+      );
+  }
+
 
 	/*deleteCompany (company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;
@@ -131,10 +156,17 @@ export class CompaniesService{
       .catch(this.handleError);
   }*/
 
-  updateHero (company: Company): Observable<any> {
+  updateCompany (company: Company): Observable<any> {
     return this.http.put(this.companiesUrl, company, httpOptions).pipe(
       tap(_ => (`updated company id=${company.id}`)),
       catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
+  updateProject (project: Project): Observable<any> {
+    return this.http.put(this.projectsUrl, project, httpOptions).pipe(
+      tap(_ => (`updated project id=${project.id}`)),
+      catchError(this.handleError<any>('updateProject'))
     );
   }
 

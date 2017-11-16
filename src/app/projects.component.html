@@ -1,46 +1,28 @@
 <form class="panel panel-default">
-	<div class="panel-heading" color="primary">Cégek listája</div>
-	<div  class="panel-body" *ngIf="companies">
+	<div class="panel-heading" color="primary">Projektek</div>
+	<div  class="panel-body" *ngIf="projects && projects.length > 0">
 		<section >
 			<table class="table">
 				<thead>
 					<tr>
 						<th></th>
-						<th></th>
-						<th>Cég</th>
-						<th>Telefon</th>
-						<th>Email</th>
+						<th>Név</th>
+						<th>Határidő</th>
+						<th>Bevétel</th>
+						<th>Kiadás</th>
 					</tr>
 				</thead>
-				<tbody (click)="gotoDetail(company)" class="clickable-tbody" *ngFor="let company of companies">
+				<tbody (click)="gotoDetail(project)" class="clickable-tbody" *ngFor="let project of projects">
 					<tr>
 						<td rowspan="2" (click)="$event.stopPropagation();">
-							  <mat-checkbox color="primary" value={{company.id}} (change)="showChbox();company.selected= !company.selected"></mat-checkbox>
+							  <mat-checkbox color="primary" value={{project.id}} (change)="showChbox();project.selected= !project.selected"></mat-checkbox>
 							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
 						</td>
-						<td rowspan="2" *ngIf="company.logo!=''">
-							<button (click)="$event.stopPropagation();" class="iconbutton" mat-fab color="primary">
-								<img src={{company.logo}} class="logo" alt="logo">
-							</button>
+						<td rowspan="2">
+							<strong class="company_name">{{project.name}}</strong>
 						</td>
-						<td rowspan="2" *ngIf="company.logo==''">
-							<button (click)="$event.stopPropagation();" class="iconbutton" mat-fab color="primary">
-								{{company.name.slice(0,1)}}
-							</button>
-						</td>
-						<td>
-							<strong class="company_name">{{company.name}}</strong>
-						</td>
-						<td rowspan="2">{{company.phone}}</td>
-						<td rowspan="2">{{company.email}}</td>
 					</tr>
 					<tr>
-						<td class="collapsed">
-							<span class="company_headquarter">
-								{{company.country_code}}-{{company.hq_zipcode}} {{company.hq_settlement}}, 
-								{{company.hq_address}}
-							</span>
-						</td>
 					</tr>
 				</tbody>
 				<tfoot>
@@ -58,11 +40,12 @@
 			</table>
 		</section>
 	</div>
-	<div  class="panel-body" *ngIf="!companies">
+	<div  class="panel-body" *ngIf="!projects || projects.length == 0">
 		<div class="nodata_alert">
-			<h1>Nincs megadva egyetlen cég sem</h1>
-			<p>A munka megkezdése előtt ajánlott felvinned legalább egy céget, amihez a rendszer társítani tudja majd a feladatokat, névjegyeket és a többi információt.<br>
-			Nem kötelező, de ajánlott.</p>
+			<h1>Nincs megadva egyetlen projekt sem</h1>
+			<p>Projektek keretében számos extra dolgot tudsz a feladatokkal csinálni, például Gantt-diagramm szerint rendezheted, megjeleníthed. A projektek bevétel és költség oldalról, illetve határidők segítségével is hatékonyabbá teszik a munkavégzést.<br>
+			Ha egyébként nem projekt alapon dolgozol, akkor a projektek segítségével csoportosíthatod a feladatokat.<br>
+			A projektekhez hozzárendelheted a résztvevőket különböző szerepkörökben és könnyen, egyszerűen kommunikálhatsz velük a projekt kapcsán. Úgy az ügyfeleiddel, partnereiddel, mint a munkatársaddal.</p>
 			<button mat-raised-button color="primary" (click)="gotoNew()">
 				<i class="fa fa-plus"></i> Új cég hozzáadása
 			</button>

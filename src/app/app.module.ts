@@ -13,8 +13,9 @@ import {
   MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,
   MatInputModule, MatIconModule, MatCheckboxModule, MatButtonModule,
   MatTableModule, MatRadioModule, MatMenuModule, MatDialogModule,
-  MatSelectModule
+  MatSelectModule, MatNativeDateModule, MAT_DATE_LOCALE 
 } from '@angular/material';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -28,6 +29,9 @@ import { CompaniesService } from './companies.service';
 import { CompanyDetailComponent } from './company-detail.component';
 import { CompanyEditComponent } from './company-edit.component';
 import { CompanyCommonComponent }        from './company-common.component';
+import { ProjectsComponent } from './projects.component';
+import { ProjectCommonComponent } from './project-common.component';
+import { ProjectEditComponent } from './project-edit.component';
 
 import { AppRoutingModule }     from './app-routing.module';
 
@@ -41,7 +45,10 @@ import { AppRoutingModule }     from './app-routing.module';
     DeleteDialog,
     CompanyDetailComponent,
     CompanyEditComponent,
-    CompanyCommonComponent
+    CompanyCommonComponent,
+    ProjectsComponent,
+    ProjectCommonComponent,
+    ProjectEditComponent
   ],
   imports: [
     BrowserModule,
@@ -64,9 +71,12 @@ import { AppRoutingModule }     from './app-routing.module';
     MatRadioModule,
     MatMenuModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [CompaniesService],
+  providers: [CompaniesService,
+    {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialog]
 })

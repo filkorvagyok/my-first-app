@@ -1,0 +1,97 @@
+<form class="panel panel-default" *ngIf="project">
+	<div class="panel-heading" color="primary">Projekt</div>
+	<div  class="panel-body" >
+		<div class="inputpanel">
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.name" name="projectName" placeholder="Név">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+				  <textarea matInput [(ngModel)]="project.description" name="projectDescription" placeholder="Leírás" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-checkbox [(ngModel)]="project.checklist" name="projectChecklist" color="primary">
+					Feladatlista
+				</mat-checkbox>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+					<mat-select [(ngModel)]="project.company" name="projectCompany" placeholder="Cég" multiple>
+						<mat-option *ngFor="let company of companies" [value]="company.id">{{company.name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.file" name="projectFile" placeholder="Fájlok">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.accountable" name="projectAccountable" placeholder="Felelős">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.owner" name="projectOwner" placeholder="Tulajdonos">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.observer" name="projectObserver" placeholder="Megfigyelő">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.participant" name="projectParticipant" placeholder="Résztvevő">
+			  	</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field>
+				<input matInput [matDatepicker]="picker" placeholder="Choose a date">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.status" name="projectStatus" placeholder="Státusz">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.priority" name="projectPriority" placeholder="Prioritás">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.stickers" name="projectStickers" placeholder="Cimkék">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.currency" name="projectCurrency" placeholder="Pénznem">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.income" name="projectIncome" placeholder="Bevétel">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.expenditure" name="projectExpenditure" placeholder="Kiadás">
+			  	</mat-form-field>
+			</div>
+		</div>
+		<div class="btn_primary">
+			<button mat-raised-button color="primary" (click)="edit? save() : add(project)">Mentés</button>
+		</div>
+		<div class="btn_primary">
+			<button mat-raised-button href="company/list" (click)="goBack()">Mégse</button>
+		</div>
+	</div>
+</form>

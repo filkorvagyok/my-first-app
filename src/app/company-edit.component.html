@@ -76,7 +76,7 @@
 			<div class="address">
 				<h4>Számlázási adatok</h4>
 			</div>
-			<div *ngIf="!billing else billing_datas(company)">
+			<div *ngIf="!billing">
 				<div class="inputfield">
 					<mat-form-field class="matffield">
 						<input matInput [(ngModel)]="company.bi_name" name="companyBiname" placeholder="Számlázási név">
@@ -108,6 +108,9 @@
 					</mat-form-field>
 				</div>
 			</div>
+			<div *ngIf="billing">
+				{{billing_datas(company)}}
+			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<input matInput [(ngModel)]="company.taxnumber" name="companyTaxnumber" placeholder="Adószám">
@@ -116,7 +119,7 @@
 			<div class="hr_style">
 				<hr>
 			</div>
-			<div *ngIf="!mail else mail_datas(company)">
+			<div *ngIf="!mail">
 				<div class="address">
 					<h4>Levelezési adatok</h4>
 				</div>
@@ -153,6 +156,9 @@
 				<div class="hr_style">
 					<hr>
 				</div>
+			</div>
+			<div *ngIf="mail">
+				{{mail_datas(company)}}
 			</div>
 			<div class="address">
 				<h4>Statisztikai adatok</h4>

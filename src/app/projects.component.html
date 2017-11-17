@@ -21,15 +21,27 @@
 						<td rowspan="2">
 							<strong class="company_name">{{project.name}}</strong>
 						</td>
+						<td>
+							<strong class="company_name">{{szamol(project)}} <span *ngIf=(!greater)><mat-icon class="fa fa-exclamation-triangle"></mat-icon></span></strong>
+						</td>
+						<td rowspan="2">
+							{{project.income}}
+						</td>
+						<td rowspan="2">
+							{{project.expenditure}}
+						</td>
 					</tr>
 					<tr>
+						<td class="collapsed">
+							{{project.deadline | date:'yyyy-MM-dd HH:mm'}}
+						</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td colspan="2"  class="newcompany_btn">
 							<button  mat-raised-button color="primary" (click)="gotoNew()">
-								<i class="fa fa-plus"></i> Új cég hozzáadása
+								<i class="fa fa-plus"></i> Új projekt hozzáadása
 							</button>
 						</td>
 						<td></td>
@@ -43,11 +55,11 @@
 	<div  class="panel-body" *ngIf="!projects || projects.length == 0">
 		<div class="nodata_alert">
 			<h1>Nincs megadva egyetlen projekt sem</h1>
-			<p>Projektek keretében számos extra dolgot tudsz a feladatokkal csinálni, például Gantt-diagramm szerint rendezheted, megjeleníthed. A projektek bevétel és költség oldalról, illetve határidők segítségével is hatékonyabbá teszik a munkavégzést.<br>
-			Ha egyébként nem projekt alapon dolgozol, akkor a projektek segítségével csoportosíthatod a feladatokat.<br>
+			<p>Projektek keretében számos extra dolgot tudsz a feladatokkal csinálni, például Gantt-diagramm szerint rendezheted, megjeleníthed. A projektek bevétel és költség oldalról, illetve határidők segítségével is hatékonyabbá teszik a munkavégzést.<br><br>
+			Ha egyébként nem projekt alapon dolgozol, akkor a projektek segítségével csoportosíthatod a feladatokat.<br><br>
 			A projektekhez hozzárendelheted a résztvevőket különböző szerepkörökben és könnyen, egyszerűen kommunikálhatsz velük a projekt kapcsán. Úgy az ügyfeleiddel, partnereiddel, mint a munkatársaddal.</p>
 			<button mat-raised-button color="primary" (click)="gotoNew()">
-				<i class="fa fa-plus"></i> Új cég hozzáadása
+				<i class="fa fa-plus"></i> Új projekt hozzáadása
 			</button>
 		</div>
 	</div>
@@ -58,12 +70,16 @@
 	</button>
 	<mat-menu #menu="matMenu">
 		<button mat-menu-item>
+			<mat-icon class="fa fa-check"></mat-icon>
+			<span>Kész</span>
+		</button>
+		<button mat-menu-item>
 			<mat-icon class="fa fa-file"></mat-icon>
 			<span>Új feladat</span>
 		</button>
 		<button mat-menu-item>
-			<mat-icon class="fa fa-folder"></mat-icon>
-			<span>Új projekt</span>
+			<mat-icon class="fa fa-industry"></mat-icon>
+			<span>Új cég</span>
 		</button>
 		<button mat-menu-item>
 			<mat-icon class="fa fa-user-plus"></mat-icon>

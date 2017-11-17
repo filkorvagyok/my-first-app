@@ -53,7 +53,9 @@ export class ProjectEditComponent implements OnInit {
 		if(this.projects.length==0)
 		{
 			project.id = 1;
+			console.log('WUT?');
 		}
+		project.id=this.projects.length+1;
     this.companiesService.addProject(project)
       .subscribe(project => {
         this.projects.push(project);

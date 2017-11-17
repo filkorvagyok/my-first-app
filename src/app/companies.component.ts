@@ -1,11 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Company } from './company';
-import { DeleteDialog } from './delete-dialog';
 import { CompaniesService } from './companies.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { HttpClient} from '@angular/common/http';
-import 'rxjs/add/operator/map';
+import { MatDialog } from '@angular/material';
+import { DeleteDialog } from './delete-dialog';
 
 
 
@@ -17,7 +15,6 @@ import 'rxjs/add/operator/map';
 
 export class CompaniesComponent implements OnInit{
 	constructor(
-		private http: HttpClient,
 		private companiesService: CompaniesService,
 		private router: Router,
 		public dialog: MatDialog
@@ -26,10 +23,7 @@ export class CompaniesComponent implements OnInit{
 	checked: boolean = false;
 	companies: Company[];
 	selectedCompany: Company;
-	selectedCompanies = [];
-
-
-	disabled = true;
+	disabled: boolean = true;
 
 	getCompanies(): void{
 		this.companiesService
@@ -94,10 +88,6 @@ export class CompaniesComponent implements OnInit{
 	ngOnInit(): void{
 		this.getCompanies();
 	}
-
-	onSelect(company: Company): void {
-    	this.selectedCompany = company;
-  	}
 
   	gotoDetail(company: Company): void{
   		this.router.navigate(['/company/shown', company.id]);

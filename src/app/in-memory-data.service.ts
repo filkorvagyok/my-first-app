@@ -466,7 +466,28 @@ export class InMemoryDataService implements InMemoryDbService {
         { id:8, amount:'1.000+ M Ft' }
     ];
 
-    let projects=[];
+    let projects=[
+        {
+            id: '1',
+            name: 'Projekt1',
+            description: 'Ez a projekt1',
+            checklist: false,
+            company: [],
+            file: 'file',
+            accountable: 'Filkor Tamás',
+            owner: 'Filkor Tamás',
+            observer: 'Filkor Tamás',
+            participant: 'Kis Béla',
+            deadline: new Date('2017-11-30'),
+            status: 'Elindítva',
+            priority: 'magas',
+            stickers: '',
+            currency: 'HUF',
+            income: 500000000,
+            expenditure: 2000000,
+            selected: false
+        }
+    ];
 
 
     return {companies, countries, industries, employeesnums, yearlyincomes, projects};

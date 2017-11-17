@@ -23,7 +23,7 @@ export class ProjectsComponent implements OnInit{
 	selectedProject: Project;
 	days: number;
 	disabled: boolean = true;
-	htmlToAdd ='<mat-icon class="fa fa-industry"></mat-icon>';
+
 	greater = true;
 
 	ngOnInit(): void{
@@ -54,17 +54,54 @@ export class ProjectsComponent implements OnInit{
         .subscribe(projects => this.projects = projects);
 	}
 
+	gotoDetail(project: Project): void{
+  		this.router.navigate(['/project/shown', project.id]);
+  	}
+
 	gotoNew(): void{
 		this.router.navigate(["/project/new"]);
 	}
 
-	szamol(project: Project): string{
+	count(project: Project): string{
 		let num: number = Math.round((new Date(project.deadline).getTime() - new Date().getTime())/86400000+0.5);
-		console.log(num.toString()+' nap');
+		//console.log(num.toString()+' nap');
 		if(num <= 0)
 		{
-			this.greater = false;
+			console.log(project);
+			project.greater = false;
+		}
+		else
+		{
+			project.greater = true;
 		}
 		return num.toString()+' nap';
 	}
+
+	openDeleteDialog(): void{
+		let dialogRef = this.dialog.open(DeleteDialog);
+	    dialogRef.afterClosed().subscribe(result => {
+	    	console.log('The dialog was closed');
+	      	if(dialogRef.componentInstance.delete)
+	      	{
+	      		let array=this.projects;
+	      		for (var i = 0; i < array.length; i++) {
+	      			if(array[i].selected)
+	      			{
+	      				 this.delete(array[i]);
+	      			}
+	      		}
+	      	}
+	      	this.checked = false;
+	    });
+	}
+
+	delete(project: Project): void {
+		this.projects = this.projects.filter(h => h !== project);
+    	this.companiesService.deleteProject(project).subscribe();
+	}
+
+	gotoEdit(): void{
+  		this.selectedProject = this.projects.filter(companie => companie.selected === true)[0];
+  		this.router.navigate(['/project/edit', this.selectedProject.id]);
+  	}
 }

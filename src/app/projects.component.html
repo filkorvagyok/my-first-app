@@ -22,7 +22,7 @@
 							<strong class="company_name">{{project.name}}</strong>
 						</td>
 						<td>
-							<strong class="company_name">{{szamol(project)}} <span *ngIf=(!greater)><mat-icon class="fa fa-exclamation-triangle"></mat-icon></span></strong>
+							<strong class="company_name">{{count(project)}} <span *ngIf="!project.greater"><mat-icon class="fa fa-exclamation-triangle"></mat-icon></span></strong>
 						</td>
 						<td rowspan="2">
 							{{project.income}}

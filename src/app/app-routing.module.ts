@@ -9,6 +9,7 @@ import { CompanyDetailComponent } from './company-detail.component';
 import { CompanyCommonComponent } from './company-common.component';
 import { ProjectsComponent } from './projects.component';
 import { ProjectCommonComponent } from './project-common.component';
+import { ProjectDetailComponent } from './project-detail.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,7 +22,8 @@ const routes: Routes = [
 	{ path: 'company/new',  component:CompanyCommonComponent },
 	{ path: 'project/list', component:ProjectsComponent },
 	{ path: 'project/edit/:id', component:ProjectCommonComponent },
-	{ path: 'project/new',  component:ProjectCommonComponent }
+	{ path: 'project/new',  component:ProjectCommonComponent },
+	{ path: 'project/shown/:id', component:ProjectDetailComponent }
 ];
 
 @NgModule({

@@ -468,7 +468,7 @@ export class InMemoryDataService implements InMemoryDbService {
 
     let projects=[
         {
-            id: '1',
+            id: 1,
             name: 'Projekt1',
             description: 'Ez a projekt1',
             checklist: false,
@@ -485,7 +485,8 @@ export class InMemoryDataService implements InMemoryDbService {
             currency: 'HUF',
             income: 500000000,
             expenditure: 2000000,
-            selected: false
+            selected: false,
+            greater: true
         }
     ];
 

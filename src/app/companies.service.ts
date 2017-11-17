@@ -124,13 +124,23 @@ export class CompaniesService{
     );
   }
 
-  delete(company: Company | number): Observable<Company> {
+  deleteCompany(company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;
     const url = `${this.companiesUrl}/${id}`;
 
     return this.http.delete<Company>(url, httpOptions).pipe(
       tap(_ => (`deleted company id=${id}`)),
       catchError(this.handleError<Company>('delete'))
+    );
+  }
+
+  deleteProject(project: Project | number): Observable<Project> {
+    const id = typeof project === 'number' ? project : project.id;
+    const url = `${this.projectsUrl}/${id}`;
+
+    return this.http.delete<Project>(url, httpOptions).pipe(
+      tap(_ => (`deleted project id=${id}`)),
+      catchError(this.handleError<Project>('delete'))
     );
   }
 

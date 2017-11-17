@@ -1,0 +1,85 @@
+<form *ngIf="project" class="panel panel-default">
+	<div class="panel-heading" color="primary">Cégek listája</div>
+	<div  class="panel-body">
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Név</th>
+						<th>Határidő</th>
+						<th>Bevétel</th>
+						<th>Kiadás</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="2">
+							<strong class="company_name">{{project.name}}</strong>
+						</td>
+						<td>
+							<strong class="company_name">{{project.greater}}</strong>
+						</td>
+						<td rowspan="2">
+							{{project.income}}
+						</td>
+						<td rowspan="2">
+							{{project.expenditure}}
+						</td>
+					</tr>
+					<tr>
+						<td class="collapsed">
+							{{project.deadline | date:'yyyy-MM-dd HH:mm'}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<hr>
+		<div>
+		<div id="wide">
+			<div>
+				<h3>Feladatok</h3>
+			</div>
+		</div>
+		<div id="narrow">
+			<div>
+				<h3>Cégek</h3>
+			</div>
+			<hr>
+			<div>
+				<h3>Névjegyek</h3>
+			</div>
+		</div>
+		</div>
+	</div>
+	<div class="botton_right">
+		<button mat-fab [matMenuTriggerFor]="menu" color="primary">
+	  		<mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
+		</button>
+		<mat-menu #menu="matMenu">
+			<button mat-menu-item>
+				<mat-icon class="fa fa-file"></mat-icon>
+				<span>Új feladat</span>
+			</button>
+			<button mat-menu-item>
+				<mat-icon class="fa fa-folder"></mat-icon>
+				<span>Új projekt</span>
+			</button>
+			<button mat-menu-item>
+				<mat-icon class="fa fa-user-plus"></mat-icon>
+				<span>Új felhasználó</span>
+			</button>
+			<button mat-menu-item (click)="gotoEdit()">
+				<mat-icon class="fa fa-pencil"></mat-icon>
+				<span>Szerkesztés</span>
+			</button>
+			<button mat-menu-item (click)="openDeleteDialog()">
+				<mat-icon class="fa fa-trash"></mat-icon>
+				<span>Törlés</span>
+			</button>
+		</mat-menu>
+	</div>
+</form>
+<div id="back">
+	<button mat-raised-button color="primary" (click)="goBack()">Vissza</button>
+</div>

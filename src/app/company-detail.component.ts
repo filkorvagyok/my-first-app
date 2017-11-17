@@ -27,14 +27,12 @@ export class CompanyDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap
-      .switchMap((params: ParamMap) => this.companiesService.getCompany(+params.get('id')))
-      .subscribe(company => this.company = company);
+    this.getCompany();
   }
 
   getCompany(): void{
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.companiesService.getCompany(id)
+    this.route.paramMap
+      .switchMap((params: ParamMap) => this.companiesService.getCompany(+params.get('id')))
       .subscribe(company => this.company = company);
   }
 
@@ -58,7 +56,7 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   delete(company: Company): void {
-      this.companiesService.delete(company).subscribe();
+      this.companiesService.deleteCompany(company).subscribe();
       this.location.back();
   }
 }

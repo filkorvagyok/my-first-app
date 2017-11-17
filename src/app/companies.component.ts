@@ -82,7 +82,7 @@ export class CompaniesComponent implements OnInit{
 
 	delete(company: Company): void {
 		this.companies = this.companies.filter(h => h !== company);
-    	this.companiesService.delete(company).subscribe();
+    	this.companiesService.deleteCompany(company).subscribe();
 	}
 
 	ngOnInit(): void{

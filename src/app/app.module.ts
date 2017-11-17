@@ -33,6 +33,7 @@ import { CompanyCommonComponent }        from './company-common.component';
 import { ProjectsComponent } from './projects.component';
 import { ProjectCommonComponent } from './project-common.component';
 import { ProjectEditComponent } from './project-edit.component';
+import { ProjectDetailComponent } from './project-detail.component';
 
 import { AppRoutingModule }     from './app-routing.module';
 
@@ -49,7 +50,8 @@ import { AppRoutingModule }     from './app-routing.module';
     CompanyCommonComponent,
     ProjectsComponent,
     ProjectCommonComponent,
-    ProjectEditComponent
+    ProjectEditComponent,
+    ProjectDetailComponent
   ],
   imports: [
     BrowserModule,

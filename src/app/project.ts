@@ -17,4 +17,5 @@ export class Project{
 	income: number;
 	expenditure: number;
 	selected: boolean;
+	greater: boolean;
 }

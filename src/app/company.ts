@@ -27,4 +27,5 @@ export class Company{
 	yearlyincome_id: number;
 	founded: number;
 	selected: boolean;
+	project: number[];
 }

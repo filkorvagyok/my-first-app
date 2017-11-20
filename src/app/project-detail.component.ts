@@ -5,6 +5,7 @@ import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 
 import { Project }        from './project';
+import { Company }        from './company';
 import { CompaniesService } from './companies.service';
 import { DeleteDialog } from './delete-dialog';
 import {MatDialog} from '@angular/material';
@@ -17,6 +18,7 @@ import {MatDialog} from '@angular/material';
 
 export class ProjectDetailComponent implements OnInit{
 	@Input() project: Project;
+	companies: Company[] = [];
 
 	constructor(
 		private companiesService: CompaniesService,
@@ -28,6 +30,7 @@ export class ProjectDetailComponent implements OnInit{
 
 	ngOnInit(): void {
 		this.getProject();
+		this.getCompanies();
 	}
 
 	getProject(): void{
@@ -35,6 +38,15 @@ export class ProjectDetailComponent implements OnInit{
 			.switchMap((params: ParamMap) => this.companiesService.getProject(+params.get('id')))
 			.subscribe(project => this.project = project);
 	}
+
+	getCompanies(): void{
+    this.companiesService
+        .getCompanies()
+        .subscribe(companies => {
+          for(var i = 0; i < this.project.company.length; i++)
+            this.companies.push(companies.find(x=>x.id == this.project.company[i]));
+        });
+  }
 
 	goBack(): void {
 		this.location.back();

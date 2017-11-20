@@ -50,7 +50,16 @@
 								<i class="fa fa-plus"></i> Új cég hozzáadása
 							</button>
 						</td>
-						<td></td>
+						<td class="instant_company">	
+							<div class="instant_input">
+							<mat-form-field>
+							    <input #companyName matInput name="companyName" placeholder="Új cég hozzáadása instant">
+						  	</mat-form-field>
+						  	<button  mat-raised-button color="primary" (click)="addInstant(companyName.value)">
+								<i class="fa fa-plus"></i>
+							</button>
+							</div>
+						</td>
 						<td></td>
 						<td></td>
 					</tr>
@@ -78,7 +87,7 @@
 			<mat-icon class="fa fa-file"></mat-icon>
 			<span>Új feladat</span>
 		</button>
-		<button mat-menu-item>
+		<button mat-menu-item (click)="createNewProject()">
 			<mat-icon class="fa fa-folder"></mat-icon>
 			<span>Új projekt</span>
 		</button>

@@ -23,6 +23,7 @@ const routes: Routes = [
 	{ path: 'project/list', component:ProjectsComponent },
 	{ path: 'project/edit/:id', component:ProjectCommonComponent },
 	{ path: 'project/new',  component:ProjectCommonComponent },
+	{ path: 'project/new/:project[]',  component:ProjectCommonComponent },
 	{ path: 'project/shown/:id', component:ProjectDetailComponent }
 ];
 

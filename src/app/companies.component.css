@@ -31,3 +31,11 @@ td.newcompany_btn{
 	padding: 30px 0 100px 0;
 	font-size: 20px;
 }
+
+td.instant_company{
+	padding-top: 43px;
+}
+
+.instant_input{
+	white-space:nowrap;
+}

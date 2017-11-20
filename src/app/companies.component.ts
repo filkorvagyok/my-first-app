@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Company } from './company';
+import { Project } from './project';
 import { CompaniesService } from './companies.service';
 import { MatDialog } from '@angular/material';
 import { DeleteDialog } from './delete-dialog';
-
 
 
 @Component({
@@ -22,6 +22,7 @@ export class CompaniesComponent implements OnInit{
 
 	checked: boolean = false;
 	companies: Company[];
+	projects: Project[];
 	selectedCompany: Company;
 	disabled: boolean = true;
 
@@ -29,6 +30,12 @@ export class CompaniesComponent implements OnInit{
 		this.companiesService
         .getCompanies()
         .subscribe(companies => this.companies = companies);
+	}
+
+	getProjects(): void{
+		this.companiesService
+        .getProjects()
+        .subscribe(projects => this.projects = projects);
 	}
 
 	showChbox(): void{
@@ -82,11 +89,18 @@ export class CompaniesComponent implements OnInit{
 
 	delete(company: Company): void {
 		this.companies = this.companies.filter(h => h !== company);
+		let project = this.projects.find(x => x.company.includes(company.id));
+		console.log(project.company, company.id);
+    	if(project)
+    	{
+    		project.company.slice(company.id, 1);
+    	}
     	this.companiesService.deleteCompany(company).subscribe();
 	}
 
 	ngOnInit(): void{
 		this.getCompanies();
+		this.getProjects();
 	}
 
   	gotoDetail(company: Company): void{
@@ -100,6 +114,31 @@ export class CompaniesComponent implements OnInit{
 
   	gotoNew(): void{
   		this.router.navigate(["/company/new"]);
+  	}
+
+  	createNewProject(): void{
+  		let projectArray: number[] = [];
+  		let array=this.companies;
+  		for (var i = 0; i < array.length; i++) {
+  			if(array[i].selected)
+  			{
+  				 projectArray.push(array[i].id);
+  			}
+  		}
+  		this.gotoNewProject(projectArray);
+  	}
+
+  	gotoNewProject(array: number[]): void{
+  		this.router.navigate(['/project/new/', array]);
+  	}
+
+  	addInstant(name: string): void{
+  		name = name.trim();
+    	if (!name) { return; }
+    	this.companiesService.addCompany({ name } as Company)
+      		.subscribe(company => {
+        this.companies.push(company);
+      });
   	}
 
 }

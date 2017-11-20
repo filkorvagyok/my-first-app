@@ -19,6 +19,7 @@ export class ProjectEditComponent implements OnInit {
 	) {}
 
 	@Input() project: Project;
+	@Input() selectedCompany: Company;
 	@Input() edit: boolean;
 	projects: Project[];
 	companies: Company[];
@@ -45,15 +46,28 @@ export class ProjectEditComponent implements OnInit {
 	}
 
 	save(): void {
+		let array=this.project.company;
+		for (var i = 0; i < array.length; i++) {
+			//this.addProjectToCompany(array[i]);
+		}
       this.companiesService.updateProject(this.project)
         .subscribe(() => this.goBack());
 	}
 
 	add(project: Project): void{
-    this.companiesService.addProject(project)
-      .subscribe(project => {
-        this.projects.push(project);
+		let array=this.project.company;
+    	this.companiesService.addProject(project)
+			.subscribe(project => {
+        		this.projects.push(project);
+        		for (var i = 0; i < array.length; i++)
+        			this.addProjectToCompany(array[i]);
+        		this.goBack();
       });
-    this.goBack();
+  	}
+
+  	addProjectToCompany(i: number): void{
+  		this.companies.find(x=>x.id==i).project.push(this.project.id);
+  		this.companiesService.updateCompany(this.companies.find(x=>x.id==i)).subscribe(() => console.log('updateCompany'));
+  		console.log(this.companies.find(x=>x.id==i));
   	}
 }

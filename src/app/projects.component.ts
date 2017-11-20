@@ -65,7 +65,7 @@ export class ProjectsComponent implements OnInit{
 	count(project: Project): string{
 		let num: number = Math.round((new Date(project.deadline).getTime() - new Date().getTime())/86400000+0.5);
 		//console.log(num.toString()+' nap');
-		if(num <= 0)
+		/*if(num <= 0)
 		{
 			console.log(project);
 			project.greater = false;
@@ -73,7 +73,7 @@ export class ProjectsComponent implements OnInit{
 		else
 		{
 			project.greater = true;
-		}
+		}*/
 		return num.toString()+' nap';
 	}
 
@@ -103,5 +103,14 @@ export class ProjectsComponent implements OnInit{
 	gotoEdit(): void{
   		this.selectedProject = this.projects.filter(companie => companie.selected === true)[0];
   		this.router.navigate(['/project/edit', this.selectedProject.id]);
+  	}
+
+  	addInstant(name: string): void{
+  		name = name.trim();
+    	if (!name) { return; }
+    	this.companiesService.addProject({ name } as Project)
+      		.subscribe(project => {
+        this.projects.push(project);
+      });
   	}
 }

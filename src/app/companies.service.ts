@@ -168,7 +168,7 @@ export class CompaniesService{
 
   updateCompany (company: Company): Observable<any> {
     return this.http.put(this.companiesUrl, company, httpOptions).pipe(
-      tap(_ => (`updated company id=${company.id}`)),
+      tap(_ => {(`updated company id=${company.id}`); console.log(company);}),
       catchError(this.handleError<any>('updateHero'))
     );
   }

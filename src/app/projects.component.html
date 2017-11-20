@@ -44,7 +44,16 @@
 								<i class="fa fa-plus"></i> Új projekt hozzáadása
 							</button>
 						</td>
-						<td></td>
+						<td class="instant_company">
+							<div class="instant_input">
+							<mat-form-field>
+							    <input #projectName matInput name="projectName" placeholder="Új projekt hozzáadása instant">
+						  	</mat-form-field>
+						  	<button  mat-raised-button color="primary" (click)="addInstant(projectName.value)">
+								<i class="fa fa-plus"></i>
+							</button>
+							</div>
+						</td>
 						<td></td>
 						<td></td>
 					</tr>

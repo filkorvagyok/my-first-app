@@ -1,20 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { CompaniesService } from './companies.service';
+import { ProjectsService } from './projects.service';
+import { CompaniesService } from '../companies/companies.service';
 
-import { Project } from './project';
-import { Company } from './company';
+import { Project } from '../project';
+import { Company } from '../company';
 
 @Component({
   selector: 'project-edit',
   templateUrl: './project-edit.component.html',
-  styleUrls: [ './company-edit.component.css' ]
+  styleUrls: [ '../companies/company-edit.component.css' ]
 })
 
 export class ProjectEditComponent implements OnInit {
 	constructor(
 		private companiesService: CompaniesService,
+		private projectsService: ProjectsService,
 		private location: Location
 	) {}
 
@@ -30,7 +32,7 @@ export class ProjectEditComponent implements OnInit {
 	}
 
 	getProjects(): void{
-    this.companiesService
+    this.projectsService
         .getProjects()
         .subscribe(projects => this.projects = projects);
 	}
@@ -50,13 +52,13 @@ export class ProjectEditComponent implements OnInit {
 		for (var i = 0; i < array.length; i++) {
 			//this.addProjectToCompany(array[i]);
 		}
-      this.companiesService.updateProject(this.project)
+      this.projectsService.updateProject(this.project)
         .subscribe(() => this.goBack());
 	}
 
 	add(project: Project): void{
 		let array=this.project.company;
-    	this.companiesService.addProject(project)
+    	this.projectsService.addProject(project)
 			.subscribe(project => {
         		this.projects.push(project);
         		for (var i = 0; i < array.length; i++)

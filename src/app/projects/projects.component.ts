@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { CompaniesService } from './companies.service';
+import { ProjectsService } from './projects.service';
 import { MatDialog } from '@angular/material';
-import { DeleteDialog } from './delete-dialog';
+import { DeleteDialog } from '../delete-dialog';
 import { Router } from '@angular/router';
-import { Project } from './project';
+import { Project } from '../project';
 
 @Component({
 	selector: 'my-projects',
 	templateUrl: './projects.component.html',
-	styleUrls: ['./companies.component.css']
+	styleUrls: ['../companies/companies.component.css']
 })
 
 export class ProjectsComponent implements OnInit{
 	constructor(
-		private companiesService: CompaniesService,
+		private projectsService: ProjectsService,
 		private router: Router,
 		public dialog: MatDialog
 	){}
@@ -23,6 +23,7 @@ export class ProjectsComponent implements OnInit{
 	selectedProject: Project;
 	days: number;
 	disabled: boolean = true;
+	isLoading: boolean = true;
 
 	greater = true;
 
@@ -49,9 +50,9 @@ export class ProjectsComponent implements OnInit{
 	}
 
 	getProjects(): void{
-		this.companiesService
+		this.projectsService
         .getProjects()
-        .subscribe(projects => this.projects = projects);
+        .subscribe(projects => {this.projects = projects, this.isLoading = false});
 	}
 
 	gotoDetail(project: Project): void{
@@ -97,7 +98,7 @@ export class ProjectsComponent implements OnInit{
 
 	delete(project: Project): void {
 		this.projects = this.projects.filter(h => h !== project);
-    	this.companiesService.deleteProject(project).subscribe();
+    	this.projectsService.delete(project).subscribe();
 	}
 
 	gotoEdit(): void{
@@ -108,7 +109,7 @@ export class ProjectsComponent implements OnInit{
   	addInstant(name: string): void{
   		name = name.trim();
     	if (!name) { return; }
-    	this.companiesService.addProject({ name } as Project)
+    	this.projectsService.addProject({ name } as Project)
       		.subscribe(project => {
         this.projects.push(project);
       });

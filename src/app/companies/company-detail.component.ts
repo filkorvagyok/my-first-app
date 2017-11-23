@@ -4,10 +4,11 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 
-import { Company }        from './company';
-import { Project }        from './project';
+import { Company }        from '../company';
+import { Project }        from '../project';
 import { CompaniesService } from './companies.service';
-import { DeleteDialog } from './delete-dialog';
+import { ProjectsService } from '../projects/projects.service';
+import { DeleteDialog } from '../delete-dialog';
 import {MatDialog} from '@angular/material';
 
 @Component({
@@ -18,9 +19,11 @@ import {MatDialog} from '@angular/material';
 export class CompanyDetailComponent implements OnInit {
   @Input() company: Company;
   projects: Project[] = [];
+  isLoading: boolean = true;
 
 
   constructor(
+    private projectsService: ProjectsService,
     private companiesService: CompaniesService,
     private route: ActivatedRoute,
     private location: Location,
@@ -40,11 +43,12 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   getProjects(): void{
-    this.companiesService
+    this.projectsService
         .getProjects()
         .subscribe(projects => {
           for(var i = 0; i < this.company.project.length; i++)
             this.projects.push(projects.find(x=>x.id == this.company.project[i]));
+            this.isLoading = false;
         });
   }
 
@@ -68,7 +72,7 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   delete(company: Company): void {
-      this.companiesService.deleteCompany(company).subscribe();
+      this.companiesService.delete(company).subscribe();
       this.location.back();
   }
 }

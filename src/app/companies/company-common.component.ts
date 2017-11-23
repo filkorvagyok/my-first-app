@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Company } from './company';
+import { Company } from '../company';
 import { CompaniesService } from './companies.service';
 
 @Component({

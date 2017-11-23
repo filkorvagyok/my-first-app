@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Project } from './project';
-import { Company } from './company';
-import { CompaniesService } from './companies.service';
+import { Project } from '../project';
+import { Company } from '../company';
+import { CompaniesService } from '../companies/companies.service';
+import { ProjectsService } from './projects.service';
 
 @Component({
   selector: 'project-common',
@@ -16,6 +17,7 @@ export class ProjectCommonComponent{
 	edit = false;
 
 	constructor(
+		private projectsService: ProjectsService,
 		private companiesService: CompaniesService,
 		private route: ActivatedRoute,
 	) {}
@@ -23,7 +25,7 @@ export class ProjectCommonComponent{
 	ngOnInit(): void {
 		let path = this.route.snapshot.routeConfig.path;
 		console.log(this.route.snapshot.paramMap);
-		let arr= this.route.snapshot.paramMap.keys;
+		let arr = this.route.snapshot.paramMap.keys;
 		this.project = new Project;
 		this.project.company = [];
 		if(path == "project/new")
@@ -42,7 +44,7 @@ export class ProjectCommonComponent{
 		{
 			this.edit = true;
 			this.route.paramMap
-		    	.switchMap((params: ParamMap) => this.companiesService.getProject(+params.get('id')))
+		    	.switchMap((params: ParamMap) => this.projectsService.getProject(+params.get('id')))
 		    	.subscribe(project => this.project = project);
 		}
 	}

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Company } from './company';
-import { Project } from './project';
+import { Company } from '../company';
+import { Project } from '../project';
 import { CompaniesService } from './companies.service';
+import { ProjectsService } from '../projects/projects.service';
 import { MatDialog } from '@angular/material';
-import { DeleteDialog } from './delete-dialog';
+import { DeleteDialog } from '../delete-dialog';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { DeleteDialog } from './delete-dialog';
 
 export class CompaniesComponent implements OnInit{
 	constructor(
+		private projectsService: ProjectsService,
 		private companiesService: CompaniesService,
 		private router: Router,
 		public dialog: MatDialog
@@ -25,15 +27,16 @@ export class CompaniesComponent implements OnInit{
 	projects: Project[];
 	selectedCompany: Company;
 	disabled: boolean = true;
+	isLoading: boolean = true;
 
 	getCompanies(): void{
 		this.companiesService
         .getCompanies()
-        .subscribe(companies => this.companies = companies);
+        .subscribe(companies => {this.companies = companies, this.isLoading=false});
 	}
 
 	getProjects(): void{
-		this.companiesService
+		this.projectsService
         .getProjects()
         .subscribe(projects => this.projects = projects);
 	}
@@ -95,7 +98,7 @@ export class CompaniesComponent implements OnInit{
     	{
     		project.company.slice(company.id, 1);
     	}
-    	this.companiesService.deleteCompany(company).subscribe();
+    	this.companiesService.delete(company).subscribe();
 	}
 
 	ngOnInit(): void{

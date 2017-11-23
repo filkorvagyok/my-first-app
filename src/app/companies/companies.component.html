@@ -1,4 +1,7 @@
-<form class="panel panel-default">
+<div *ngIf="isLoading">
+	<mat-spinner></mat-spinner>
+</div>
+<form class="panel panel-default" *ngIf="!isLoading">
 	<div class="panel-heading" color="primary">Cégek listája</div>
 	<div  class="panel-body" *ngIf="companies">
 		<section >

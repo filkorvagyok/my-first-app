@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { CompaniesService } from './companies.service';
+import { CompaniesService } from './companies/companies.service';
 
 @Component({
   selector: 'delete-dialog',

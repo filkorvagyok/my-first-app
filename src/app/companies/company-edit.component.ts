@@ -3,11 +3,11 @@ import { Component, OnInit, Input }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
-import { Company }        from './company';
-import { Country } from './country';
-import { Industry } from './industry';
-import { Employeesnum } from './employeesnum';
-import { Yearlyincome } from './yearlyincome';
+import { Company }        from '../company';
+import { Country } from '../country';
+import { Industry } from '../industry';
+import { Employeesnum } from '../employeesnum';
+import { Yearlyincome } from '../yearlyincome';
 import { CompaniesService } from './companies.service';
 
 @Component({

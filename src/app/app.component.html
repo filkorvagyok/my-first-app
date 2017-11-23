@@ -1,11 +1,11 @@
 <mat-sidenav-container fullscreen>
 	<mat-toolbar color="primary">
-	    <a mat-list-item class="toolbar_li" href="">Főoldal</a>
+	    <a mat-list-item class="toolbar_li" routerLink="">Főoldal</a>
 	    <a mat-list-item class="toolbar_li" routerLink="/company/list">Cégek</a>
 	    <a mat-list-item class="toolbar_li" routerLink="/project/list">Projektek</a>
 	    <span class="example-spacer"></span>
-	    <a mat-list-item class="toolbar_li" href="login">Bejelentkezés</a>
-	    <a mat-list-item class="toolbar_li" href="register">Regisztráció</a>
+	    <a mat-list-item class="toolbar_li" routerLink="/login">Bejelentkezés</a>
+	    <a mat-list-item class="toolbar_li" routerLink="/register">Regisztráció</a>
 	</mat-toolbar>
 	<router-outlet></router-outlet>
 </mat-sidenav-container>

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Company }        from '../company';
 import { Project }        from '../project';
 import { CompaniesService } from './companies.service';
-import { ProjectsService } from '../projects/projects.service';
+import { SharedService } from '../shared.service';
 import { DeleteDialog } from '../delete-dialog';
 import {MatDialog} from '@angular/material';
 
@@ -23,8 +23,8 @@ export class CompanyDetailComponent implements OnInit {
 
 
   constructor(
-    private projectsService: ProjectsService,
     private companiesService: CompaniesService,
+    private sharedService: SharedService,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router,
@@ -33,23 +33,27 @@ export class CompanyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCompany();
-    this.getProjects();
+    this.sharedService.getProjects();
   }
 
   getCompany(): void{
     this.route.paramMap
       .switchMap((params: ParamMap) => this.companiesService.getCompany(+params.get('id')))
-      .subscribe(company => this.company = company);
+      .subscribe(company => {
+        this.company = company
+        if(company.project.length > 0)
+        {
+          this.getProjects(company)
+        }
+        else
+          this.isLoading = false;
+    });
   }
 
-  getProjects(): void{
-    this.projectsService
-        .getProjects()
-        .subscribe(projects => {
-          for(var i = 0; i < this.company.project.length; i++)
-            this.projects.push(projects.find(x=>x.id == this.company.project[i]));
-            this.isLoading = false;
-        });
+  getProjects(company: Company): void{
+    this.sharedService
+      .getProjectsForCompanyDetail(company)
+      .subscribe(projects => {this.projects = projects, this.isLoading = false});
   }
 
   goBack(): void {
@@ -72,6 +76,7 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   delete(company: Company): void {
+      this.sharedService.deleteCompanyFromProject(company);
       this.companiesService.delete(company).subscribe();
       this.location.back();
   }

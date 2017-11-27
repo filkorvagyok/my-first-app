@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Company } from '../company';
 import { Project } from '../project';
 import { CompaniesService } from './companies.service';
-import { ProjectsService } from '../projects/projects.service';
+import { SharedService } from '../shared.service';
 import { MatDialog } from '@angular/material';
 import { DeleteDialog } from '../delete-dialog';
 
@@ -16,15 +16,14 @@ import { DeleteDialog } from '../delete-dialog';
 
 export class CompaniesComponent implements OnInit{
 	constructor(
-		private projectsService: ProjectsService,
 		private companiesService: CompaniesService,
+		private sharedService: SharedService,
 		private router: Router,
 		public dialog: MatDialog
 	){}
 
 	checked: boolean = false;
 	companies: Company[];
-	projects: Project[];
 	selectedCompany: Company;
 	disabled: boolean = true;
 	isLoading: boolean = true;
@@ -33,12 +32,6 @@ export class CompaniesComponent implements OnInit{
 		this.companiesService
         .getCompanies()
         .subscribe(companies => {this.companies = companies, this.isLoading=false});
-	}
-
-	getProjects(): void{
-		this.projectsService
-        .getProjects()
-        .subscribe(projects => this.projects = projects);
 	}
 
 	showChbox(): void{
@@ -72,10 +65,9 @@ export class CompaniesComponent implements OnInit{
 	      				 this.delete(array[i]);
 	      			}
 	      		}
+	      		this.checked = false;
 	      	}
-	      	this.checked = false;
 	    });
-	    
 	}
 
 	/*delete(): Company[] {
@@ -92,18 +84,13 @@ export class CompaniesComponent implements OnInit{
 
 	delete(company: Company): void {
 		this.companies = this.companies.filter(h => h !== company);
-		let project = this.projects.find(x => x.company.includes(company.id));
-		console.log(project.company, company.id);
-    	if(project)
-    	{
-    		project.company.slice(company.id, 1);
-    	}
+		this.sharedService.deleteCompanyFromProject(company).subscribe();
     	this.companiesService.delete(company).subscribe();
 	}
 
 	ngOnInit(): void{
 		this.getCompanies();
-		this.getProjects();
+		this.sharedService.getProjects();
 	}
 
   	gotoDetail(company: Company): void{

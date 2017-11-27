@@ -69,7 +69,6 @@ export class ProjectEditComponent implements OnInit {
 
   	addProjectToCompany(i: number): void{
   		this.companies.find(x=>x.id==i).project.push(this.project.id);
-  		this.companiesService.updateCompany(this.companies.find(x=>x.id==i)).subscribe(() => console.log('updateCompany'));
-  		console.log(this.companies.find(x=>x.id==i));
+  		this.companiesService.updateCompany(this.companies.find(x=>x.id==i)).subscribe();
   	}
 }

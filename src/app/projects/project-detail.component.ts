@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Project }        from '../project';
 import { Company }        from '../company';
 import { ProjectsService } from './projects.service';
-import { CompaniesService } from '../companies/companies.service';
+import { SharedService } from '../shared.service';
 import { DeleteDialog } from '../delete-dialog';
 import {MatDialog} from '@angular/material';
 
@@ -23,8 +23,8 @@ export class ProjectDetailComponent implements OnInit{
 	isLoading: boolean = true;
 
 	constructor(
-		private companiesService: CompaniesService,
 		private projectsService: ProjectsService,
+		private sharedService: SharedService,
 		private route: ActivatedRoute,
 		private location: Location,
 		private router: Router,
@@ -33,23 +33,27 @@ export class ProjectDetailComponent implements OnInit{
 
 	ngOnInit(): void {
 		this.getProject();
-		this.getCompanies();
+		this.sharedService.getCompanies();
 	}
 
 	getProject(): void{
 		this.route.paramMap
 			.switchMap((params: ParamMap) => this.projectsService.getProject(+params.get('id')))
-			.subscribe(project => this.project = project);
+			.subscribe(project => {
+				this.project = project
+				if(project.company.length > 0)
+		        {
+		          this.getCompanies(project)
+		        }
+		        else
+		          this.isLoading = false;
+			});
 	}
 
-	getCompanies(): void{
-    this.companiesService
-        .getCompanies()
-        .subscribe(companies => {
-          for(var i = 0; i < this.project.company.length; i++)
-            this.companies.push(companies.find(x=>x.id == this.project.company[i]));
-        	this.isLoading = false;
-        });
+	getCompanies(project: Project): void{
+    this.sharedService
+      .getCompaniesForProjectDetail(this.project)
+      .subscribe(companies => {this.companies = companies, this.isLoading = false});
   }
 
 	goBack(): void {

@@ -9,6 +9,7 @@ import { CompanyCommonComponent }  from './company-common.component';
 import { CompanyEditComponent } from './company-edit.component';
 
 import { CompaniesService } from './companies.service';
+import { SharedService } from '../shared.service';
 
 import { CompanyRoutingModule } from './companies-routing.module';
 
@@ -48,7 +49,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     CompanyCommonComponent,
     CompanyEditComponent
   ],
-  providers: [CompaniesService,
+  providers: [CompaniesService, SharedService,
     //{provide: APP_INITIALIZER, useFactory: (cs:CompaniesService) => () => cs.getCompanies(), deps:[CompaniesService], multi: true},
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}]
 })

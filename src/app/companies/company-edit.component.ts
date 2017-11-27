@@ -71,8 +71,7 @@ export class CompanyEditComponent implements OnInit {
   }
 
   onChangeHqcountry(newValue, asd){
-    this.company.hq_country = this.countries.filter(x=>x.code==newValue)[0].country
-    console.log(newValue, this.countries.filter(x=>x.code==newValue)[0].country, asd);
+    this.company.hq_country = this.countries.filter(x=>x.code==newValue)[0].country;
     return newValue;
   }
 

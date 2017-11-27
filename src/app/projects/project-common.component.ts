@@ -24,7 +24,6 @@ export class ProjectCommonComponent{
 
 	ngOnInit(): void {
 		let path = this.route.snapshot.routeConfig.path;
-		console.log(this.route.snapshot.paramMap);
 		let arr = this.route.snapshot.paramMap.keys;
 		this.project = new Project;
 		this.project.company = [];
@@ -50,7 +49,6 @@ export class ProjectCommonComponent{
 	}
 
 	addIdToProject(company: Company): void{
-		console.log(company.id);
 		this.project.company[0] = company.id;
 	}
 

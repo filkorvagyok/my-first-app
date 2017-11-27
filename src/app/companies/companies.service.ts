@@ -18,6 +18,7 @@ export class CompaniesService {
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Company } from '../company';
+import { Project } from '../project';
 import { Country } from '../country';
 import { Industry } from '../industry';
 import { Employeesnum } from '../employeesnum';
@@ -42,7 +43,9 @@ export class CompaniesService{
   private employeesnumsUrl = 'api/employeesnums';
   private yearlyincomesUrl = 'api/yearlyincomes';
 
-	constructor(private http: HttpClient){}
+	constructor(
+    private http: HttpClient,
+    ){}
 
 
   /*getCompanies(): Observable<Company[]>{
@@ -127,10 +130,12 @@ export class CompaniesService{
 
   updateCompany (company: Company): Observable<any> {
     return this.http.put(this.companiesUrl, company, httpOptions).pipe(
-      tap(_ => {(`updated company id=${company.id}`); console.log(company);}),
+      tap(_ => (`updated company id=${company.id}`)),
       catchError(this.handleError<any>('updateHero'))
     );
   }
+
+  
 
 
 	private handleError<T> (operation = 'operation', result?: T) {

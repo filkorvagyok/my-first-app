@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from '../project';
+import { Company } from '../company';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -15,7 +16,9 @@ export class ProjectsService{
 
 	private projectsUrl = 'api/projects';
 
-	constructor(private http: HttpClient){}
+	constructor(
+		private http: HttpClient,
+		){}
 
 	getProjects(): Observable<Project[]> {
 		return this.http.get<Project[]>(this.projectsUrl)

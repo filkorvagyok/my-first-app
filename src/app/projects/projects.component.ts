@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from './projects.service';
+import { SharedService } from '../shared.service';
 import { MatDialog } from '@angular/material';
 import { DeleteDialog } from '../delete-dialog';
 import { Router } from '@angular/router';
@@ -14,6 +15,7 @@ import { Project } from '../project';
 export class ProjectsComponent implements OnInit{
 	constructor(
 		private projectsService: ProjectsService,
+		private sharedService: SharedService,
 		private router: Router,
 		public dialog: MatDialog
 	){}
@@ -29,6 +31,7 @@ export class ProjectsComponent implements OnInit{
 
 	ngOnInit(): void{
 		this.getProjects();
+		this.sharedService.getCompanies();
 	}
 
 	showChbox(): void{
@@ -98,6 +101,7 @@ export class ProjectsComponent implements OnInit{
 
 	delete(project: Project): void {
 		this.projects = this.projects.filter(h => h !== project);
+		this.sharedService.deleteProjectFromCompany(project).subscribe();
     	this.projectsService.delete(project).subscribe();
 	}
 

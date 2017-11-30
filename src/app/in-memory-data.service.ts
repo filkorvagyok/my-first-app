@@ -472,7 +472,7 @@ export class InMemoryDataService implements InMemoryDbService {
         { id:8, amount:'1.000+ M Ft' }
     ];
 
-    let projects=[
+    let projects = [
         {
             id: 1,
             name: 'Projekt1',
@@ -496,7 +496,25 @@ export class InMemoryDataService implements InMemoryDbService {
         }
     ];
 
+    let contacts = [
+        {
+            id: 1,
+            company: [],
+            full_name: 'Filkor Tamás',
+            surname: 'Filkor',
+            middle_name: '',
+            forename: 'Tamás',
+            nickname: 'Tomi',
+            phone: '06-20/417-6907',
+            email: 'filkor.tomi@gmail.com',
+            primary_communication_chanel: 'beszéd',
+            rank: 'beosztott',
+            greeting: 'csá',
+            selected: false
+        }
+    ];
 
-    return {companies, countries, industries, employeesnums, yearlyincomes, projects};
+
+    return {companies, countries, industries, employeesnums, yearlyincomes, projects, contacts};
   }
 }

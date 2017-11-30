@@ -4,17 +4,15 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 
-import { Project }        from '../project';
-import { Company }        from '../company';
+import { Project }        from '../classes/project';
+import { Company }        from '../classes/company';
 import { ProjectsService } from './projects.service';
 import { SharedService } from '../shared.service';
-import { DeleteDialog } from '../delete-dialog';
-import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'project-detail',
   templateUrl: './project-detail.component.html',
-  styleUrls: [ '../companies/company-detail.component.css' ]
+  styleUrls: [ '../styles/detail.component.css' ]
 })
 
 export class ProjectDetailComponent implements OnInit{
@@ -27,8 +25,7 @@ export class ProjectDetailComponent implements OnInit{
 		private sharedService: SharedService,
 		private route: ActivatedRoute,
 		private location: Location,
-		private router: Router,
-		public dialog: MatDialog
+		private router: Router
 	) {}
 
 	ngOnInit(): void {
@@ -65,7 +62,7 @@ export class ProjectDetailComponent implements OnInit{
 	}
 
 	openDeleteDialog(): void{
-		let dialogRef = this.dialog.open(DeleteDialog);
+		let dialogRef = this.sharedService.openDeleteDialog();
 		dialogRef.afterClosed().subscribe(result => {
 			console.log('The dialog was closed');
 			if(dialogRef.componentInstance.delete)
@@ -75,8 +72,8 @@ export class ProjectDetailComponent implements OnInit{
 		});
 	}
 
-  delete(project: Project): void {
-      this.projectsService.delete(project).subscribe();
-      this.location.back();
-  }
+	delete(project: Project): void {
+		this.projectsService.delete(project).subscribe();
+		this.location.back();
+	}
 }

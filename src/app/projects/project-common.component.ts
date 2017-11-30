@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Project } from '../project';
-import { Company } from '../company';
+import { Project } from '../classes/project';
+import { Company } from '../classes/company';
 import { CompaniesService } from '../companies/companies.service';
 import { ProjectsService } from './projects.service';
 

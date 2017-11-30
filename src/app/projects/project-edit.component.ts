@@ -4,13 +4,13 @@ import { Location } from '@angular/common';
 import { ProjectsService } from './projects.service';
 import { CompaniesService } from '../companies/companies.service';
 
-import { Project } from '../project';
-import { Company } from '../company';
+import { Project } from '../classes/project';
+import { Company } from '../classes/company';
 
 @Component({
   selector: 'project-edit',
   templateUrl: './project-edit.component.html',
-  styleUrls: [ '../companies/company-edit.component.css' ]
+  styleUrls: [ '../styles/edit.component.css' ]
 })
 
 export class ProjectEditComponent implements OnInit {

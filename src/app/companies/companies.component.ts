@@ -1,30 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Company } from '../company';
-import { Project } from '../project';
+import { Company } from '../classes/company';
+import { Project } from '../classes/project';
 import { CompaniesService } from './companies.service';
 import { SharedService } from '../shared.service';
-import { MatDialog } from '@angular/material';
-import { DeleteDialog } from '../delete-dialog';
 
 
 @Component({
 	selector: 'my-companies',
 	templateUrl: './companies.component.html',
-	styleUrls: ['./companies.component.css']
+	styleUrls: ['../styles/display.component.css']
 })
 
 export class CompaniesComponent implements OnInit{
 	constructor(
 		private companiesService: CompaniesService,
 		private sharedService: SharedService,
-		private router: Router,
-		public dialog: MatDialog
+		private router: Router
 	){}
 
 	checked: boolean = false;
 	companies: Company[];
-	selectedCompany: Company;
 	disabled: boolean = true;
 	isLoading: boolean = true;
 
@@ -52,23 +48,26 @@ export class CompaniesComponent implements OnInit{
 		}
 	}
 
+
 	openDeleteDialog(): void{
-		let dialogRef = this.dialog.open(DeleteDialog);
-	    dialogRef.afterClosed().subscribe(result => {
-	    	console.log('The dialog was closed');
-	      	if(dialogRef.componentInstance.delete)
-	      	{
-	      		let array=this.companies;
-	      		for (var i = 0; i < array.length; i++) {
-	      			if(array[i].selected)
-	      			{
-	      				 this.delete(array[i]);
-	      			}
-	      		}
-	      		this.checked = false;
-	      	}
-	    });
+		let dialogRef = this.sharedService.openDeleteDialog();
+		dialogRef.afterClosed().subscribe(result => {
+			console.log('The dialog was closed');
+			if(dialogRef.componentInstance.delete)
+			{
+				let array=this.companies;
+				for (var i = 0; i < array.length; i++) {
+					if(array[i].selected)
+					{
+						this.delete(array[i]);
+					}
+				}
+				this.checked = false;
+			}
+		});
 	}
+
+
 
 	/*delete(): Company[] {
 		for (var i = 0;  i < this.companies.length; i++) {
@@ -98,8 +97,8 @@ export class CompaniesComponent implements OnInit{
   	}
 
   	gotoEdit(): void{
-  		this.selectedCompany = this.companies.filter(companie => companie.selected === true)[0];
-  		this.router.navigate(['/company/edit', this.selectedCompany.id]);
+  		let selectedCompany = this.companies.filter(company => company.selected === true)[0];
+  		this.router.navigate(['/company/edit', selectedCompany.id]);
   	}
 
   	gotoNew(): void{

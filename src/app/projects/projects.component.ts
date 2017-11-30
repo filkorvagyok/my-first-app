@@ -1,28 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from './projects.service';
 import { SharedService } from '../shared.service';
-import { MatDialog } from '@angular/material';
-import { DeleteDialog } from '../delete-dialog';
 import { Router } from '@angular/router';
-import { Project } from '../project';
+import { Project } from '../classes/project';
 
 @Component({
 	selector: 'my-projects',
 	templateUrl: './projects.component.html',
-	styleUrls: ['../companies/companies.component.css']
+	styleUrls: ['../styles/display.component.css']
 })
 
 export class ProjectsComponent implements OnInit{
 	constructor(
 		private projectsService: ProjectsService,
 		private sharedService: SharedService,
-		private router: Router,
-		public dialog: MatDialog
+		private router: Router
 	){}
 
 	checked: boolean = false;
 	projects: Project[];
-	selectedProject: Project;
 	days: number;
 	disabled: boolean = true;
 	isLoading: boolean = true;
@@ -81,22 +77,23 @@ export class ProjectsComponent implements OnInit{
 		return num.toString()+' nap';
 	}
 
+
 	openDeleteDialog(): void{
-		let dialogRef = this.dialog.open(DeleteDialog);
-	    dialogRef.afterClosed().subscribe(result => {
-	    	console.log('The dialog was closed');
-	      	if(dialogRef.componentInstance.delete)
-	      	{
-	      		let array=this.projects;
-	      		for (var i = 0; i < array.length; i++) {
-	      			if(array[i].selected)
-	      			{
-	      				 this.delete(array[i]);
-	      			}
-	      		}
-	      	}
-	      	this.checked = false;
-	    });
+		let dialogRef = this.sharedService.openDeleteDialog();
+		dialogRef.afterClosed().subscribe(result => {
+			console.log('The dialog was closed');
+			if(dialogRef.componentInstance.delete)
+			{
+				let array=this.projects;
+				for (var i = 0; i < array.length; i++) {
+					if(array[i].selected)
+					{
+						this.delete(array[i]);
+					}
+				}
+				this.checked = false;
+			}
+		});
 	}
 
 	delete(project: Project): void {
@@ -106,8 +103,8 @@ export class ProjectsComponent implements OnInit{
 	}
 
 	gotoEdit(): void{
-  		this.selectedProject = this.projects.filter(companie => companie.selected === true)[0];
-  		this.router.navigate(['/project/edit', this.selectedProject.id]);
+  		let selectedProject = this.projects.filter(project => project.selected === true)[0];
+  		this.router.navigate(['/project/edit', selectedProject.id]);
   	}
 
   	addInstant(name: string): void{

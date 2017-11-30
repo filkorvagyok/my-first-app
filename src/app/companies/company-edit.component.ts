@@ -3,17 +3,17 @@ import { Component, OnInit, Input }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
-import { Company }        from '../company';
-import { Country } from '../country';
-import { Industry } from '../industry';
-import { Employeesnum } from '../employeesnum';
-import { Yearlyincome } from '../yearlyincome';
+import { Company }        from '../classes/company';
+import { Country } from '../classes/country';
+import { Industry } from '../classes/industry';
+import { Employeesnum } from '../classes/employeesnum';
+import { Yearlyincome } from '../classes/yearlyincome';
 import { CompaniesService } from './companies.service';
 
 @Component({
   selector: 'company-edit',
   templateUrl: './company-edit.component.html',
-  styleUrls: [ './company-edit.component.css' ]
+  styleUrls: [ '../styles/edit.component.css' ]
 })
 export class CompanyEditComponent implements OnInit {
   @Input() company: Company;

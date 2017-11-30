@@ -13,16 +13,14 @@ export class CompaniesService {
   }
 }*/
 
-
-// FOLYTATNI!!! MEMORY WEB API
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Company } from '../company';
-import { Project } from '../project';
-import { Country } from '../country';
-import { Industry } from '../industry';
-import { Employeesnum } from '../employeesnum';
-import { Yearlyincome } from '../yearlyincome';
+import { Company } from '../classes/company';
+import { Project } from '../classes/project';
+import { Country } from '../classes/country';
+import { Industry } from '../classes/industry';
+import { Employeesnum } from '../classes/employeesnum';
+import { Yearlyincome } from '../classes/yearlyincome';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';

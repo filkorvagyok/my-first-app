@@ -1,17 +1,17 @@
-import { NgModule, APP_INITIALIZER }       from '@angular/core';
+import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
-import { CompaniesComponent }    from './companies.component';
-import { CompanyDetailComponent }  from './company-detail.component';
-import { CompanyCommonComponent }  from './company-common.component';
-import { CompanyEditComponent } from './company-edit.component';
+import { ContactsComponent }    from './contacts.component';
+/*import { ContactDetailComponent }  from './contact-detail.component';
+import { ContactCommonComponent }  from './contact-common.component';
+import { ContactEditComponent } from './contact-edit.component';*/
 
-import { CompaniesService } from './companies.service';
+import { ContactsService } from './contacts.service';
 import { SharedService } from '../shared.service';
 
-import { CompanyRoutingModule } from './companies-routing.module';
+import { ContactRoutingModule } from './contacts-routing.module';
 
 import {
   MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,
@@ -26,7 +26,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   imports: [
     CommonModule,
     FormsModule,
-    CompanyRoutingModule,
+    ContactRoutingModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -43,12 +43,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatProgressSpinnerModule
   ],
   declarations: [
-    CompaniesComponent,
-    CompanyDetailComponent,
-    CompanyCommonComponent,
-    CompanyEditComponent
+    ContactsComponent,
+    /*ContactDetailComponent,
+    ContactCommonComponent,
+    ContactEditComponent*/
   ],
-  providers: [CompaniesService, SharedService]
-    //{provide: APP_INITIALIZER, useFactory: (cs:CompaniesService) => () => cs.getCompanies(), deps:[CompaniesService], multi: true},
+  providers: [ContactsService, SharedService]
 })
-export class CompaniesModule {}
+export class ContactsModule {}

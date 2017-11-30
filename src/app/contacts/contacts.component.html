@@ -1,0 +1,102 @@
+<div *ngIf="isLoading">
+	<mat-spinner></mat-spinner>
+</div>
+<form class="panel panel-default" *ngIf="!isLoading">
+	<div class="panel-heading" color="primary">Névjegyek</div>
+	<div  class="panel-body" *ngIf="contacts && contacts.length > 0">
+		<section >
+			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Név</th>
+						<th>Telefon</th>
+						<th>E-mail</th>
+					</tr>
+				</thead>
+				<tbody class="clickable-tbody" *ngFor="let contact of contacts" (click)="gotoDetail(contact)">
+					<tr>
+						<td rowspan="2" (click)="$event.stopPropagation();">
+							  <mat-checkbox color="primary" value={{contact.id}} (change)="showChbox();contact.selected= !contact.selected"></mat-checkbox>
+							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
+						</td>
+						<td>
+							<strong class="company_name">{{contact.full_name}}</strong>
+						</td>
+						<td>
+							{{contact.phone}}
+						</td>
+						<td>
+							{{contact.email}}
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2"  class="newcompany_btn">
+							<button  mat-raised-button color="primary" (click)="gotoNew()">
+								<i class="fa fa-plus"></i> Új névjegy hozzáadása
+							</button>
+						</td>
+						<!--<td colspan="2" class="instant_company">
+							<div class="instant_input">
+							<mat-form-field>
+							    <input #contactFullName matInput name="contactFullName" placeholder="Új névjegy hozzáadása instant"/>
+						  	</mat-form-field>
+						  	<mat-form-field>
+							    <input #contactPhone matInput name="contactPhone" placeholder="Telefon"/>
+						  	</mat-form-field>
+						  	<mat-form-field>
+							    <input #contactEmail matInput name="contactEmail" placeholder="E-mail"/>
+						  	</mat-form-field>
+						  	<button  mat-raised-button color="primary" (click)="addInstant(contactFullName.value, contactPhone.value, contactEmail.value)">
+								<i class="fa fa-plus"></i>
+							</button>
+							</div>
+						</td>-->
+						<td></td>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+		</section>
+	</div>
+	<div  class="panel-body" *ngIf="!contacts || contacts.length == 0">
+		<div class="nodata_alert">
+			<h1>Nincs megadva egyetlen névjegy sem</h1>
+			<p>A munka megkezdése előtt ajánlott felvinned legalább egy névjegyet, amihez a rendszer társítani tudja majd feladatokat és a többi információt.<br><br>
+			Nem kötelező, de ajánlott.<br><br>
+			A névjegyek segítségével kommunikálhatsz az ügyfeleiddel, partnereiddel. Például küldhetsz nekik értesítő e-mailt egy feladattal vagy projekttel kapcsolatban.</p>
+			<button mat-raised-button color="primary" (click)="gotoNew()">
+				<i class="fa fa-plus"></i> Új névjegy hozzáadása
+			</button>
+		</div>
+	</div>
+</form>
+<div *ngIf=checked class="botton_right">
+	<button mat-fab [matMenuTriggerFor]="menu" color="primary">
+  		<mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
+	</button>
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item>
+			<mat-icon class="fa fa-file"></mat-icon>
+			<span>Új feladat</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject()">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Új projekt</span>
+		</button>
+		<button mat-menu-item>
+			<mat-icon class="fa fa-industry"></mat-icon>
+			<span>Új cég</span>
+		</button>
+		<button mat-menu-item [disabled]="disabled" (click)="gotoEdit()">
+			<mat-icon class="fa fa-pencil"></mat-icon>
+			<span>Szerkesztés</span>
+		</button>
+		<button mat-menu-item (click)="openDeleteDialog()">
+			<mat-icon class="fa fa-trash"></mat-icon>
+			<span>Törlés</span>
+		</button>
+	</mat-menu>
+</div>

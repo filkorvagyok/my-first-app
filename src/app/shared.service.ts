@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Company } from './company';
-import { Project } from './project';
+import { Company } from './classes/company';
+import { Project } from './classes/project';
 import { CompaniesService } from './companies/companies.service';
 import { ProjectsService } from './projects/projects.service';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/forkJoin';
+import { DeleteDialog } from './delete-dialog';
+import {MatDialog, MatDialogRef} from '@angular/material';
 
 @Injectable()
 
@@ -12,7 +15,8 @@ export class SharedService{
 
 	constructor(
 		private companiesService: CompaniesService,
-		private projectsService: ProjectsService
+		private projectsService: ProjectsService,
+		public dialog: MatDialog
 		){}
 
 	private projects: Project[];
@@ -77,4 +81,9 @@ export class SharedService{
 		project.company.splice(index,1);
 		return this.projectsService.updateProject(project);
 	}
+
+	openDeleteDialog(): MatDialogRef<DeleteDialog>{
+    let dialogRef = this.dialog.open(DeleteDialog);
+     return dialogRef;
+  }
 }

@@ -22,11 +22,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CompaniesModule }            from './companies/companies.module';
 import { ProjectsModule }            from './projects/projects.module';
+import { ContactsModule }            from './contacts/contacts.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent }   from './login.component';
-import { RegisterComponent }   from './register.component';
-import { ResetPasswordComponent }   from './reset-password.component';
+import { LoginComponent }   from './login-register/login.component';
+import { RegisterComponent }   from './login-register/register.component';
+import { ResetPasswordComponent }   from './login-register/reset-password.component';
 import { DeleteDialog }   from './delete-dialog';
 
 import { AppRoutingModule }     from './app-routing.module';
@@ -65,7 +66,8 @@ import { AppRoutingModule }     from './app-routing.module';
     MatNativeDateModule,
     DateTimePickerModule,
     CompaniesModule,
-    ProjectsModule
+    ProjectsModule,
+    ContactsModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}],
   bootstrap: [AppComponent],

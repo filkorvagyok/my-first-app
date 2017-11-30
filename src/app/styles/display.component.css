@@ -37,7 +37,7 @@ td.instant_company{
 }
 
 .instant_input{
-	white-space:nowrap;
+	float: left;
 }
 
 mat-spinner{
@@ -47,4 +47,18 @@ mat-spinner{
     left: 0;
     right: 0;
     margin: auto;
+}
+
+.icon-background2 {
+    color: #3F51B5;
+    
+}
+
+.fa-2x{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.logo, .icon_letter{
+	margin: 0 0 6px 0.15px;
 }

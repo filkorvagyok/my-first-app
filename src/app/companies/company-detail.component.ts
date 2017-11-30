@@ -4,17 +4,15 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 
-import { Company }        from '../company';
-import { Project }        from '../project';
+import { Company }        from '../classes/company';
+import { Project }        from '../classes/project';
 import { CompaniesService } from './companies.service';
 import { SharedService } from '../shared.service';
-import { DeleteDialog } from '../delete-dialog';
-import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'company-detail',
   templateUrl: './company-detail.component.html',
-  styleUrls: [ './company-detail.component.css' ]
+  styleUrls: [ '../styles/detail.component.css' ]
 })
 export class CompanyDetailComponent implements OnInit {
   @Input() company: Company;
@@ -27,8 +25,7 @@ export class CompanyDetailComponent implements OnInit {
     private sharedService: SharedService,
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router,
-    public dialog: MatDialog
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -65,8 +62,8 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   openDeleteDialog(): void{
-    let dialogRef = this.dialog.open(DeleteDialog);
-      dialogRef.afterClosed().subscribe(result => {
+    let dialogRef = this.sharedService.openDeleteDialog();
+    dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
           if(dialogRef.componentInstance.delete)
           {

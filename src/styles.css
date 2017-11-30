@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+body{
+	font-family: 'Roboto', sans-serif;
+}
+
 .panel{
 	margin: 2% 22%;
 }
@@ -57,6 +61,7 @@ th{
 .logo{
 	height: 25px;
 	width: 25px;
+
 }
 
 .company_name{
@@ -87,5 +92,12 @@ td.newcompany_btn{
 .nodata_alert p{
 	padding: 30px 0 100px 0;
 	font-size: 20px;
+}
+
+.icon_letter{
+	font-family: 'Roboto', sans-serif;
+	color: white;
+	font-size: 0.8em;
+	/*margin: 0 0 20px 0;*/
 }
 

@@ -15,7 +15,7 @@
 						<th>Kiadás</th>
 					</tr>
 				</thead>
-				<tbody (click)="gotoDetail(project)" class="clickable-tbody" *ngFor="let project of projects">
+				<tbody class="clickable-tbody" *ngFor="let project of projects" (click)="gotoDetail(project)">
 					<tr>
 						<td rowspan="2" (click)="$event.stopPropagation();">
 							  <mat-checkbox color="primary" value={{project.id}} (change)="showChbox();project.selected= !project.selected"></mat-checkbox>

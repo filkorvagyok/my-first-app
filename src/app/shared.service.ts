@@ -32,6 +32,10 @@ export class SharedService{
 			.subscribe(companies => this.companies = companies);
 	}
 
+	returnCompanies(): Observable<Company[]>{
+		return this.companiesService.getCompanies();
+	}
+
 	getProjectsForCompanyDetail(company: Company): Observable<Project[]>{
 		const getProjects: Array<Observable<Project>> = [];
         company.project
@@ -83,7 +87,12 @@ export class SharedService{
 	}
 
 	openDeleteDialog(): MatDialogRef<DeleteDialog>{
-    let dialogRef = this.dialog.open(DeleteDialog);
-     return dialogRef;
-  }
+		let dialogRef = this.dialog.open(DeleteDialog);
+		return dialogRef;
+	}
+
+	addProjectToCompany(i: number, project: Project, companies: Company[]): void{
+  		companies.find(x=>x.id==i).project.push(project.id);
+  		this.companiesService.updateCompany(companies.find(x=>x.id==i)).subscribe();
+  	}
 }

@@ -51,10 +51,10 @@ export class ContactsService{
 		);
 	}
 
-	updateCompany (contact: Contact): Observable<any> {
+	updateContact (contact: Contact): Observable<any> {
 		return this.http.put(this.contactsUrl, contact, httpOptions).pipe(
 			tap(_ => (`updated contact id=${contact.id}`)),
-			catchError(this.handleError<any>('updateCompany'))
+			catchError(this.handleError<any>('updateContact'))
 		);
 	}
 

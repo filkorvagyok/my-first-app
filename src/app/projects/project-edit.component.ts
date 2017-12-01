@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { ProjectsService } from './projects.service';
-import { CompaniesService } from '../companies/companies.service';
-
 import { Project } from '../classes/project';
 import { Company } from '../classes/company';
+import { ProjectsService } from './projects.service';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'project-edit',
@@ -15,31 +14,17 @@ import { Company } from '../classes/company';
 
 export class ProjectEditComponent implements OnInit {
 	constructor(
-		private companiesService: CompaniesService,
 		private projectsService: ProjectsService,
+		private sharedService: SharedService,
 		private location: Location
 	) {}
 
 	@Input() project: Project;
-	@Input() selectedCompany: Company;
 	@Input() edit: boolean;
-	projects: Project[];
 	companies: Company[];
 
 	ngOnInit(): void{
-		this.getProjects();
-		this.getCompanies();
-	}
-
-	getProjects(): void{
-    this.projectsService
-        .getProjects()
-        .subscribe(projects => this.projects = projects);
-	}
-
-	getCompanies(): void{
-		this.companiesService
-			.getCompanies()
+		this.sharedService.returnCompanies()
 			.subscribe(companies => this.companies = companies);
 	}
 
@@ -50,7 +35,7 @@ export class ProjectEditComponent implements OnInit {
 	save(): void {
 		let array=this.project.company;
 		for (var i = 0; i < array.length; i++) {
-			//this.addProjectToCompany(array[i]);
+			this.addProjectToCompany(array[i]);
 		}
       this.projectsService.updateProject(this.project)
         .subscribe(() => this.goBack());
@@ -59,8 +44,7 @@ export class ProjectEditComponent implements OnInit {
 	add(project: Project): void{
 		let array=this.project.company;
     	this.projectsService.addProject(project)
-			.subscribe(project => {
-        		this.projects.push(project);
+			.subscribe(() => {
         		for (var i = 0; i < array.length; i++)
         			this.addProjectToCompany(array[i]);
         		this.goBack();
@@ -68,7 +52,6 @@ export class ProjectEditComponent implements OnInit {
   	}
 
   	addProjectToCompany(i: number): void{
-  		this.companies.find(x=>x.id==i).project.push(this.project.id);
-  		this.companiesService.updateCompany(this.companies.find(x=>x.id==i)).subscribe();
+  		this.sharedService.addProjectToCompany(i, this.project, this.companies);
   	}
 }

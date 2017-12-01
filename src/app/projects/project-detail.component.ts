@@ -48,10 +48,10 @@ export class ProjectDetailComponent implements OnInit{
 	}
 
 	getCompanies(project: Project): void{
-    this.sharedService
-      .getCompaniesForProjectDetail(this.project)
-      .subscribe(companies => {this.companies = companies, this.isLoading = false});
-  }
+		this.sharedService
+			.getCompaniesForProjectDetail(this.project)
+			.subscribe(companies => {this.companies = companies, this.isLoading = false});
+	}
 
 	goBack(): void {
 		this.location.back();

@@ -1,0 +1,74 @@
+<div *ngIf="isLoading">Tőőőőőőőőőőőőőőőőt</div>
+<form class="panel panel-default" *ngIf="contact && !isLoading">
+	<div class="panel-heading" color="primary">Névjegy</div>
+	<div  class="panel-body" >
+		<div class="inputpanel">
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+					<mat-select [(ngModel)]="selectedCompanies" name="contactCompany" placeholder="Cég" multiple>
+						<mat-option *ngFor="let company of companies" [value]="company.id">{{company.name}}</mat-option>
+					</mat-select>
+					<!--<mat-select [(ngModel)]="contact.company" name="contactCompany" placeholder="Cég" multiple>
+						<mat-option *ngFor="let company of companies" [value]="company">{{company.name}}</mat-option>
+					</mat-select>-->
+				</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.full_name" name="contactFullName" placeholder="Teljes név">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.surname" name="contactSurname" placeholder="Családnév">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.middle_name" name="contactMiddleName" placeholder="Középső név">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.forename" name="contactForename" placeholder="Utónév">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.nickname" name="contactNickname" placeholder="Bencenév">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.phone" name="contactPhone" placeholder="Telefon">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.email" name="contactEmail" placeholder="E-mail-cím">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.primary_communication_chanel" name="contactPCC" placeholder="Elsődleges kommunikációs csatorna">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.rank" name="contactRank" placeholder="Beosztás">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="contact.greeting" name="contactGreeting" placeholder="Köszönés">
+			  	</mat-form-field>
+			</div>
+		</div>
+		<div class="btn_primary">
+			<button mat-raised-button color="primary" (click)="edit? save() : add(contact)">Mentés</button>
+		</div>
+		<div class="btn_primary">
+			<button mat-raised-button href="company/list" (click)="goBack()">Mégse</button>
+		</div>
+	</div>
+</form>

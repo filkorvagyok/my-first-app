@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Project } from '../classes/project';
-import { Company } from '../classes/company';
-import { CompaniesService } from '../companies/companies.service';
 import { ProjectsService } from './projects.service';
 
 @Component({
@@ -11,15 +9,13 @@ import { ProjectsService } from './projects.service';
   templateUrl: './project-common.component.html',
 })
 
-export class ProjectCommonComponent{
+export class ProjectCommonComponent implements OnInit{
 	@Input() project: Project;
-	@Input() selectedCompany: Company;
 	edit = false;
 
 	constructor(
 		private projectsService: ProjectsService,
-		private companiesService: CompaniesService,
-		private route: ActivatedRoute,
+		private route: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
@@ -33,12 +29,6 @@ export class ProjectCommonComponent{
 				this.project.company.push(Number(this.route.snapshot.paramMap.get(arr[i])));
 			}
 		}
-		else if(path == "project/new/:id")
-		{
-			this.route.paramMap
-		    .switchMap((params: ParamMap) => this.companiesService.getCompany(+params.get('id')))
-		    .subscribe(selectedCompany => {this.selectedCompany = selectedCompany, this.addIdToProject(selectedCompany)});
-		}
 		else
 		{
 			this.edit = true;
@@ -47,9 +37,4 @@ export class ProjectCommonComponent{
 		    	.subscribe(project => this.project = project);
 		}
 	}
-
-	addIdToProject(company: Company): void{
-		this.project.company[0] = company.id;
-	}
-
 }

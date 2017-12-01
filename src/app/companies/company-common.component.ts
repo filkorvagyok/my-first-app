@@ -7,7 +7,7 @@ import { CompaniesService } from './companies.service';
 
 @Component({
   selector: 'company-common',
-  templateUrl: './company-common.component.html',
+  templateUrl: './company-common.component.html'
 })
 
 export class CompanyCommonComponent{

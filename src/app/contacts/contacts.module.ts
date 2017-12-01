@@ -4,9 +4,9 @@ import { FormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
 import { ContactsComponent }    from './contacts.component';
-/*import { ContactDetailComponent }  from './contact-detail.component';
+import { ContactDetailComponent }  from './contact-detail.component';
 import { ContactCommonComponent }  from './contact-common.component';
-import { ContactEditComponent } from './contact-edit.component';*/
+import { ContactEditComponent } from './contact-edit.component';
 
 import { ContactsService } from './contacts.service';
 import { SharedService } from '../shared.service';
@@ -44,9 +44,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   ],
   declarations: [
     ContactsComponent,
-    /*ContactDetailComponent,
+    ContactDetailComponent,
     ContactCommonComponent,
-    ContactEditComponent*/
+    ContactEditComponent
   ],
   providers: [ContactsService, SharedService]
 })

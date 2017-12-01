@@ -106,19 +106,33 @@ export class CompaniesComponent implements OnInit{
   	}
 
   	createNewProject(): void{
-  		let projectArray: number[] = [];
-  		let array=this.companies;
-  		for (var i = 0; i < array.length; i++) {
-  			if(array[i].selected)
+  		let companiesArray: number[] = [];
+  		this.companies.forEach( company =>{
+  			if(company.selected)
   			{
-  				 projectArray.push(array[i].id);
+  				companiesArray.push(company.id);
   			}
-  		}
-  		this.gotoNewProject(projectArray);
+  		});
+  		this.gotoNewProject(companiesArray);
   	}
 
   	gotoNewProject(array: number[]): void{
   		this.router.navigate(['/project/new/', array]);
+  	}
+
+  	createNewContact(): void {
+  		let companiesArray: number[] = [];
+  		this.companies.forEach( company =>{
+  			if(company.selected)
+  			{
+  				companiesArray.push(company.id);
+  			}
+  		});
+  		this.gotoNewContact(companiesArray);
+  	}
+
+  	gotoNewContact(array: number[]): void{
+  		this.router.navigate(['/people/new/', array]);
   	}
 
   	addInstant(name: string): void{

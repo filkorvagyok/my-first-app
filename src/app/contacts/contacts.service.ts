@@ -18,7 +18,7 @@ export class ContactsService{
     	private http: HttpClient,
     ){}
 
-    getConctast (): Observable<Contact[]> {
+    getContacts (): Observable<Contact[]> {
     return this.http.get<Contact[]>(this.contactsUrl)
       .pipe(
         tap(contacts => (`fetched contacts`)),

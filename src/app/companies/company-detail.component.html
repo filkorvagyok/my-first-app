@@ -42,6 +42,9 @@
 			<hr>
 			<div>
 				<h3>Névjegyek</h3>
+				<p *ngFor="let contact of contacts">
+					{{contact.full_name}}
+				</p>
 			</div>
 		</div>
 	</div>

@@ -21,7 +21,6 @@ export class ContactEditComponent implements OnInit{
 
 	@Input() contact: Contact;
 	@Input() edit: boolean;
-	@Input() selectedCompanies: number[];
 	companies: Company[];
 
 	ngOnInit(): void{
@@ -34,10 +33,9 @@ export class ContactEditComponent implements OnInit{
 	}
 
 	save(): void {
-		for(let i = 0; i < this.selectedCompanies.length; i++)
-		{
-			this.contact.company[i] = this.companies.find(x => x.id == this.selectedCompanies[i]);
-		}
+		let array = this.contact.company;
+		for (var i = 0; i < array.length; i++)
+        			this.addContactToCompany(array[i]);
 		this.contactsService.updateContact(this.contact)
 			.subscribe(() => this.goBack());
 	}
@@ -48,11 +46,16 @@ export class ContactEditComponent implements OnInit{
 	}*/
 
 	add(contact: Contact): void{
-		for(let i = 0; i < this.selectedCompanies.length; i++)
-		{
-			this.contact.company[i] = this.companies.find(x => x.id == this.selectedCompanies[i]);
-		}
+		let array = this.contact.company;
     	this.contactsService.addContact(contact)
-			.subscribe(() => this.goBack());
+			.subscribe(() => {
+				for (var i = 0; i < array.length; i++)
+        			this.addContactToCompany(array[i]);
+				this.goBack()
+			});
+  	}
+
+  	addContactToCompany(i: number): void{
+  		this.sharedService.addContactToCompany(i, this.contact, this.companies);
   	}
 }

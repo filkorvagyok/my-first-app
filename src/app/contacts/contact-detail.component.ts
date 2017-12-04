@@ -5,6 +5,7 @@ import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 
 import { Contact } from '../classes/contact';
+import { Company }        from '../classes/company';
 import { ContactsService } from './contacts.service';
 import { SharedService } from '../shared.service';
 
@@ -16,6 +17,7 @@ import { SharedService } from '../shared.service';
 })
 export class ContactDetailComponent implements OnInit{
 	@Input() contact: Contact;
+	companies: Company[] = [];
 	isLoading: boolean = true;
 
 	constructor(
@@ -27,6 +29,7 @@ export class ContactDetailComponent implements OnInit{
 	) {}
 
 	ngOnInit(): void{
+		this.sharedService.getCompanies();
 		this.getContact();
 	}
 
@@ -34,9 +37,20 @@ export class ContactDetailComponent implements OnInit{
 		this.route.paramMap
 		.switchMap((params: ParamMap) => this.contactsService.getContact(+params.get('id')))
 		.subscribe(contact => {
-			this.contact = contact
-			this.isLoading = false;
+			this.contact = contact;
+			if(contact.company.length > 0)
+		        {
+		          this.getCompanies(contact)
+		        }
+		    else
+		    	this.isLoading = false;
 		});
+	}
+
+	getCompanies(contact: Contact): void{
+		this.sharedService
+			.getCompaniesForContactDetail(this.contact)
+			.subscribe(companies => {this.companies = companies; this.isLoading = false;});
 	}
 
 	goBack(): void {

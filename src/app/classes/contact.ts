@@ -2,7 +2,7 @@ import { Company } from './company';
 
 export class Contact{
 	id: number;
-	company: Company[];
+	company: number[];
 	full_name: string;
 	surname: string;
 	middle_name: string;

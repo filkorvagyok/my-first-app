@@ -26,8 +26,8 @@ export class CompaniesComponent implements OnInit{
 
 	getCompanies(): void{
 		this.companiesService
-        .getCompanies()
-        .subscribe(companies => {this.companies = companies, this.isLoading=false});
+        	.getCompanies()
+        	.subscribe(companies => {this.companies = companies, this.isLoading=false});
 	}
 
 	showChbox(): void{
@@ -88,8 +88,8 @@ export class CompaniesComponent implements OnInit{
 	}
 
 	ngOnInit(): void{
-		this.getCompanies();
 		this.sharedService.getProjects();
+		this.getCompanies();
 	}
 
   	gotoDetail(company: Company): void{

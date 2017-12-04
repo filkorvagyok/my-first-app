@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { Company }        from '../classes/company';
 import { Project }        from '../classes/project';
+import { Contact }        from '../classes/contact';
 import { CompaniesService } from './companies.service';
 import { SharedService } from '../shared.service';
 
@@ -17,6 +18,7 @@ import { SharedService } from '../shared.service';
 export class CompanyDetailComponent implements OnInit {
   @Input() company: Company;
   projects: Project[] = [];
+  contacts: Contact[] = [];
   isLoading: boolean = true;
 
 
@@ -29,20 +31,25 @@ export class CompanyDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCompany();
     this.sharedService.getProjects();
+    this.sharedService.getContacts();
+    this.getCompany();
   }
 
   getCompany(): void{
     this.route.paramMap
       .switchMap((params: ParamMap) => this.companiesService.getCompany(+params.get('id')))
       .subscribe(company => {
-        this.company = company
+        this.company = company;
         if(company.project.length > 0)
         {
           this.getProjects(company)
         }
-        else
+        if(company.contact.length > 0)
+        {
+          this.getContacts(company);
+        }
+        if(company.project.length == 0 && company.contact.length == 0)
           this.isLoading = false;
     });
   }
@@ -51,6 +58,12 @@ export class CompanyDetailComponent implements OnInit {
     this.sharedService
       .getProjectsForCompanyDetail(company)
       .subscribe(projects => {this.projects = projects, this.isLoading = false});
+  }
+
+  getContacts(company: Company): void{
+    this.sharedService
+      .getContactsForCompanyDetail(company)
+      .subscribe(contacts => {this.contacts = contacts, this.isLoading = false});
   }
 
   goBack(): void {
@@ -75,6 +88,6 @@ export class CompanyDetailComponent implements OnInit {
   delete(company: Company): void {
       this.sharedService.deleteCompanyFromProject(company);
       this.companiesService.delete(company).subscribe();
-      this.location.back();
+      this.router.navigate(['company/list']);
   }
 }

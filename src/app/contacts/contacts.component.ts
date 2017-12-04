@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../classes/contact';
+import { Company } from '../classes/company';
 import { ContactsService } from './contacts.service';
 import { SharedService } from '../shared.service';
-import { MatDialog } from '@angular/material';
-import { DeleteDialog } from '../delete-dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,8 +15,7 @@ export class ContactsComponent implements OnInit{
 	constructor(
 		private contactsService: ContactsService,
 		private sharedService: SharedService,
-		private router: Router,
-		public dialog: MatDialog
+		private router: Router
 	){}
 
 	checked: boolean = false;
@@ -33,7 +31,7 @@ export class ContactsComponent implements OnInit{
 
 	getConctast(): void{
 		this.contactsService
-        .getConctast()
+        .getContacts()
         .subscribe(contacts => {this.contacts = contacts, this.isLoading = false});
 	}
 
@@ -64,7 +62,7 @@ export class ContactsComponent implements OnInit{
 	}
 
 	openDeleteDialog(): void{
-		let dialogRef = this.dialog.open(DeleteDialog);
+		let dialogRef = this.sharedService.openDeleteDialog();
 	    dialogRef.afterClosed().subscribe(result => {
 	    	console.log('The dialog was closed');
 	      	if(dialogRef.componentInstance.delete)
@@ -76,13 +74,14 @@ export class ContactsComponent implements OnInit{
 	      				 this.delete(array[i]);
 	      			}
 	      		}
+	      		this.checked = false;
 	      	}
-	      	this.checked = false;
 	    });
 	}
 
 	delete(contact: Contact): void {
 		this.contacts = this.contacts.filter(h => h !== contact);
+		this.sharedService.deleteContactFromCompany(contact).subscribe();
     	this.contactsService.delete(contact).subscribe();
 	}
 
@@ -91,12 +90,15 @@ export class ContactsComponent implements OnInit{
   		this.router.navigate(['/people/edit', selectedContact.id]);
   	}
 
-  	/*addInstant(name: string, phone: string, email: string): void{
-  		name = name.trim();
-    	if (!name) { return; }
-    	this.contactsService.addContact({ name } as Contact)
+  	addInstant(full_name: string, phone: string, email: string): void{
+  		full_name = full_name.trim();
+  		phone = phone.trim();
+  		email = email.trim();
+    	if (!full_name) { return; }
+    	this.contactsService.addContact({ full_name, phone, email } as Contact)
       		.subscribe(contact => {
         this.contacts.push(contact);
       });
-  	}*/
+  	}
+
 }

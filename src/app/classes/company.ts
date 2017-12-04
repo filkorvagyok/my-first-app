@@ -28,4 +28,5 @@ export class Company{
 	founded: number;
 	selected: boolean;
 	project: number[];
+	contact: number[];
 }

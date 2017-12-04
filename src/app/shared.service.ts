@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Company } from './classes/company';
 import { Project } from './classes/project';
+import { Contact } from './classes/contact';
 import { CompaniesService } from './companies/companies.service';
 import { ProjectsService } from './projects/projects.service';
+import { ContactsService } from './contacts/contacts.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/forkJoin';
@@ -16,20 +18,27 @@ export class SharedService{
 	constructor(
 		private companiesService: CompaniesService,
 		private projectsService: ProjectsService,
+		private contactsService: ContactsService,
 		public dialog: MatDialog
 		){}
 
 	private projects: Project[];
 	private companies: Company[];
+	private contacts: Contact[];
 
 	getProjects(): void{
 		this.projectsService.getProjects()
-			.subscribe(projects => this.projects = projects);
+			.subscribe(projects => {this.projects = projects; console.log('sharedService getprojects:', projects);});
 	}
 
 	getCompanies(): void{
 		this.companiesService.getCompanies()
 			.subscribe(companies => this.companies = companies);
+	}
+
+	getContacts(): void{
+		this.contactsService.getContacts()
+			.subscribe(contacts => this.contacts = contacts);
 	}
 
 	returnCompanies(): Observable<Company[]>{
@@ -47,12 +56,34 @@ export class SharedService{
         return Observable.forkJoin(getProjects);
 	}
 
+	getContactsForCompanyDetail(company: Company): Observable<Contact[]>{
+		const getContacts: Array<Observable<Contact>> = [];
+        company.contact
+        	.forEach(company_contact => {
+        	this.contacts
+        		.filter(contact => contact.id == company_contact)
+        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+        	});
+        return Observable.forkJoin(getContacts);
+	}
+
 	getCompaniesForProjectDetail(project: Project): Observable<Company[]>{
 		const getCompanies: Array<Observable<Company>> = [];
         project.company
         	.forEach(project_company => {
         	this.companies
         		.filter(company => company.id == project_company)
+        		.forEach(company => getCompanies.push(this.companiesService.getCompany(company)))
+        	});
+        return Observable.forkJoin(getCompanies);
+	}
+
+	getCompaniesForContactDetail(contact: Contact): Observable<Company[]>{
+		const getCompanies: Array<Observable<Company>> = [];
+        contact.company
+        	.forEach(contact_company => {
+        	this.companies
+        		.filter(company => company.id == contact_company)
         		.forEach(company => getCompanies.push(this.companiesService.getCompany(company)))
         	});
         return Observable.forkJoin(getCompanies);
@@ -72,8 +103,23 @@ export class SharedService{
 		return this.companiesService.updateCompany(company);
 	}
 
+	deleteContactFromCompany(contact: Contact): Observable<Company[]>{
+		const deletingContacts: Array<Observable<Company>> = [];
+				this.companies
+					.filter(company => company.contact.includes(contact.id))
+					.forEach(company => deletingContacts.push(this.deleteCFC(contact, company)))
+		return Observable.forkJoin(deletingContacts);
+	}
+
+	deleteCFC(contact: Contact, company: Company): Observable<Company>{
+		let index = company.contact.indexOf(contact.id);
+		company.contact.splice(index,1);
+		return this.companiesService.updateCompany(company);
+	}
+
 	deleteCompanyFromProject(company: Company): Observable<Project[]>{
 		const deletingCompanies: Array<Observable<Project>> = [];
+		console.log('deleteCompanyFromProject:', this.projects);
 				this.projects
 					.filter(project => project.company.includes(company.id))
 					.forEach(project => deletingCompanies.push(this.deleteCFP(company, project)))
@@ -81,8 +127,10 @@ export class SharedService{
 	}
 
 	deleteCFP(company: Company, project: Project): Observable<Project>{
+		console.log(company.name);
 		let index = project.company.indexOf(company.id);
 		project.company.splice(index,1);
+		console.log(project.company);
 		return this.projectsService.updateProject(project);
 	}
 
@@ -93,6 +141,11 @@ export class SharedService{
 
 	addProjectToCompany(i: number, project: Project, companies: Company[]): void{
   		companies.find(x=>x.id==i).project.push(project.id);
+  		this.companiesService.updateCompany(companies.find(x=>x.id==i)).subscribe();
+  	}
+
+  	addContactToCompany(i: number, contact: Contact, companies: Company[]): void{
+  		companies.find(x=>x.id==i).contact.push(contact.id);
   		this.companiesService.updateCompany(companies.find(x=>x.id==i)).subscribe();
   	}
 }

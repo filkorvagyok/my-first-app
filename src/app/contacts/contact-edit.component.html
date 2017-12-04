@@ -1,11 +1,10 @@
-<div *ngIf="isLoading">Tőőőőőőőőőőőőőőőőt</div>
-<form class="panel panel-default" *ngIf="contact && !isLoading">
+<form class="panel panel-default" *ngIf="contact">
 	<div class="panel-heading" color="primary">Névjegy</div>
 	<div  class="panel-body" >
 		<div class="inputpanel">
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select [(ngModel)]="selectedCompanies" name="contactCompany" placeholder="Cég" multiple>
+					<mat-select [(ngModel)]="contact.company" name="contactCompany" placeholder="Cég" multiple>
 						<mat-option *ngFor="let company of companies" [value]="company.id">{{company.name}}</mat-option>
 					</mat-select>
 					<!--<mat-select [(ngModel)]="contact.company" name="contactCompany" placeholder="Cég" multiple>

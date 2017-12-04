@@ -29,8 +29,8 @@ export class ProjectDetailComponent implements OnInit{
 	) {}
 
 	ngOnInit(): void {
-		this.getProject();
 		this.sharedService.getCompanies();
+		this.getProject();
 	}
 
 	getProject(): void{
@@ -40,10 +40,11 @@ export class ProjectDetailComponent implements OnInit{
 				this.project = project
 				if(project.company.length > 0)
 		        {
+		        	console.log('gáz:', project.company);
 		          this.getCompanies(project)
 		        }
 		        else
-		          this.isLoading = false;
+		        	this.isLoading = false;
 			});
 	}
 

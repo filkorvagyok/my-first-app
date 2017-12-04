@@ -31,7 +31,8 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 8,
             founded: 1962,
             selected: false,
-            project: []
+            project: [],
+            contact: []
         },
         {
             id: 2,
@@ -62,7 +63,8 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 2,
             founded: 2017,
             selected: false,
-            project: []
+            project: [],
+            contact: []
         },
         {
             id: 3,
@@ -93,7 +95,8 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 8,
             founded: 1937,
             selected: false,
-            project: []
+            project: [],
+            contact: []
         },
         {
             id: 4,
@@ -124,7 +127,8 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 1,
             founded: 2017,
             selected: false,
-            project: []
+            project: [],
+            contact: []
         },
         {
             id: 5,
@@ -155,7 +159,8 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 8,
             founded: 1976,
             selected: false,
-            project: []
+            project: [],
+            contact: []
         },
         {
             id: 6,
@@ -186,7 +191,8 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 2,
             founded: 2017,
             selected: false,
-            project: []
+            project: [],
+            contact: []
         }
     ];
 

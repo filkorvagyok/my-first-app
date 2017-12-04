@@ -27,7 +27,6 @@ export class ProjectsComponent implements OnInit{
 
 	ngOnInit(): void{
 		this.getProjects();
-		this.sharedService.getCompanies();
 	}
 
 	showChbox(): void{
@@ -76,7 +75,6 @@ export class ProjectsComponent implements OnInit{
 		}*/
 		return num.toString()+' nap';
 	}
-
 
 	openDeleteDialog(): void{
 		let dialogRef = this.sharedService.openDeleteDialog();

@@ -26,6 +26,7 @@ export class CompanyCommonComponent{
 		if(this.route.snapshot.routeConfig.path == "company/new")
 		{
 		  this.company = new Company;
+		  this.company = this.companiesService.setDefaultCompany(this.company);
 		  this.edit = false;
 		}
 		else
@@ -37,5 +38,4 @@ export class CompanyCommonComponent{
 		  this.mail = false;
 		}
 	}
-
 }

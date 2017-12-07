@@ -29,25 +29,33 @@
 				    <input matInput [(ngModel)]="project.file" name="projectFile" placeholder="Fájlok">
 			  	</mat-form-field>
 			</div>
-			<div class="inputfield">	
+			<div class="inputfield">
 				<mat-form-field class="matffield">
-				    <input matInput [(ngModel)]="project.accountable" name="projectAccountable" placeholder="Felelős">
-			  	</mat-form-field>
+					<mat-select [(ngModel)]="project.accountable" name="projectAccountable" placeholder="Felelős">
+						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
-			<div class="inputfield">	
+			<div class="inputfield">
 				<mat-form-field class="matffield">
-				    <input matInput [(ngModel)]="project.owner" name="projectOwner" placeholder="Tulajdonos">
-			  	</mat-form-field>
+					<mat-select [(ngModel)]="project.owner" name="projectOwner" placeholder="Tulajdonos">
+						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
-			<div class="inputfield">	
+			<div class="inputfield">
 				<mat-form-field class="matffield">
-				    <input matInput [(ngModel)]="project.observer" name="projectObserver" placeholder="Megfigyelő">
-			  	</mat-form-field>
+					<mat-select [(ngModel)]="project.observer" name="projectObserver" placeholder="Megfigyelő" multiple>
+						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
-			<div class="inputfield">	
+			<div class="inputfield">
 				<mat-form-field class="matffield">
-				    <input matInput [(ngModel)]="project.participant" name="projectParticipant" placeholder="Résztvevő">
-			  	</mat-form-field>
+					<mat-select [(ngModel)]="project.participant" name="projectParticipant" placeholder="Résztvevő" multiple>
+						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
 			<div>
 				<mat-form-field>

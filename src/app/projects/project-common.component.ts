@@ -22,9 +22,9 @@ export class ProjectCommonComponent implements OnInit{
 		let path = this.route.snapshot.routeConfig.path;
 		let arr = this.route.snapshot.paramMap.keys;
 		this.project = new Project;
-		this.project.company = [];
 		if(path == "project/new")
 		{ 
+			this.project = this.projectsService.setDefaultProject(this.project);
 			for (var i = 0; i < arr.length; i++) {
 				this.project.company.push(Number(this.route.snapshot.paramMap.get(arr[i])));
 			}

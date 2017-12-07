@@ -5,10 +5,10 @@ export class Project{
 	checklist: boolean;
 	company: number[];
 	file: string;
-	accountable: string;
-	owner: string;
-	observer: string;
-	participant: string;
+	accountable: number[];
+	owner: number[];
+	observer: number[];
+	participant: number[];
 	deadline: Date;
 	status: string;
 	priority: string;
@@ -17,5 +17,4 @@ export class Project{
 	income: number;
 	expenditure: number;
 	selected: boolean;
-	greater: boolean;
 }

@@ -49,7 +49,7 @@
 						  	<mat-form-field>
 							    <input #contactEmail matInput name="contactEmail" placeholder="E-mail"/>
 						  	</mat-form-field>
-						  	<button  mat-raised-button color="primary" (click)="addInstant(contactFullName.value, contactPhone.value, contactEmail.value)">
+						  	<button  mat-raised-button color="primary" (click)="addInstant(contactFullName.value, contactPhone.value, contactEmail.value); contactFullName.value=''; contactPhone.value=''; contactEmail.value='';">
 								<i class="fa fa-plus"></i>
 							</button>
 							</div>

@@ -84,6 +84,7 @@ export class CompaniesComponent implements OnInit{
 	delete(company: Company): void {
 		this.companies = this.companies.filter(h => h !== company);
 		this.sharedService.deleteCompanyFromProject(company).subscribe();
+		this.sharedService.deleteCompanyFromContact(company).subscribe();
     	this.companiesService.delete(company).subscribe();
 	}
 
@@ -136,9 +137,11 @@ export class CompaniesComponent implements OnInit{
   	}
 
   	addInstant(name: string): void{
-  		name = name.trim();
+		let company = new Company();
+		company = this.companiesService.setDefaultCompany(company);
+  		company.name = name.trim();
     	if (!name) { return; }
-    	this.companiesService.addCompany({ name } as Company)
+    	this.companiesService.addCompany(company)
       		.subscribe(company => {
         this.companies.push(company);
       });

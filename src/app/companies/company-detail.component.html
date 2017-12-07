@@ -1,7 +1,7 @@
-<div *ngIf="isLoading">
+<div *ngIf="isLoadingProjects || isLoadingContacts">
 	<mat-spinner></mat-spinner>
 </div>
-<div *ngIf="!isLoading">
+<div *ngIf="!(isLoadingProjects || isLoadingContacts)">
 <form *ngIf="company && !isLoading" class="panel panel-default">
 	<div class="panel-heading" color="primary">{{company.name}}</div>
 	<div  class="panel-body">
@@ -25,17 +25,17 @@
 				<p><i class="fa fa-envelope"></i> {{company.email}}</p>
 				<p>
 					<i class="fa fa-map-marker"></i>
-					{{company.hq_country}} {{company.hq_zipcode}} {{company.hq_settlement}}, 
+					{{company.hq_country}} {{company.hq_zipcode}} {{company.hq_settlement}}<span *ngIf="(company.hq_country || company.hq_zipcode || company.hq_settlement) || company.hq_address">, </span>
 					{{company.hq_address}}
 				</p>
 				<p>
 					<i class="fa fa-usd"></i>
-					{{company.bi_country}} {{company.bi_zipcode}} {{company.bi_settlement}}, 
+					{{company.bi_country}} {{company.bi_zipcode}} {{company.bi_settlement}}<span *ngIf="(company.hq_country || company.hq_zipcode || company.hq_settlement) || company.hq_address">, </span> 
 					{{company.bi_address}}
 				</p>
 				<p>
 					<i class="fa fa-envelope"></i>
-					{{company.mail_country}} {{company.mail_zipcode}} {{company.mail_settlement}}, 
+					{{company.mail_country}} {{company.mail_zipcode}} {{company.mail_settlement}}<span *ngIf="(company.hq_country || company.hq_zipcode || company.hq_settlement) || company.hq_address">, </span>
 					{{company.mail_address}}
 				</p>
 			</div>

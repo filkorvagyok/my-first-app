@@ -486,10 +486,10 @@ export class InMemoryDataService implements InMemoryDbService {
             checklist: false,
             company: [],
             file: 'file',
-            accountable: 'Filkor Tamás',
-            owner: 'Filkor Tamás',
-            observer: 'Filkor Tamás',
-            participant: 'Kis Béla',
+            accountable: 1,
+            owner: 1,
+            observer: [],
+            participant: [],
             deadline: new Date('2017-11-30'),
             status: 'Elindítva',
             priority: 'magas',
@@ -498,7 +498,6 @@ export class InMemoryDataService implements InMemoryDbService {
             income: 500000000,
             expenditure: 2000000,
             selected: false,
-            greater: true
         }
     ];
 
@@ -506,6 +505,7 @@ export class InMemoryDataService implements InMemoryDbService {
         {
             id: 1,
             company: [],
+            project: [],
             full_name: 'Filkor Tamás',
             surname: 'Filkor',
             middle_name: '',

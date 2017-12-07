@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { Project }        from '../classes/project';
 import { Company }        from '../classes/company';
+import { Contact }        from '../classes/contact';
 import { ProjectsService } from './projects.service';
 import { SharedService } from '../shared.service';
 
@@ -18,6 +19,7 @@ import { SharedService } from '../shared.service';
 export class ProjectDetailComponent implements OnInit{
 	@Input() project: Project;
 	companies: Company[] = [];
+	contacts: Contact[] = [];
 	isLoading: boolean = true;
 
 	constructor(
@@ -30,6 +32,7 @@ export class ProjectDetailComponent implements OnInit{
 
 	ngOnInit(): void {
 		this.sharedService.getCompanies();
+		this.sharedService.getContacts();
 		this.getProject();
 	}
 
@@ -40,7 +43,6 @@ export class ProjectDetailComponent implements OnInit{
 				this.project = project
 				if(project.company.length > 0)
 		        {
-		        	console.log('gáz:', project.company);
 		          this.getCompanies(project)
 		        }
 		        else
@@ -50,7 +52,7 @@ export class ProjectDetailComponent implements OnInit{
 
 	getCompanies(project: Project): void{
 		this.sharedService
-			.getCompaniesForProjectDetail(this.project)
+			.getCompaniesForProjectDetail(project)
 			.subscribe(companies => {this.companies = companies, this.isLoading = false});
 	}
 
@@ -74,6 +76,8 @@ export class ProjectDetailComponent implements OnInit{
 	}
 
 	delete(project: Project): void {
+		if(project.company.length > 0)
+			this.sharedService.deleteProjectFromCompany(project).subscribe();
 		this.projectsService.delete(project).subscribe();
 		this.location.back();
 	}

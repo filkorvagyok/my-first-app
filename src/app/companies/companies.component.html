@@ -48,7 +48,8 @@
 					<tr>
 						<td class="collapsed">
 							<span class="company_headquarter">
-								{{company.country_code}}-{{company.hq_zipcode}} {{company.hq_settlement}}, 
+								{{company.country_code}}<span *ngIf="company.country_code && company.hq_zipcode">-</span>{{company.hq_zipcode}} 
+								{{company.hq_settlement}}<span *ngIf="company.hq_settlement && company.hq_address">, </span>
 								{{company.hq_address}}
 							</span>
 						</td>
@@ -66,7 +67,7 @@
 							<mat-form-field>
 							    <input #companyName matInput name="companyName" placeholder="Új cég hozzáadása instant">
 						  	</mat-form-field>
-						  	<button  mat-raised-button color="primary" (click)="addInstant(companyName.value)">
+						  	<button  mat-raised-button color="primary" (click)="addInstant(companyName.value); companyName.value='';">
 								<i class="fa fa-plus"></i>
 							</button>
 							</div>

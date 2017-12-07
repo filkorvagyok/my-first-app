@@ -71,4 +71,25 @@ export class ContactsService{
 			return of(result as T);
 		};
 	}
+
+	setDefaultContact(contact: Contact): Contact{
+		contact.accountable = [];
+		contact.company = [];
+		contact.email = "";
+		contact.forename = "";
+		contact.full_name = "";
+		contact.greeting = "";
+		contact.middle_name = "";
+		contact.nickname = "";
+		contact.observer = [];
+		contact.owner = [];
+		contact.participant = [];
+		contact.phone = "";
+		contact.primary_communication_chanel = "";
+		contact.project = [];
+		contact.rank = "";
+		contact.selected = false;
+		contact.surname = "";
+		return contact;
+	}
 }

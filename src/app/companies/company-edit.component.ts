@@ -89,6 +89,7 @@ export class CompanyEditComponent implements OnInit {
   }
 
   add(company: Company): void{
+    console.log(company)
     this.companiesService.addCompany(company)
       .subscribe(company => {
         this.companies.push(company);

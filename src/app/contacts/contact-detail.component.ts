@@ -73,6 +73,8 @@ export class ContactDetailComponent implements OnInit{
 	}
 
 	delete(contact: Contact): void {
+		if(contact.company.length > 0)
+			this.sharedService.deleteContactFromCompany(contact).subscribe();
 		this.contactsService.delete(contact).subscribe();
 		this.location.back();
 	}

@@ -22,9 +22,9 @@ export class ContactCommonComponent implements OnInit{
 		let path = this.route.snapshot.routeConfig.path;
 		let arr = this.route.snapshot.paramMap.keys;
 		this.contact = new Contact;
-		this.contact.company = [];
 		if(path == "people/new")
-		{ 
+		{
+			this.contact = this.contactsService.setDefaultContact(this.contact);
 			for (var i = 0; i < arr.length; i++) {
 				this.contact.company.push(Number(this.route.snapshot.paramMap.get(arr[i])));
 			}

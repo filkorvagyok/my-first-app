@@ -19,7 +19,8 @@ export class CompanyDetailComponent implements OnInit {
   @Input() company: Company;
   projects: Project[] = [];
   contacts: Contact[] = [];
-  isLoading: boolean = true;
+  isLoadingProjects: boolean = true;
+  isLoadingContacts: boolean = true;
 
 
   constructor(
@@ -43,27 +44,29 @@ export class CompanyDetailComponent implements OnInit {
         this.company = company;
         if(company.project.length > 0)
         {
-          this.getProjects(company)
+          this.getProjects(company);
         }
         if(company.contact.length > 0)
         {
           this.getContacts(company);
         }
-        if(company.project.length == 0 && company.contact.length == 0)
-          this.isLoading = false;
+        if(company.project.length == 0)
+          this.isLoadingProjects = false;
+        if(company.contact.length == 0)
+          this.isLoadingContacts = false;
     });
   }
 
   getProjects(company: Company): void{
     this.sharedService
       .getProjectsForCompanyDetail(company)
-      .subscribe(projects => {this.projects = projects, this.isLoading = false});
+      .subscribe(projects => {this.projects = projects, this.isLoadingProjects = false})
   }
 
   getContacts(company: Company): void{
     this.sharedService
       .getContactsForCompanyDetail(company)
-      .subscribe(contacts => {this.contacts = contacts, this.isLoading = false});
+      .subscribe(contacts => {this.contacts = contacts, this.isLoadingContacts = false});
   }
 
   goBack(): void {
@@ -86,7 +89,8 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   delete(company: Company): void {
-      this.sharedService.deleteCompanyFromProject(company);
+      this.sharedService.deleteCompanyFromProject(company).subscribe();
+      this.sharedService.deleteCompanyFromContact(company).subscribe();
       this.companiesService.delete(company).subscribe();
       this.router.navigate(['company/list']);
   }

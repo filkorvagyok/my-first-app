@@ -23,8 +23,6 @@ export class ProjectsComponent implements OnInit{
 	disabled: boolean = true;
 	isLoading: boolean = true;
 
-	greater = true;
-
 	ngOnInit(): void{
 		this.getProjects();
 	}
@@ -96,7 +94,8 @@ export class ProjectsComponent implements OnInit{
 
 	delete(project: Project): void {
 		this.projects = this.projects.filter(h => h !== project);
-		this.sharedService.deleteProjectFromCompany(project).subscribe();
+		if(project.company.length > 0)
+			this.sharedService.deleteProjectFromCompany(project).subscribe();
     	this.projectsService.delete(project).subscribe();
 	}
 
@@ -106,9 +105,11 @@ export class ProjectsComponent implements OnInit{
   	}
 
   	addInstant(name: string): void{
-  		name = name.trim();
+  		let project = new Project();
+  		this.projectsService.setDefaultProject(project);
+  		project.name = name.trim();
     	if (!name) { return; }
-    	this.projectsService.addProject({ name } as Project)
+    	this.projectsService.addProject(project)
       		.subscribe(project => {
         this.projects.push(project);
       });

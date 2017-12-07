@@ -25,7 +25,7 @@
 							<strong class="company_name">{{project.name}}</strong>
 						</td>
 						<td>
-							<strong class="company_name">{{count(project)}} <span *ngIf="!project.greater"><mat-icon class="fa fa-exclamation-triangle"></mat-icon></span></strong>
+							<strong class="company_name">{{count(project)}}</strong>
 						</td>
 						<td rowspan="2">
 							{{project.income}}
@@ -52,7 +52,7 @@
 							<mat-form-field>
 							    <input #projectName matInput name="projectName" placeholder="Új projekt hozzáadása instant">
 						  	</mat-form-field>
-						  	<button  mat-raised-button color="primary" (click)="addInstant(projectName.value)">
+						  	<button  mat-raised-button color="primary" (click)="addInstant(projectName.value); projectName.value='';">
 								<i class="fa fa-plus"></i>
 							</button>
 							</div>

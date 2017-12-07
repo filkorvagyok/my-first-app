@@ -26,9 +26,17 @@ export class SharedService{
 	private companies: Company[];
 	private contacts: Contact[];
 
+	returnCompanies(): Observable<Company[]>{
+		return this.companiesService.getCompanies();
+	}
+
+	returnContacts(): Observable<Contact[]>{
+		return this.contactsService.getContacts();
+	}
+
 	getProjects(): void{
 		this.projectsService.getProjects()
-			.subscribe(projects => {this.projects = projects; console.log('sharedService getprojects:', projects);});
+			.subscribe(projects => this.projects = projects);
 	}
 
 	getCompanies(): void{
@@ -39,10 +47,6 @@ export class SharedService{
 	getContacts(): void{
 		this.contactsService.getContacts()
 			.subscribe(contacts => this.contacts = contacts);
-	}
-
-	returnCompanies(): Observable<Company[]>{
-		return this.companiesService.getCompanies();
 	}
 
 	getProjectsForCompanyDetail(company: Company): Observable<Project[]>{
@@ -90,6 +94,7 @@ export class SharedService{
 	}
 
 	deleteProjectFromCompany(project: Project): Observable<Company[]>{
+		console.log("Projekt információ gyűjtés folyamatban...");
 		const deletingProjects: Array<Observable<Company>> = [];
 				this.companies
 					.filter(company => company.project.includes(project.id))
@@ -107,11 +112,11 @@ export class SharedService{
 		const deletingContacts: Array<Observable<Company>> = [];
 				this.companies
 					.filter(company => company.contact.includes(contact.id))
-					.forEach(company => deletingContacts.push(this.deleteCFC(contact, company)))
+					.forEach(company => deletingContacts.push(this.deleteConFCom(contact, company)))
 		return Observable.forkJoin(deletingContacts);
 	}
 
-	deleteCFC(contact: Contact, company: Company): Observable<Company>{
+	deleteConFCom(contact: Contact, company: Company): Observable<Company>{
 		let index = company.contact.indexOf(contact.id);
 		company.contact.splice(index,1);
 		return this.companiesService.updateCompany(company);
@@ -119,19 +124,30 @@ export class SharedService{
 
 	deleteCompanyFromProject(company: Company): Observable<Project[]>{
 		const deletingCompanies: Array<Observable<Project>> = [];
-		console.log('deleteCompanyFromProject:', this.projects);
-				this.projects
-					.filter(project => project.company.includes(company.id))
-					.forEach(project => deletingCompanies.push(this.deleteCFP(company, project)))
+		this.projects
+			.filter(project => project.company.includes(company.id))
+			.forEach(project => deletingCompanies.push(this.deleteCFP(company, project)));
 		return Observable.forkJoin(deletingCompanies);
 	}
 
 	deleteCFP(company: Company, project: Project): Observable<Project>{
-		console.log(company.name);
 		let index = project.company.indexOf(company.id);
 		project.company.splice(index,1);
-		console.log(project.company);
 		return this.projectsService.updateProject(project);
+	}
+
+	deleteCompanyFromContact(company: Company): Observable<Contact[]>{
+		const deletingCompanies: Array<Observable<Contact>> = [];
+		this.contacts
+			.filter(contact => contact.company.includes(company.id))
+			.forEach(contact => deletingCompanies.push(this.deleteComFCon(company, contact)));
+		return Observable.forkJoin(deletingCompanies);
+	}
+
+	deleteComFCon(company: Company, contact: Contact): Observable<Contact>{
+		let index = contact.company.indexOf(company.id);
+		contact.company.splice(index,1);
+		return this.contactsService.updateContact(contact);
 	}
 
 	openDeleteDialog(): MatDialogRef<DeleteDialog>{
@@ -142,6 +158,25 @@ export class SharedService{
 	addProjectToCompany(i: number, project: Project, companies: Company[]): void{
   		companies.find(x=>x.id==i).project.push(project.id);
   		this.companiesService.updateCompany(companies.find(x=>x.id==i)).subscribe();
+  	}
+
+  	addProjectToContact(i: number, project: Project, contacts: Contact[], which: number): void{
+  		let contact = contacts.find(x=>x.id==i);
+  		switch (which) {
+  			case 0:
+  				contact.accountable.push(project.id)
+  			case 1:
+  				contact.observer.push(project.id)
+			case 1:
+  				contact.owner.push(project.id)
+			case 1:
+  				contact.participant.push(project.id)
+  			default:
+  				this.contactsService.updateContact(contacts.find(x=>x.id==i)).subscribe();
+  				break;
+  		}
+  		contacts.find(x=>x.id==i).project.push(project.id);
+  		this.contactsService.updateContact(contacts.find(x=>x.id==i)).subscribe();
   	}
 
   	addContactToCompany(i: number, contact: Contact, companies: Company[]): void{

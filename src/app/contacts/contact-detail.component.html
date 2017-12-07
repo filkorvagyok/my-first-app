@@ -46,6 +46,9 @@
 			<hr>
 			<div>
 				<h3>Projektek</h3>
+				<p *ngFor="let company of companies">
+					<span *ngFor="let project of company.project">{{project}}</span>
+				</p>
 			</div>
 		</div>
 		</div>

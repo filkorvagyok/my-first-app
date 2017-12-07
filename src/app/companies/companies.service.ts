@@ -150,4 +150,37 @@ export class CompaniesService{
     };
   }
 
+  setDefaultCompany(company: Company): Company{
+    company.bi_address = "";
+    company.bi_country = "";
+    company.bi_name = "";
+    company.bi_settlement = "";
+    company.bi_zipcode = null;
+    company.contact = [];
+    company.country_code = "";
+    company.email = "";
+    company.employeesnum_id = null;
+    company.facebook = "";
+    company.founded = null;
+    company.hq_address = "";
+    company.hq_country = "";
+    company.hq_settlement = "";
+    company.hq_zipcode = null;
+    company.industry_id = null;
+    company.logo = "";
+    company.mail_address = "";
+    company.mail_country = "";
+    company.mail_name = "";
+    company.mail_settlement = "";
+    company.mail_zipcode = null;
+    company.name = "";
+    company.phone = "";
+    company.project = [];
+    company.selected = false;
+    company.taxnumber = null;
+    company.website = "";
+    company.yearlyincome_id = null;
+    return company;
+  }
+
 }

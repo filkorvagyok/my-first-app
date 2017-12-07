@@ -29,7 +29,6 @@ export class ProjectsService{
 
 	getProject(project: Project | number): Observable<Project> {
 		const id = typeof project === 'number' ? project : project.id;
-		console.log('getProject:', id);
 		const url = `${this.projectsUrl}/${id}`;
 		return this.http.get<Project>(url).pipe(
 			tap(_ => (`fetched project id=${id}`)),
@@ -54,7 +53,6 @@ export class ProjectsService{
 	}
 
 	updateProject (project: Project): Observable<any> {
-		console.log('ez is lefut: updateProject');
 		return this.http.put(this.projectsUrl, project, httpOptions).pipe(
 			tap(_ => (`updated project id=${project.id}`)),
 			catchError(this.handleError<any>('updateProject'))
@@ -72,5 +70,26 @@ export class ProjectsService{
 			// Let the app keep running by returning an empty result.
 			return of(result as T);
 		};
+	}
+
+	setDefaultProject(project: Project): Project{
+		project.accountable = [];
+		project.checklist = false;
+		project.company = [];
+		project.currency = "";
+		project.deadline = new Date();
+		project.description = "";
+		project.expenditure = null;
+		project.file = "";
+		project.income = null;
+		project.name = "";
+		project.observer = [];
+		project.owner = [];
+		project.participant = [];
+		project.priority = "";
+		project.selected = false;
+		project.status = "";
+		project.stickers = "";
+		return project;
 	}
 }

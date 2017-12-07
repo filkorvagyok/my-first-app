@@ -81,7 +81,8 @@ export class ContactsComponent implements OnInit{
 
 	delete(contact: Contact): void {
 		this.contacts = this.contacts.filter(h => h !== contact);
-		this.sharedService.deleteContactFromCompany(contact).subscribe();
+		if(contact.company.length > 0)
+			this.sharedService.deleteContactFromCompany(contact).subscribe();
     	this.contactsService.delete(contact).subscribe();
 	}
 
@@ -91,11 +92,13 @@ export class ContactsComponent implements OnInit{
   	}
 
   	addInstant(full_name: string, phone: string, email: string): void{
-  		full_name = full_name.trim();
-  		phone = phone.trim();
-  		email = email.trim();
+  		let contact = new Contact();
+  		contact = this.contactsService.setDefaultContact(contact);
+  		contact.full_name = full_name.trim();
+  		contact.phone = phone.trim();
+  		contact.email = email.trim();
     	if (!full_name) { return; }
-    	this.contactsService.addContact({ full_name, phone, email } as Contact)
+    	this.contactsService.addContact(contact)
       		.subscribe(contact => {
         this.contacts.push(contact);
       });

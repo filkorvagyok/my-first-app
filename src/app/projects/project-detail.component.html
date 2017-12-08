@@ -1,7 +1,7 @@
-<div *ngIf="isLoading">
+<div *ngIf="isLoading < 5">
 	<mat-spinner></mat-spinner>
 </div>
-<div *ngIf="!isLoading">
+<div *ngIf="isLoading >= 5">
 <form *ngIf="project" class="panel panel-default">
 	<div class="panel-heading" color="primary">{{project.name}}</div>
 	<div  class="panel-body">
@@ -54,7 +54,23 @@
 			</div>
 			<hr>
 			<div>
-				<h3>Névjegyek</h3>
+				<h3 class="contact">Névjegyek</h3>
+				<h4 *ngIf="accountables.length > 0">Felelős(ök):</h4>
+				<ul *ngFor="let accountable of accountables">
+					<li>{{accountable}}</li>
+				</ul>
+				<h4 *ngIf="owners.length > 0">Tulajdonos(ok):</h4>
+				<ul *ngFor="let owner of owners">
+					<li>{{owner}}</li>
+				</ul>
+				<h4 *ngIf="observers.length > 0">Megfigyelő(k):</h4>
+				<ul *ngFor="let observer of observers">
+					<li>{{observer}}</li>
+				</ul>
+				<h4 *ngIf="participants.length > 0">Résztvevő(k):</h4>
+				<ul *ngFor="let participant of participants">
+					<li>{{participant}}</li>
+				</ul>
 			</div>
 		</div>
 		</div>

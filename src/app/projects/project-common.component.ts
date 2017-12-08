@@ -28,6 +28,7 @@ export class ProjectCommonComponent implements OnInit{
 			for (var i = 0; i < arr.length; i++) {
 				this.project.company.push(Number(this.route.snapshot.paramMap.get(arr[i])));
 			}
+			console.log(this.project);
 		}
 		else
 		{

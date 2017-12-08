@@ -86,7 +86,6 @@ export class ContactsService{
 		contact.participant = [];
 		contact.phone = "";
 		contact.primary_communication_chanel = "";
-		contact.project = [];
 		contact.rank = "";
 		contact.selected = false;
 		contact.surname = "";

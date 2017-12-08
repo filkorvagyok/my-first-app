@@ -3,6 +3,7 @@ import { Component, OnInit, Input }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 import { Project }        from '../classes/project';
 import { Company }        from '../classes/company';
@@ -19,8 +20,11 @@ import { SharedService } from '../shared.service';
 export class ProjectDetailComponent implements OnInit{
 	@Input() project: Project;
 	companies: Company[] = [];
-	contacts: Contact[] = [];
-	isLoading: boolean = true;
+	accountables: string[] = [];
+	observers: string[] = [];
+	owners: string[] = [];
+	participants: string[] = [];
+	isLoading: number = 0;
 
 	constructor(
 		private projectsService: ProjectsService,
@@ -43,17 +47,68 @@ export class ProjectDetailComponent implements OnInit{
 				this.project = project
 				if(project.company.length > 0)
 		        {
-		          this.getCompanies(project)
+		          this.getCompanies(project);
 		        }
-		        else
-		        	this.isLoading = false;
+		        else{
+		        	this.isLoading += 1;
+		        }
+		        if(project.accountable.length > 0)
+		        {
+		        	this.getContacts(project, 0)
+		        		.subscribe(contact => {
+		        			this.accountables = contact.map(x=>x.full_name)
+		        			this.isLoading += 1;
+		        			console.log(this.accountables);
+		        		});
+		        }
+		        else{
+		        	this.isLoading += 1;
+		        }
+		        if(project.observer.length > 0)
+		        {
+		        	this.getContacts(project, 1)
+		        		.subscribe(contact => {
+		        			this.observers = contact.map(x=>x.full_name)
+		        			this.isLoading += 1;
+		        		});
+		        }
+		        else{
+		        	this.isLoading += 1;
+		        }
+		        if(project.owner.length > 0)
+		        {
+		        	this.getContacts(project, 2)
+		        		.subscribe(contact => {
+		        			this.owners = contact.map(x=>x.full_name)
+		        			this.isLoading += 1;
+		        		});
+		        }
+		        else{
+		        	this.isLoading += 1;
+		        }
+		        if(project.participant.length > 0)
+		        {
+		        	this.getContacts(project, 3)
+		        		.subscribe(contact => {
+		        			this.participants = contact.map(x=>x.full_name)
+		        			this.isLoading += 1;
+		        		});
+		        }
+		        else{
+		        	this.isLoading += 1;
+		        }
 			});
 	}
 
 	getCompanies(project: Project): void{
 		this.sharedService
 			.getCompaniesForProjectDetail(project)
-			.subscribe(companies => {this.companies = companies, this.isLoading = false});
+			.subscribe(companies => {this.companies = companies, this.isLoading += 1});
+	}
+
+	getContacts(project: Project, which: number): Observable<Contact[]>{
+		return this.sharedService
+			.getContactsForProjectDetail(project, which);
 	}
 
 	goBack(): void {

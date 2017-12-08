@@ -31,14 +31,14 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select [(ngModel)]="project.accountable" name="projectAccountable" placeholder="Felelős">
+					<mat-select [(ngModel)]="project.accountable" name="projectAccountable" placeholder="Felelős" multiple>
 						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select [(ngModel)]="project.owner" name="projectOwner" placeholder="Tulajdonos">
+					<mat-select [(ngModel)]="project.owner" name="projectOwner" placeholder="Tulajdonos" multiple>
 						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
 					</mat-select>
 				</mat-form-field>

@@ -37,10 +37,21 @@ export class ProjectEditComponent implements OnInit {
 	}
 
 	save(): void {
-		let array=this.project.company;
-		for (var i = 0; i < array.length; i++) {
-			this.addProjectToCompany(array[i], this.project);
-		}
+		let companies=this.project.company;
+		companies.forEach(
+			company => this.addProjectToCompany(company, this.project));
+		let accountables = this.project.accountable;
+		let observers = this.project.observer;
+		let owners = this.project.owner;
+		let participants = this.project.participant;
+		accountables.forEach(
+			accountable => this.addProjectToContact(accountable, this.project, 0));
+		observers.forEach(
+			observer => this.addProjectToContact(observer, this.project, 1));
+		owners.forEach(
+			owner => this.addProjectToContact(owner, this.project, 2));
+		participants.forEach(
+			participant => this.addProjectToContact(participant, this.project, 3));
       this.projectsService.updateProject(this.project)
         .subscribe(() => this.goBack());
 	}
@@ -55,12 +66,9 @@ export class ProjectEditComponent implements OnInit {
 	}
 
 	addToCompany(project: Project): void{
-		let array=project.company;
-    	if(array.length > 0)
-		{
-    		for (var i = 0; i < array.length; i++)
-    			this.addProjectToCompany(array[i], project);
-		}
+		let companies=project.company;
+		companies.forEach(
+			company => this.addProjectToCompany(company, this.project));
   	}
 
   	addProjectToCompany(i: number, project: Project): void{
@@ -69,28 +77,24 @@ export class ProjectEditComponent implements OnInit {
 
   	addToContact(project: Project): void{
 		if(project.accountable)
-			for(var i = 0; i < project.accountable.length; i++)
-			{
-				this.addProjectToContact(project.accountable[i], project, 0);
-			}
+		{
+			project.accountable.forEach(
+				accountable => this.addProjectToContact(accountable, project, 0))
+		}
 		if(project.observer)
-			for(var i = 0; i < project.observer.length; i++)
-			{
-				this.addProjectToContact(project.observer[i], project, 1);
-			}
+		{
+			project.observer.forEach(
+				observer => this.addProjectToContact(observer, project, 0))
+		}
 		if(project.owner)
 		{
-			for(var i = 0; i < project.owner.length; i++)
-			{
-				this.addProjectToContact(project.owner[i], project, 2);
-			}
+			project.owner.forEach(
+				owner => this.addProjectToContact(owner, project, 0))
 		}
 		if(project.participant)
 		{
-			for(var i = 0; i < project.participant.length; i++)
-			{
-				this.addProjectToContact(project.participant[i], project, 3);
-			}
+			project.participant.forEach(
+				participant => this.addProjectToContact(participant, project, 0))
 		}
   	}
 

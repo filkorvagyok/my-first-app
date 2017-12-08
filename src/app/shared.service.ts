@@ -82,6 +82,88 @@ export class SharedService{
         return Observable.forkJoin(getCompanies);
 	}
 
+	getContactsForProjectDetail(project: Project, which: number): Observable<Contact[]>{
+		const getContacts: Array<Observable<Contact>> = [];
+		switch (which) {
+			case 0:
+				project.accountable
+		        	.forEach(project_accountable => {
+		        	this.contacts
+		        		.filter(contact => contact.id == project_accountable)
+		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        	});
+				break;
+			case 1:
+				project.observer
+		        	.forEach(project_observer => {
+		        	this.contacts
+		        		.filter(contact => contact.id == project_observer)
+		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        	});
+				break;
+			case 2:
+				project.owner
+		        	.forEach(project_owner => {
+		        	this.contacts
+		        		.filter(contact => contact.id == project_owner)
+		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        	});
+				break;
+			case 3:
+				project.participant
+		        	.forEach(project_participant => {
+		        	this.contacts
+		        		.filter(contact => contact.id == project_participant)
+		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        	});
+				break;
+			default:
+				break;
+		}
+        return Observable.forkJoin(getContacts);
+	}
+
+	getProjectsForContactDetail(contact: Contact, which: number): Observable<Project[]>{
+		const getProjects: Array<Observable<Project>> = [];
+		switch (which) {
+			case 0:
+				contact.accountable
+		        	.forEach(contact_accountable => {
+		        	this.projects
+		        		.filter(project => project.id == contact_accountable)
+		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        	});
+				break;
+			case 1:
+				contact.observer
+		        	.forEach(contact_observer => {
+		        	this.projects
+		        		.filter(project => project.id == contact_observer)
+		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        	});
+				break;
+			case 2:
+				contact.owner
+		        	.forEach(contact_owner => {
+		        	this.projects
+		        		.filter(project => project.id == contact_owner)
+		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        	});
+				break;
+			case 3:
+				contact.participant
+		        	.forEach(contact_participant => {
+		        	this.projects
+		        		.filter(project => project.id == contact_participant)
+		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        	});
+				break;
+			default:
+				break;
+		}
+        return Observable.forkJoin(getProjects);
+	}
+
 	getCompaniesForContactDetail(contact: Contact): Observable<Company[]>{
 		const getCompanies: Array<Observable<Company>> = [];
         contact.company
@@ -156,31 +238,46 @@ export class SharedService{
 	}
 
 	addProjectToCompany(i: number, project: Project, companies: Company[]): void{
-  		companies.find(x=>x.id==i).project.push(project.id);
-  		this.companiesService.updateCompany(companies.find(x=>x.id==i)).subscribe();
+		let company = companies.find(x=>x.id==i);
+		if(!(company.project.indexOf(project.id) > -1))
+  			company.project.push(project.id);
+  		this.companiesService.updateCompany(company).subscribe();
   	}
 
   	addProjectToContact(i: number, project: Project, contacts: Contact[], which: number): void{
   		let contact = contacts.find(x=>x.id==i);
+  		console.log(contact);
   		switch (which) {
   			case 0:
-  				contact.accountable.push(project.id)
+  				console.log(which);
+  				if(!(contact.accountable.indexOf(project.id) > -1))
+  					contact.accountable.push(project.id)
+  				break;
   			case 1:
-  				contact.observer.push(project.id)
-			case 1:
-  				contact.owner.push(project.id)
-			case 1:
-  				contact.participant.push(project.id)
+  				console.log(which);
+	  			if(!(contact.observer.indexOf(project.id) > -1))
+	  				contact.observer.push(project.id)
+	  			break;
+			case 2:
+				console.log(which);
+				if(!(contact.owner.indexOf(project.id) > -1))
+	  				contact.owner.push(project.id)
+	  			break;
+			case 3:
+				console.log(which);
+				if(!(contact.participant.indexOf(project.id) > -1))
+	  				contact.participant.push(project.id)
+	  			break;
   			default:
-  				this.contactsService.updateContact(contacts.find(x=>x.id==i)).subscribe();
   				break;
   		}
-  		contacts.find(x=>x.id==i).project.push(project.id);
   		this.contactsService.updateContact(contacts.find(x=>x.id==i)).subscribe();
   	}
 
   	addContactToCompany(i: number, contact: Contact, companies: Company[]): void{
-  		companies.find(x=>x.id==i).contact.push(contact.id);
-  		this.companiesService.updateCompany(companies.find(x=>x.id==i)).subscribe();
+  		let company = companies.find(x=>x.id==i);
+  		if(!(company.contact.indexOf(contact.id) > -1))
+  			company.contact.push(contact.id);
+  		this.companiesService.updateCompany(company).subscribe();
   	}
 }

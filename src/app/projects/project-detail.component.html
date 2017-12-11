@@ -55,19 +55,23 @@
 			<hr>
 			<div>
 				<h3 class="contact">Névjegyek</h3>
-				<h4 *ngIf="accountables.length > 0">Felelős(ök):</h4>
+				<ng-template [ngIf]="accountables.length == 1"><h4>Felelős:</h4></ng-template>
+				<ng-template [ngIf]="accountables.length > 1"><h4>Felelősök:</h4></ng-template>
 				<ul *ngFor="let accountable of accountables">
 					<li>{{accountable}}</li>
 				</ul>
-				<h4 *ngIf="owners.length > 0">Tulajdonos(ok):</h4>
+				<ng-template [ngIf]="owners.length == 1"><h4>Tulajdonos:</h4></ng-template>
+				<ng-template [ngIf]="owners.length > 1"><h4>Tulajdonosok:</h4></ng-template>
 				<ul *ngFor="let owner of owners">
 					<li>{{owner}}</li>
 				</ul>
-				<h4 *ngIf="observers.length > 0">Megfigyelő(k):</h4>
+				<ng-template [ngIf]="observers.length == 1"><h4>Megfigyelő:</h4></ng-template>
+				<ng-template [ngIf]="observers.length > 1"><h4>Megfigyelők:</h4></ng-template>
 				<ul *ngFor="let observer of observers">
 					<li>{{observer}}</li>
 				</ul>
-				<h4 *ngIf="participants.length > 0">Résztvevő(k):</h4>
+				<ng-template [ngIf]="participants.length == 1"><h4>Résztvevő:</h4></ng-template>
+				<ng-template [ngIf]="participants.length > 1"><h4>Résztvevők:</h4></ng-template>
 				<ul *ngFor="let participant of participants">
 					<li>{{participant}}</li>
 				</ul>

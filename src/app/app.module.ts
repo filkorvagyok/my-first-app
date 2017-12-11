@@ -20,7 +20,7 @@ import { DateTimePickerModule } from 'ng-pick-datetime';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { CompaniesModule }            from './companies/companies.module';
+import { CompaniesModule }            from './modules/companies.module';
 import { ProjectsModule }            from './projects/projects.module';
 import { ContactsModule }            from './contacts/contacts.module';
 

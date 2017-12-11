@@ -3,15 +3,15 @@ import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
-import { CompaniesComponent }    from './companies.component';
-import { CompanyDetailComponent }  from './company-detail.component';
-import { CompanyCommonComponent }  from './company-common.component';
-import { CompanyEditComponent } from './company-edit.component';
+import { CompaniesComponent }    from '../components/companies/companies/companies.component';
+import { CompanyDetailComponent }  from '../components/companies/company-detail/company-detail.component';
+import { CompanyCommonComponent }  from '../components/companies/company-common/company-common.component';
+import { CompanyEditComponent } from '../components/companies/company-edit/company-edit.component';
 
-import { CompaniesService } from './companies.service';
+import { CompaniesService } from '../services/companies.service';
 import { SharedService } from '../shared.service';
 
-import { CompanyRoutingModule } from './companies-routing.module';
+import { CompanyRoutingModule } from '../routers/companies-routing.module';
 
 import {
   MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,

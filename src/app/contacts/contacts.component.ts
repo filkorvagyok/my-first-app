@@ -27,6 +27,8 @@ export class ContactsComponent implements OnInit{
 
 	ngOnInit(): void{
 		this.getConctast();
+		this.sharedService.getCompanies();
+		this.sharedService.getProjects();
 	}
 
 	getConctast(): void{
@@ -83,6 +85,14 @@ export class ContactsComponent implements OnInit{
 		this.contacts = this.contacts.filter(h => h !== contact);
 		if(contact.company.length > 0)
 			this.sharedService.deleteContactFromCompany(contact).subscribe();
+		if(contact.accountable.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 0).subscribe();
+		if(contact.owner.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 1).subscribe();
+		if(contact.observer.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 2).subscribe();
+		if(contact.participant.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 3).subscribe();
     	this.contactsService.delete(contact).subscribe();
 	}
 

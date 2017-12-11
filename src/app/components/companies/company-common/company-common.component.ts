@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Company } from '../classes/company';
-import { CompaniesService } from './companies.service';
+import { Company } from '../../../classes/company';
+import { CompaniesService } from '../../../services/companies.service';
 
 @Component({
   selector: 'company-common',

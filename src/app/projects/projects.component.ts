@@ -25,6 +25,8 @@ export class ProjectsComponent implements OnInit{
 
 	ngOnInit(): void{
 		this.getProjects();
+		this.sharedService.getContacts();
+		this.sharedService.getProjects();
 	}
 
 	showChbox(): void{
@@ -96,6 +98,14 @@ export class ProjectsComponent implements OnInit{
 		this.projects = this.projects.filter(h => h !== project);
 		if(project.company.length > 0)
 			this.sharedService.deleteProjectFromCompany(project).subscribe();
+		if(project.accountable.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 0).subscribe();
+		if(project.owner.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 1).subscribe();
+		if(project.observer.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 2).subscribe();
+		if(project.participant.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 3).subscribe();
     	this.projectsService.delete(project).subscribe();
 	}
 

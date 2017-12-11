@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Company } from './classes/company';
 import { Project } from './classes/project';
 import { Contact } from './classes/contact';
-import { CompaniesService } from './companies/companies.service';
+import { CompaniesService } from './services/companies.service';
 import { ProjectsService } from './projects/projects.service';
 import { ContactsService } from './contacts/contacts.service';
 import { Observable } from 'rxjs/Observable';
@@ -176,11 +176,10 @@ export class SharedService{
 	}
 
 	deleteProjectFromCompany(project: Project): Observable<Company[]>{
-		console.log("Projekt információ gyűjtés folyamatban...");
 		const deletingProjects: Array<Observable<Company>> = [];
-				this.companies
-					.filter(company => company.project.includes(project.id))
-					.forEach(company => deletingProjects.push(this.deletePFC(project, company)))
+		this.companies
+			.filter(company => company.project.includes(project.id))
+			.forEach(company => deletingProjects.push(this.deletePFC(project, company)))
 		return Observable.forkJoin(deletingProjects);
 	}
 
@@ -188,6 +187,61 @@ export class SharedService{
 		let index = company.project.indexOf(project.id);
 		company.project.splice(index,1);
 		return this.companiesService.updateCompany(company);
+	}
+
+	deleteProjectFromContact(project: Project, which: number): Observable<Contact[]>{
+		const deletingProjects: Array<Observable<Contact>> = [];
+		switch (which) {
+			case 0:
+				this.contacts
+					.filter(contact => contact.accountable.includes(project.id))
+					.forEach(contact => deletingProjects.push(this.deletePFCon(project, contact, 0)))
+				break;
+			case 1:
+				this.contacts
+					.filter(contact => contact.owner.includes(project.id))
+					.forEach(contact => deletingProjects.push(this.deletePFCon(project, contact, 1)))
+				break;
+			case 2:
+				this.contacts
+					.filter(contact => contact.observer.includes(project.id))
+					.forEach(contact => deletingProjects.push(this.deletePFCon(project, contact, 2)))
+				break;
+			case 3:
+				this.contacts
+					.filter(contact => contact.participant.includes(project.id))
+					.forEach(contact => deletingProjects.push(this.deletePFCon(project, contact, 3)))
+				break;
+			default:
+				break;
+		}
+		return Observable.forkJoin(deletingProjects);
+	}
+
+	deletePFCon(project: Project, contact: Contact, which: number): Observable<Contact>{
+		let index: number;
+		switch (which) {
+			case 0:
+				index = contact.accountable.indexOf(project.id);
+				contact.accountable.splice(index,1);
+				break;
+			case 1:
+				index = contact.owner.indexOf(project.id);
+				contact.owner.splice(index,1);
+				break;
+			case 2:
+				index = contact.observer.indexOf(project.id);
+				contact.observer.splice(index,1);
+				break;
+			case 3:
+				index = contact.participant.indexOf(project.id);
+				contact.participant.splice(index,1);
+				break;
+			default:
+				break;
+		}
+		
+		return this.contactsService.updateContact(contact);
 	}
 
 	deleteContactFromCompany(contact: Contact): Observable<Company[]>{
@@ -202,6 +256,61 @@ export class SharedService{
 		let index = company.contact.indexOf(contact.id);
 		company.contact.splice(index,1);
 		return this.companiesService.updateCompany(company);
+	}
+
+	deleteContactFromProject(contact: Contact, which: number): Observable<Project[]>{
+		const deletingContacts: Array<Observable<Project>> = [];
+		switch (which) {
+			case 0:
+				this.projects
+					.filter(project => project.accountable.includes(contact.id))
+					.forEach(project => deletingContacts.push(this.deleteConFP(contact, project, 0)))
+				break;
+			case 1:
+				this.projects
+					.filter(project => project.owner.includes(contact.id))
+					.forEach(project => deletingContacts.push(this.deleteConFP(contact, project, 1)))
+				break;
+			case 2:
+				this.projects
+					.filter(project => project.observer.includes(contact.id))
+					.forEach(project => deletingContacts.push(this.deleteConFP(contact, project, 2)))
+				break;
+			case 3:
+				this.projects
+					.filter(project => project.participant.includes(contact.id))
+					.forEach(project => deletingContacts.push(this.deleteConFP(contact, project, 3)))
+				break;
+			default:
+				break;
+		}
+		return Observable.forkJoin(deletingContacts);
+	}
+
+	deleteConFP(contact: Contact, project: Project, which: number): Observable<Project>{
+		let index: number;
+		switch (which) {
+			case 0:
+				index = project.accountable.indexOf(contact.id);
+				project.accountable.splice(index,1);
+				break;
+			case 1:
+				index = project.owner.indexOf(contact.id);
+				project.owner.splice(index,1);
+				break;
+			case 2:
+				index = project.observer.indexOf(contact.id);
+				project.observer.splice(index,1);
+				break;
+			case 3:
+				index = project.participant.indexOf(contact.id);
+				project.participant.splice(index,1);
+				break;
+			default:
+				break;
+		}
+		
+		return this.projectsService.updateProject(project);
 	}
 
 	deleteCompanyFromProject(company: Company): Observable<Project[]>{

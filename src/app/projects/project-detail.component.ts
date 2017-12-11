@@ -133,6 +133,14 @@ export class ProjectDetailComponent implements OnInit{
 	delete(project: Project): void {
 		if(project.company.length > 0)
 			this.sharedService.deleteProjectFromCompany(project).subscribe();
+		if(project.accountable.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 0).subscribe();
+		if(project.owner.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 1).subscribe();
+		if(project.observer.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 2).subscribe();
+		if(project.participant.length > 0)
+			this.sharedService.deleteProjectFromContact(project, 3).subscribe();
 		this.projectsService.delete(project).subscribe();
 		this.location.back();
 	}

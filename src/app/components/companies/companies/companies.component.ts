@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Company } from '../classes/company';
-import { Project } from '../classes/project';
-import { CompaniesService } from './companies.service';
-import { SharedService } from '../shared.service';
+import { Company } from '../../../classes/company';
+import { Project } from '../../../classes/project';
+import { CompaniesService } from '../../../services/companies.service';
+import { SharedService } from '../../../shared.service';
 
 
 @Component({
 	selector: 'my-companies',
 	templateUrl: './companies.component.html',
-	styleUrls: ['../styles/display.component.css']
+	styleUrls: ['../../../styles/display.component.css']
 })
 
 export class CompaniesComponent implements OnInit{
@@ -90,6 +90,7 @@ export class CompaniesComponent implements OnInit{
 
 	ngOnInit(): void{
 		this.sharedService.getProjects();
+		this.sharedService.getContacts();
 		this.getCompanies();
 	}
 

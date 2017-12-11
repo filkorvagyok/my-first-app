@@ -4,16 +4,16 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 
-import { Company }        from '../classes/company';
-import { Project }        from '../classes/project';
-import { Contact }        from '../classes/contact';
-import { CompaniesService } from './companies.service';
-import { SharedService } from '../shared.service';
+import { Company }        from '../../../classes/company';
+import { Project }        from '../../../classes/project';
+import { Contact }        from '../../../classes/contact';
+import { CompaniesService } from '../../../services/companies.service';
+import { SharedService } from '../../../shared.service';
 
 @Component({
   selector: 'company-detail',
   templateUrl: './company-detail.component.html',
-  styleUrls: [ '../styles/detail.component.css' ]
+  styleUrls: [ '../../../styles/detail.component.css' ]
 })
 export class CompanyDetailComponent implements OnInit {
   @Input() company: Company;

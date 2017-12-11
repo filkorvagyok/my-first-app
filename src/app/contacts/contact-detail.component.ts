@@ -98,7 +98,56 @@ export class ContactDetailComponent implements OnInit{
 		        else{
 		        	this.isLoading += 1;
 		        }
+		        
 		});
+	}
+
+	compare(accountables: string[], observers: string[], owner: string[], participant: string[]): string[]{
+		let projects: string[] = [];
+		let num = 0;
+		for(let i=0; i < accountables.length; i++)
+		{
+			projects[i] = accountables[i] + "- Felelős";
+			if(owner.includes(accountables[i]))
+				projects[i] += ", Tulajdonos";
+			if(observers.includes(accountables[i]))
+				projects[i] += ", Megfigyelő";
+			if(participant.includes(accountables[i]))
+				projects[i] += ", Résztvevő";
+			num ++;
+		}
+		for(let i=0; i < owner.length; i++)
+		{
+			num++;
+			if(!accountables.includes(owner[i]))
+			{
+				projects[num] = owner[i] + "- Tulajdonos"
+				if(observers.includes(owner[i]))
+					projects[num] += ", Megfigyelő";
+				if(participant.includes(owner[i]))
+					projects[num] += ", Résztvevő";
+			}
+
+		}
+		for(let i=0; i < observers.length; i++)
+		{
+			num++;
+			if(!accountables.includes(observers[i]) && !owner.includes(observers[i]))
+			{
+				projects[num] = observers[i] + "- Megfigyelő";
+				if(participant.includes(observers[i]))
+					projects[num] += ", Résztvevő";
+			}
+		}
+		for(let i=0; i < participant.length; i++)
+		{
+			num++;
+			if(!accountables.includes(participant[i]) && !owner.includes(participant[i]) && !observers.includes(participant[i]))
+			{
+				projects[num] = observers[i] + "- Megfigyelő";
+			}
+		}
+		return projects;
 	}
 
 	getCompanies(contact: Contact): void{
@@ -134,6 +183,14 @@ export class ContactDetailComponent implements OnInit{
 	delete(contact: Contact): void {
 		if(contact.company.length > 0)
 			this.sharedService.deleteContactFromCompany(contact).subscribe();
+		if(contact.accountable.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 0).subscribe();
+		if(contact.owner.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 1).subscribe();
+		if(contact.observer.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 2).subscribe();
+		if(contact.participant.length > 0)
+			this.sharedService.deleteContactFromProject(contact, 3).subscribe();
 		this.contactsService.delete(contact).subscribe();
 		this.location.back();
 	}

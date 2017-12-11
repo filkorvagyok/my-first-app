@@ -84,17 +84,17 @@ export class ProjectEditComponent implements OnInit {
 		if(project.observer)
 		{
 			project.observer.forEach(
-				observer => this.addProjectToContact(observer, project, 0))
+				observer => this.addProjectToContact(observer, project, 1))
 		}
 		if(project.owner)
 		{
 			project.owner.forEach(
-				owner => this.addProjectToContact(owner, project, 0))
+				owner => this.addProjectToContact(owner, project, 2))
 		}
 		if(project.participant)
 		{
 			project.participant.forEach(
-				participant => this.addProjectToContact(participant, project, 0))
+				participant => this.addProjectToContact(participant, project, 3))
 		}
   	}
 

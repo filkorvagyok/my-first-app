@@ -7,7 +7,7 @@ import * as $ from 'jquery';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
-import { InMemoryDataService } from './in-memory-data.service';
+import { InMemoryDataService } from './shared/services/in-memory-data.service';
 
 import {
   MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,
@@ -20,15 +20,15 @@ import { DateTimePickerModule } from 'ng-pick-datetime';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { CompaniesModule }            from './modules/companies.module';
-import { ProjectsModule }            from './projects/projects.module';
-import { ContactsModule }            from './contacts/contacts.module';
+import { CompaniesModule }            from './modules/companies/companies.module';
+import { ProjectsModule }            from './modules/projects/projects.module';
+import { ContactsModule }            from './modules/contacts/contacts.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent }   from './login-register/login.component';
-import { RegisterComponent }   from './login-register/register.component';
-import { ResetPasswordComponent }   from './login-register/reset-password.component';
-import { DeleteDialog }   from './delete-dialog';
+import { LoginComponent }   from './modules/login/components/login.component';
+import { RegisterComponent }   from './modules/register/components/register.component';
+import { ResetPasswordComponent }   from './modules/reset-password/components/reset-password.component';
+import { DeleteDialog }   from './modules/delete-dialog/components/delete-dialog';
 
 import { AppRoutingModule }     from './app-routing.module';
 

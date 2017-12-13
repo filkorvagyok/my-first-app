@@ -1,9 +1,9 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent }   from './login-register/login.component';
-import { RegisterComponent }   from './login-register/register.component';
-import { ResetPasswordComponent }   from './login-register/reset-password.component';
+import { LoginComponent }   from './modules/login/components/login.component';
+import { RegisterComponent }   from './modules/register/components/register.component';
+import { ResetPasswordComponent }   from './modules/reset-password/components/reset-password.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/login', pathMatch: 'full' },

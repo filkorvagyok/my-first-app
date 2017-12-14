@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit, Input }        from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit }        from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -8,7 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { Project }        from '../../../../shared/classes/project';
 import { Company }        from '../../../../shared/classes/company';
 import { Contact }        from '../../../../shared/classes/contact';
-import { ProjectsService } from '../../projects.service';
+import { ProjectsApiService } from '../../projects-api.service';
+import { ProjectsDataHandler } from '../../projects-datahandler.service';
 import { SharedService } from '../../../../shared/services/shared.service';
 
 @Component({
@@ -18,7 +19,6 @@ import { SharedService } from '../../../../shared/services/shared.service';
 })
 
 export class ProjectDetailComponent implements OnInit{
-	@Input() project: Project;
 	companies: Company[] = [];
 	accountables: string[] = [];
 	observers: string[] = [];
@@ -27,7 +27,8 @@ export class ProjectDetailComponent implements OnInit{
 	isLoading: number = 0;
 
 	constructor(
-		private projectsService: ProjectsService,
+		private projectsApiService: ProjectsApiService,
+		private projectsDataHandler: ProjectsDataHandler,
 		private sharedService: SharedService,
 		private route: ActivatedRoute,
 		private location: Location,
@@ -35,69 +36,64 @@ export class ProjectDetailComponent implements OnInit{
 	) {}
 
 	ngOnInit(): void {
+		this.route.paramMap.subscribe(params => this.projectsDataHandler.getProject(Number(params.get('id'))));
 		this.sharedService.getCompanies();
 		this.sharedService.getContacts();
-		this.getProject();
 	}
 
 	getProject(): void{
-		this.route.paramMap
-			.switchMap((params: ParamMap) => this.projectsService.getProject(+params.get('id')))
-			.subscribe(project => {
-				this.project = project
-				if(project.company.length > 0)
-		        {
-		          this.getCompanies(project);
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-		        if(project.accountable.length > 0)
-		        {
-		        	this.getContacts(project, 0)
-		        		.subscribe(contact => {
-		        			this.accountables = contact.map(x=>x.full_name)
-		        			this.isLoading += 1;
-		        			console.log(this.accountables);
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-		        if(project.observer.length > 0)
-		        {
-		        	this.getContacts(project, 1)
-		        		.subscribe(contact => {
-		        			this.observers = contact.map(x=>x.full_name)
-		        			this.isLoading += 1;
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-		        if(project.owner.length > 0)
-		        {
-		        	this.getContacts(project, 2)
-		        		.subscribe(contact => {
-		        			this.owners = contact.map(x=>x.full_name)
-		        			this.isLoading += 1;
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-		        if(project.participant.length > 0)
-		        {
-		        	this.getContacts(project, 3)
-		        		.subscribe(contact => {
-		        			this.participants = contact.map(x=>x.full_name)
-		        			this.isLoading += 1;
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-			});
+		if(this.projectsDataHandler.project.company.length > 0)
+        {
+          this.getCompanies(this.projectsDataHandler.project);
+        }
+        else{
+        	this.isLoading += 1;
+        }
+        if(this.projectsDataHandler.project.accountable.length > 0)
+        {
+        	this.getContacts(this.projectsDataHandler.project, 0)
+        		.subscribe(contact => {
+        			this.accountables = contact.map(x=>x.full_name)
+        			this.isLoading += 1;
+        			console.log(this.accountables);
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
+        if(this.projectsDataHandler.project.observer.length > 0)
+        {
+        	this.getContacts(this.projectsDataHandler.project, 1)
+        		.subscribe(contact => {
+        			this.observers = contact.map(x=>x.full_name)
+        			this.isLoading += 1;
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
+        if(this.projectsDataHandler.project.owner.length > 0)
+        {
+        	this.getContacts(this.projectsDataHandler.project, 2)
+        		.subscribe(contact => {
+        			this.owners = contact.map(x=>x.full_name)
+        			this.isLoading += 1;
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
+        if(this.projectsDataHandler.project.participant.length > 0)
+        {
+        	this.getContacts(this.projectsDataHandler.project, 3)
+        		.subscribe(contact => {
+        			this.participants = contact.map(x=>x.full_name)
+        			this.isLoading += 1;
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
 	}
 
 	getCompanies(project: Project): void{
@@ -116,7 +112,7 @@ export class ProjectDetailComponent implements OnInit{
 	}
 
 	gotoEdit(): void{
-		this.router.navigate(['/project/edit', this.project.id]);
+		this.router.navigate(['/project/edit', this.projectsDataHandler.project.id]);
 	}
 
 	openDeleteDialog(): void{
@@ -125,7 +121,7 @@ export class ProjectDetailComponent implements OnInit{
 			console.log('The dialog was closed');
 			if(dialogRef.componentInstance.delete)
 			{
-				this.delete(this.project);
+				this.delete(this.projectsDataHandler.project);
 			}
 		});
 	}
@@ -141,7 +137,7 @@ export class ProjectDetailComponent implements OnInit{
 			this.sharedService.deleteProjectFromContact(project, 2).subscribe();
 		if(project.participant.length > 0)
 			this.sharedService.deleteProjectFromContact(project, 3).subscribe();
-		this.projectsService.delete(project).subscribe();
+		this.projectsApiService.delete(project).subscribe();
 		this.location.back();
 	}
 }

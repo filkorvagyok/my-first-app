@@ -1,6 +1,5 @@
-import 'rxjs/add/operator/switchMap';
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -9,7 +8,8 @@ import { Contact } from '../../../../shared/classes/contact';
 import { Company }        from '../../../../shared/classes/company';
 import { Project }        from '../../../../shared/classes/project';
 
-import { ContactsService } from '../../contacts.service';
+import { ContactsApiService } from '../../contacts-api.service';
+import { ContactsDataHandler } from '../../contacts-datahandler.service';
 import { SharedService } from '../../../../shared/services/shared.service';
 
 
@@ -19,7 +19,6 @@ import { SharedService } from '../../../../shared/services/shared.service';
   styleUrls: [ '../../../../shared/styles/detail.component.css' ]
 })
 export class ContactDetailComponent implements OnInit{
-	@Input() contact: Contact;
 	companies: Company[] = [];
 	isLoading: number = 0;
 	accountables: string[] = [];
@@ -28,7 +27,8 @@ export class ContactDetailComponent implements OnInit{
 	participants: string[] = [];
 
 	constructor(
-	    private contactsService: ContactsService,
+	    private contactsApiService: ContactsApiService,
+	    private contactsDataHandler: ContactsDataHandler,
 	    private sharedService: SharedService,
 	    private route: ActivatedRoute,
 	    private location: Location,
@@ -36,70 +36,65 @@ export class ContactDetailComponent implements OnInit{
 	) {}
 
 	ngOnInit(): void{
+		this.route.paramMap.subscribe(params => this.contactsDataHandler.getContact(Number(params.get('id'))));
 		this.sharedService.getCompanies();
 		this.sharedService.getProjects();
-		this.getContact();
 	}
 
 	getContact(): void{
-		this.route.paramMap
-		.switchMap((params: ParamMap) => this.contactsService.getContact(+params.get('id')))
-		.subscribe(contact => {
-			this.contact = contact;
-			console.log(contact);
-			if(contact.company.length > 0)
-		        {
-		          this.getCompanies(contact)
-		        }
-		    else{
-		        	this.isLoading += 1;
-		        }
-		        if(contact.accountable.length > 0)
-		        {
-		        	this.getProjects(contact, 0)
-		        		.subscribe(project => {
-		        			this.accountables = project.map(x=>x.name)
-		        			this.isLoading += 1;
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-		        if(contact.observer.length > 0)
-		        {
-		        	this.getProjects(contact, 1)
-		        		.subscribe(project => {
-		        			this.observers = project.map(x=>x.name)
-		        			this.isLoading += 1;
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-		        if(contact.owner.length > 0)
-		        {
-		        	this.getProjects(contact, 2)
-		        		.subscribe(project => {
-		        			this.owners = project.map(x=>x.name)
-		        			this.isLoading += 1;
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
-		        if(contact.participant.length > 0)
-		        {
-		        	this.getProjects(contact, 3)
-		        		.subscribe(project => {
-		        			this.participants = project.map(x=>x.name)
-		        			this.isLoading += 1;
-		        		});
-		        }
-		        else{
-		        	this.isLoading += 1;
-		        }
+		if(this.contactsDataHandler.contact.company.length > 0)
+        {
+			this.getCompanies(this.contactsDataHandler.contact)
+        }
+	    else{
+	        	this.isLoading += 1;
+		}
+        if(this.contactsDataHandler.contact.accountable.length > 0)
+        {
+        	this.getProjects(this.contactsDataHandler.contact, 0)
+        		.subscribe(project => {
+        			this.accountables = project.map(x=>x.name)
+        			this.isLoading += 1;
+        			console.log(this.accountables);
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
+        if(this.contactsDataHandler.contact.observer.length > 0)
+        {
+        	this.getProjects(this.contactsDataHandler.contact, 1)
+        		.subscribe(project => {
+        			this.observers = project.map(x=>x.name)
+        			this.isLoading += 1;
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
+        if(this.contactsDataHandler.contact.owner.length > 0)
+        {
+        	this.getProjects(this.contactsDataHandler.contact, 2)
+        		.subscribe(project => {
+        			this.owners = project.map(x=>x.name)
+        			this.isLoading += 1;
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
+        if(this.contactsDataHandler.contact.participant.length > 0)
+        {
+        	this.getProjects(this.contactsDataHandler.contact, 3)
+        		.subscribe(project => {
+        			this.participants = project.map(x=>x.name)
+        			this.isLoading += 1;
+        		});
+        }
+        else{
+        	this.isLoading += 1;
+        }
 		        
-		});
 	}
 
 	compare(accountables: string[], observers: string[], owner: string[], participant: string[]): string[]{
@@ -152,7 +147,7 @@ export class ContactDetailComponent implements OnInit{
 
 	getCompanies(contact: Contact): void{
 		this.sharedService
-			.getCompaniesForContactDetail(this.contact)
+			.getCompaniesForContactDetail(this.contactsDataHandler.contact)
 			.subscribe(companies => {this.companies = companies; this.isLoading += 1;});
 	}
 
@@ -166,7 +161,7 @@ export class ContactDetailComponent implements OnInit{
 	}
 
 	gotoEdit(): void{
-		this.router.navigate(['/people/edit', this.contact.id]);
+		this.router.navigate(['/people/edit', this.contactsDataHandler.contact.id]);
 	}
 
 	openDeleteDialog(): void{
@@ -175,7 +170,7 @@ export class ContactDetailComponent implements OnInit{
 			console.log('The dialog was closed');
 			if(dialogRef.componentInstance.delete)
 			{
-				this.delete(this.contact);
+				this.delete(this.contactsDataHandler.contact);
 			}
 		});
 	}
@@ -191,7 +186,7 @@ export class ContactDetailComponent implements OnInit{
 			this.sharedService.deleteContactFromProject(contact, 2).subscribe();
 		if(contact.participant.length > 0)
 			this.sharedService.deleteContactFromProject(contact, 3).subscribe();
-		this.contactsService.delete(contact).subscribe();
+		this.contactsApiService.delete(contact).subscribe();
 		this.location.back();
 	}
 }

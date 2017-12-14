@@ -11,6 +11,7 @@ import { CompanyEditComponent } from './components/company-edit/company-edit.com
 import { CompaniesApiService } from './companies-api.service';
 import { CompaniesDataHandler } from './companies-datahandler.service';
 import { SharedService } from '../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
 
 import { CompanyRoutingModule } from './companies-routing.module';
 
@@ -49,7 +50,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     CompanyCommonComponent,
     CompanyEditComponent
   ],
-  providers: [CompaniesApiService, CompaniesDataHandler, SharedService]
+  providers: [CompaniesApiService, CompaniesDataHandler, SharedService, SharedGetDataHandler]
     //{provide: APP_INITIALIZER, useFactory: (cs:CompaniesService) => () => cs.getCompanies(), deps:[CompaniesService], multi: true},
 })
 export class CompaniesModule {}

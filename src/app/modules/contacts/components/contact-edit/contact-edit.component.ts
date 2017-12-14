@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 
 import { Contact } from '../../../../shared/classes/contact';
 import { Company } from '../../../../shared/classes/company';
-import { ContactsService } from '../../contacts.service';
+import { ContactsApiService } from '../../contacts-api.service';
 import { SharedService } from '../../../../shared/services/shared.service';
 
 
@@ -14,7 +14,7 @@ import { SharedService } from '../../../../shared/services/shared.service';
 })
 export class ContactEditComponent implements OnInit{
 	constructor(
-		private contactsService: ContactsService,
+		private contactsApiService: ContactsApiService,
 		private sharedService: SharedService,
 		private location: Location
 	) {}
@@ -36,7 +36,7 @@ export class ContactEditComponent implements OnInit{
 		let array = this.contact.company;
 		for (var i = 0; i < array.length; i++)
         			this.addContactToCompany(array[i]);
-		this.contactsService.updateContact(this.contact)
+		this.contactsApiService.updateContact(this.contact)
 			.subscribe(() => this.goBack());
 	}
 
@@ -47,10 +47,9 @@ export class ContactEditComponent implements OnInit{
 
 	add(contact: Contact): void{
 		let array = this.contact.company;
-    	this.contactsService.addContact(contact)
+    	this.contactsApiService.addContact(contact)
 			.subscribe(() => {
-				for (var i = 0; i < array.length; i++)
-        			this.addContactToCompany(array[i]);
+        		array.forEach(arr => this.addContactToCompany(arr))
 				this.goBack()
 			});
   	}

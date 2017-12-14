@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Company } from '../../../../shared/classes/company';

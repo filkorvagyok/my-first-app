@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Project } from '../../../../shared/classes/project';
-import { ProjectsService } from '../../projects.service';
+import { ProjectsDataHandler } from '../../projects-datahandler.service';
 
 @Component({
   selector: 'project-common',
@@ -10,32 +10,33 @@ import { ProjectsService } from '../../projects.service';
 })
 
 export class ProjectCommonComponent implements OnInit{
-	@Input() project: Project;
 	edit = false;
 
 	constructor(
-		private projectsService: ProjectsService,
+		private projectsDataHandler: ProjectsDataHandler,
 		private route: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
-		let path = this.route.snapshot.routeConfig.path;
-		let arr = this.route.snapshot.paramMap.keys;
-		this.project = new Project;
-		if(path == "project/new")
+		if(this.route.snapshot.routeConfig.path == "project/new")
 		{ 
-			this.project = this.projectsService.setDefaultProject(this.project);
-			for (var i = 0; i < arr.length; i++) {
-				this.project.company.push(Number(this.route.snapshot.paramMap.get(arr[i])));
-			}
-			console.log(this.project);
+			this.setNewContact();
 		}
 		else
 		{
-			this.edit = true;
-			this.route.paramMap
-		    	.switchMap((params: ParamMap) => this.projectsService.getProject(+params.get('id')))
-		    	.subscribe(project => this.project = project);
+			this.setEditContact();
 		}
+	}
+
+	setNewContact(): void{
+		let arr = this.route.snapshot.paramMap.keys;
+		this.projectsDataHandler.project = new Project;
+		this.projectsDataHandler.project = this.projectsDataHandler.setDefaultProject(this.projectsDataHandler.project);
+		arr.forEach(array => this.projectsDataHandler.project.company.push(Number(this.route.snapshot.paramMap.get(array))));
+	}
+
+	setEditContact(): void{
+		this.edit = true;
+		this.route.paramMap.subscribe(params => this.projectsDataHandler.getProject(Number(params.get('id'))));
 	}
 }

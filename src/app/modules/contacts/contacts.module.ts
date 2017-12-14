@@ -8,7 +8,8 @@ import { ContactDetailComponent }  from './components/contact-detail/contact-det
 import { ContactCommonComponent }  from './components/contact-common/contact-common.component';
 import { ContactEditComponent } from './components/contact-edit/contact-edit.component';
 
-import { ContactsService } from './contacts.service';
+import { ContactsApiService } from './contacts-api.service';
+import { ContactsDataHandler } from './contacts-datahandler.service';
 import { SharedService } from '../../shared/services/shared.service';
 
 import { ContactRoutingModule } from './contacts-routing.module';
@@ -48,6 +49,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ContactCommonComponent,
     ContactEditComponent
   ],
-  providers: [ContactsService, SharedService]
+  providers: [ContactsApiService, ContactsDataHandler, SharedService]
 })
 export class ContactsModule {}

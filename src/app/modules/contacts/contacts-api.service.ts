@@ -11,7 +11,7 @@ const httpOptions = {
 
 @Injectable()
 
-export class ContactsService{
+export class ContactsApiService{
 
 	private contactsUrl = 'api/contacts';
 	constructor(
@@ -70,25 +70,5 @@ export class ContactsService{
 			// Let the app keep running by returning an empty result.
 			return of(result as T);
 		};
-	}
-
-	setDefaultContact(contact: Contact): Contact{
-		contact.accountable = [];
-		contact.company = [];
-		contact.email = "";
-		contact.forename = "";
-		contact.full_name = "";
-		contact.greeting = "";
-		contact.middle_name = "";
-		contact.nickname = "";
-		contact.observer = [];
-		contact.owner = [];
-		contact.participant = [];
-		contact.phone = "";
-		contact.primary_communication_chanel = "";
-		contact.rank = "";
-		contact.selected = false;
-		contact.surname = "";
-		return contact;
 	}
 }

@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit, Input }        from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit }        from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { Contact }        from '../../../../shared/classes/contact';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
 import { SharedService } from '../../../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 
 @Component({
   selector: 'company-detail',
@@ -27,6 +28,7 @@ export class CompanyDetailComponent implements OnInit {
     private companiesApiService: CompaniesApiService,
     private companiesDataHandler: CompaniesDataHandler,
     private sharedService: SharedService,
+    private sharedGetDataHandler: SharedGetDataHandler,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router
@@ -34,23 +36,31 @@ export class CompanyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => this.companiesDataHandler.getCompany(Number(params.get('id'))));
-    this.sharedService.getProjects();
-    this.sharedService.getContacts();
+    this.sharedGetDataHandler.getProjects();
+    this.sharedGetDataHandler.getContacts();
+    /*this.sharedService.getProjects();
+    this.sharedService.getContacts();*/
   }
 
   getCompany(): void{
+    console.log(this.companiesDataHandler.company);
     if(this.companiesDataHandler.company.project.length > 0)
     {
-      this.getProjects(this.companiesDataHandler.company);
+      //this.getProjects(this.companiesDataHandler.company);
+      this.sharedGetDataHandler.getProjectsForCompanyDetail(this.companiesDataHandler.company);
     }
-    if(this.companiesDataHandler.company.contact.length > 0)
+    else
+    {
+      this.sharedGetDataHandler.projects = [];
+    }
+    /*if(this.companiesDataHandler.company.contact.length > 0)
     {
       this.getContacts(this.companiesDataHandler.company);
     }
     if(this.companiesDataHandler.company.project.length == 0)
       this.isLoadingProjects = false;
     if(this.companiesDataHandler.company.contact.length == 0)
-      this.isLoadingContacts = false;
+      this.isLoadingContacts = false;*/
   }
 
   getProjects(company: Company): void{

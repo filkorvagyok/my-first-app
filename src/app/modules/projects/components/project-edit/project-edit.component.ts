@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Project } from '../../../../shared/classes/project';
 import { Company } from '../../../../shared/classes/company';
 import { Contact } from '../../../../shared/classes/contact';
-import { ProjectsService } from '../../projects.service';
+import { ProjectsApiService } from '../../projects-api.service';
 import { SharedService } from '../../../../shared/services/shared.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { SharedService } from '../../../../shared/services/shared.service';
 
 export class ProjectEditComponent implements OnInit {
 	constructor(
-		private projectsService: ProjectsService,
+		private projectsApiService: ProjectsApiService,
 		private sharedService: SharedService,
 		private location: Location
 	) {}
@@ -52,12 +52,12 @@ export class ProjectEditComponent implements OnInit {
 			owner => this.addProjectToContact(owner, this.project, 2));
 		participants.forEach(
 			participant => this.addProjectToContact(participant, this.project, 3));
-      this.projectsService.updateProject(this.project)
+      this.projectsApiService.updateProject(this.project)
         .subscribe(() => this.goBack());
 	}
 
 	add(project: Project): void{
-		this.projectsService.addProject(project)
+		this.projectsApiService.addProject(project)
 			.subscribe(() => {
 				this.addToCompany(project);
 				this.addToContact(project);

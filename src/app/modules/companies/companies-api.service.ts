@@ -1,18 +1,3 @@
-/*import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { Company } from './company';
-import { COMPANIES } from './companies';
-
-@Injectable()
-
-export class CompaniesService {
-
-  getCompanies(): Promise<Company[]> {
-    return Promise.resolve(COMPANIES);
-  }
-}*/
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Company } from '../../shared/classes/company';
@@ -44,12 +29,6 @@ export class CompaniesApiService{
 	constructor(
     private http: HttpClient,
     ){}
-
-
-  /*getCompanies(): Observable<Company[]>{
-    return this.http.get("http://atwork.djw.hu/filkortamas/json/companies.json")
-      .map((res:Response) => res.json());
-  }*/
 
 	getCompanies (): Observable<Company[]> {
     return this.http.get<Company[]>(this.companiesUrl)
@@ -115,16 +94,6 @@ export class CompaniesApiService{
         catchError(this.handleError<Company>('addHero'))
       );
   }
-
-
-	/*deleteCompany (company: Company | number): Observable<Company> {
-    const id = typeof company === 'number' ? company : company.id;
-    const url = `${this.companiesUrl}/${id}`;
-
-    return this.http.delete(url, httpOptions)
-      .map(()=>null)
-      .catch(this.handleError);
-  }*/
 
   updateCompany (company: Company): Observable<any> {
     return this.http.put(this.companiesUrl, company, httpOptions).pipe(

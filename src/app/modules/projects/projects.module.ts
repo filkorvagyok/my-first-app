@@ -8,7 +8,8 @@ import { ProjectDetailComponent }  from './components/project-detail/project-det
 import { ProjectCommonComponent }  from './components/project-common/project-common.component';
 import { ProjectEditComponent } from './components/project-edit/project-edit.component';
 
-import { ProjectsService } from './projects.service';
+import { ProjectsApiService } from './projects-api.service';
+import { ProjectsDataHandler } from './projects-datahandler.service';
 import { SharedService } from '../../shared/services/shared.service';
 
 import { ProjectRoutingModule } from './projects-routing.module';
@@ -52,7 +53,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ProjectCommonComponent,
     ProjectEditComponent
   ],
-  providers: [ProjectsService, SharedService,
+  providers: [ProjectsApiService, ProjectsDataHandler, SharedService,
     {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}]
 })
 export class ProjectsModule {}

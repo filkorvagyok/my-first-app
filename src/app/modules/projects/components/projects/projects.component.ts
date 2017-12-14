@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectsService } from '../../projects.service';
+import { ProjectsApiService } from '../../projects-api.service';
+import { ProjectsDataHandler } from '../../projects-datahandler.service';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { Router } from '@angular/router';
 import { Project } from '../../../../shared/classes/project';
@@ -12,21 +13,20 @@ import { Project } from '../../../../shared/classes/project';
 
 export class ProjectsComponent implements OnInit{
 	constructor(
-		private projectsService: ProjectsService,
+		private projectsApiService: ProjectsApiService,
+		private projectsDataHandler: ProjectsDataHandler,
 		private sharedService: SharedService,
 		private router: Router
 	){}
 
 	checked: boolean = false;
-	projects: Project[];
 	days: number;
 	disabled: boolean = true;
-	isLoading: boolean = true;
 
 	ngOnInit(): void{
-		this.getProjects();
 		this.sharedService.getContacts();
 		this.sharedService.getProjects();
+		this.projectsDataHandler.getProjects();
 	}
 
 	showChbox(): void{
@@ -47,12 +47,6 @@ export class ProjectsComponent implements OnInit{
 		}
 	}
 
-	getProjects(): void{
-		this.projectsService
-        .getProjects()
-        .subscribe(projects => {this.projects = projects, this.isLoading = false});
-	}
-
 	gotoDetail(project: Project): void{
   		this.router.navigate(['/project/shown', project.id]);
   	}
@@ -63,16 +57,6 @@ export class ProjectsComponent implements OnInit{
 
 	count(project: Project): string{
 		let num: number = Math.round((new Date(project.deadline).getTime() - new Date().getTime())/86400000+0.5);
-		//console.log(num.toString()+' nap');
-		/*if(num <= 0)
-		{
-			console.log(project);
-			project.greater = false;
-		}
-		else
-		{
-			project.greater = true;
-		}*/
 		return num.toString()+' nap';
 	}
 
@@ -82,7 +66,7 @@ export class ProjectsComponent implements OnInit{
 			console.log('The dialog was closed');
 			if(dialogRef.componentInstance.delete)
 			{
-				let array=this.projects;
+				let array=this.projectsDataHandler.projects;
 				for (var i = 0; i < array.length; i++) {
 					if(array[i].selected)
 					{
@@ -95,7 +79,7 @@ export class ProjectsComponent implements OnInit{
 	}
 
 	delete(project: Project): void {
-		this.projects = this.projects.filter(h => h !== project);
+		this.projectsDataHandler.projects = this.projectsDataHandler.projects.filter(h => h !== project);
 		if(project.company.length > 0)
 			this.sharedService.deleteProjectFromCompany(project).subscribe();
 		if(project.accountable.length > 0)
@@ -106,22 +90,19 @@ export class ProjectsComponent implements OnInit{
 			this.sharedService.deleteProjectFromContact(project, 2).subscribe();
 		if(project.participant.length > 0)
 			this.sharedService.deleteProjectFromContact(project, 3).subscribe();
-    	this.projectsService.delete(project).subscribe();
+    	this.projectsApiService.delete(project).subscribe();
 	}
 
 	gotoEdit(): void{
-  		let selectedProject = this.projects.filter(project => project.selected === true)[0];
+  		let selectedProject = this.projectsDataHandler.projects.filter(project => project.selected === true)[0];
   		this.router.navigate(['/project/edit', selectedProject.id]);
   	}
 
   	addInstant(name: string): void{
   		let project = new Project();
-  		this.projectsService.setDefaultProject(project);
+  		this.projectsDataHandler.setDefaultProject(project);
   		project.name = name.trim();
     	if (!name) { return; }
-    	this.projectsService.addProject(project)
-      		.subscribe(project => {
-        this.projects.push(project);
-      });
+    	this.projectsDataHandler.addProject(project);
   	}
 }

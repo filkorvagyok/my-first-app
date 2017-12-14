@@ -11,7 +11,7 @@ const httpOptions = {
 
 @Injectable()
 
-export class ProjectsService{
+export class ProjectsApiService{
 
 	private projectsUrl = 'api/projects';
 
@@ -70,26 +70,5 @@ export class ProjectsService{
 			// Let the app keep running by returning an empty result.
 			return of(result as T);
 		};
-	}
-
-	setDefaultProject(project: Project): Project{
-		project.accountable = [];
-		project.checklist = false;
-		project.company = [];
-		project.currency = "";
-		project.deadline = new Date();
-		project.description = "";
-		project.expenditure = null;
-		project.file = "";
-		project.income = null;
-		project.name = "";
-		project.observer = [];
-		project.owner = [];
-		project.participant = [];
-		project.priority = "";
-		project.selected = false;
-		project.status = "";
-		project.stickers = "";
-		return project;
 	}
 }

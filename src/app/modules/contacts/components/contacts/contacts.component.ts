@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../../../../shared/classes/contact';
 import { Company } from '../../../../shared/classes/company';
-import { ContactsService } from '../../contacts.service';
+import { ContactsApiService } from '../../contacts-api.service';
+import { ContactsDataHandler } from '../../contacts-datahandler.service';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { Router } from '@angular/router';
 
@@ -13,28 +14,21 @@ import { Router } from '@angular/router';
 export class ContactsComponent implements OnInit{
 
 	constructor(
-		private contactsService: ContactsService,
+		private contactsApiService: ContactsApiService,
+		private contactsDataHandler: ContactsDataHandler,
 		private sharedService: SharedService,
 		private router: Router
 	){}
 
 	checked: boolean = false;
-	contacts: Contact[];
 	days: number;
 	disabled: boolean = true;
-	isLoading: boolean = true;
 
 
 	ngOnInit(): void{
-		this.getConctast();
 		this.sharedService.getCompanies();
 		this.sharedService.getProjects();
-	}
-
-	getConctast(): void{
-		this.contactsService
-        .getContacts()
-        .subscribe(contacts => {this.contacts = contacts, this.isLoading = false});
+		this.contactsDataHandler.getContacts();
 	}
 
 	showChbox(): void{
@@ -69,7 +63,7 @@ export class ContactsComponent implements OnInit{
 	    	console.log('The dialog was closed');
 	      	if(dialogRef.componentInstance.delete)
 	      	{
-	      		let array=this.contacts;
+	      		let array=this.contactsDataHandler.contacts;
 	      		for (var i = 0; i < array.length; i++) {
 	      			if(array[i].selected)
 	      			{
@@ -82,7 +76,7 @@ export class ContactsComponent implements OnInit{
 	}
 
 	delete(contact: Contact): void {
-		this.contacts = this.contacts.filter(h => h !== contact);
+		this.contactsDataHandler.contacts = this.contactsDataHandler.contacts.filter(h => h !== contact);
 		if(contact.company.length > 0)
 			this.sharedService.deleteContactFromCompany(contact).subscribe();
 		if(contact.accountable.length > 0)
@@ -93,25 +87,22 @@ export class ContactsComponent implements OnInit{
 			this.sharedService.deleteContactFromProject(contact, 2).subscribe();
 		if(contact.participant.length > 0)
 			this.sharedService.deleteContactFromProject(contact, 3).subscribe();
-    	this.contactsService.delete(contact).subscribe();
+    	this.contactsApiService.delete(contact).subscribe();
 	}
 
 	gotoEdit(): void{
-  		let selectedContact = this.contacts.filter(contact => contact.selected === true)[0];
+  		let selectedContact = this.contactsDataHandler.contacts.filter(contact => contact.selected === true)[0];
   		this.router.navigate(['/people/edit', selectedContact.id]);
   	}
 
   	addInstant(full_name: string, phone: string, email: string): void{
   		let contact = new Contact();
-  		contact = this.contactsService.setDefaultContact(contact);
+  		contact = this.contactsDataHandler.setDefaultContact(contact);
   		contact.full_name = full_name.trim();
   		contact.phone = phone.trim();
   		contact.email = email.trim();
     	if (!full_name) { return; }
-    	this.contactsService.addContact(contact)
-      		.subscribe(contact => {
-        this.contacts.push(contact);
-      });
+    	this.contactsDataHandler.addContact(contact);
   	}
 
 }

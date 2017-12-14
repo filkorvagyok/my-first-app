@@ -23,7 +23,6 @@ export class CompaniesComponent implements OnInit{
 
 	checked: boolean = false;
 	disabled: boolean = true;
-	isLoading: boolean = true;
 
 	ngOnInit(): void{
 		this.sharedService.getProjects();

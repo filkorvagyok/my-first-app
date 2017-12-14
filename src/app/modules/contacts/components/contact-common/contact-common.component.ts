@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Contact } from '../../../../shared/classes/contact';
-import { ContactsService } from '../../contacts.service';
+import { ContactsDataHandler } from '../../contacts-datahandler.service';
 
 @Component({
   selector: 'contact-common',
@@ -10,31 +10,33 @@ import { ContactsService } from '../../contacts.service';
 })
 
 export class ContactCommonComponent implements OnInit{
-	@Input() contact: Contact;
 	edit = false;
 
 	constructor(
-		private contactsService: ContactsService,
+		private contactsDataHandler: ContactsDataHandler,
 		private route: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
-		let path = this.route.snapshot.routeConfig.path;
-		let arr = this.route.snapshot.paramMap.keys;
-		this.contact = new Contact;
-		if(path == "people/new")
+		if(this.route.snapshot.routeConfig.path == "people/new")
 		{
-			this.contact = this.contactsService.setDefaultContact(this.contact);
-			for (var i = 0; i < arr.length; i++) {
-				this.contact.company.push(Number(this.route.snapshot.paramMap.get(arr[i])));
-			}
+			this.setNewContact();
 		}
 		else
 		{
-			this.edit = true;
-			this.route.paramMap
-		    	.switchMap((params: ParamMap) => this.contactsService.getContact(+params.get('id')))
-		    	.subscribe(contact => this.contact = contact);
+			this.setEditContact();
 		}
+	}
+
+	setNewContact(): void{
+		let arr = this.route.snapshot.paramMap.keys;
+		this.contactsDataHandler.contact = new Contact;
+		this.contactsDataHandler.contact = this.contactsDataHandler.setDefaultContact(this.contactsDataHandler.contact);
+		arr.forEach(array => this.contactsDataHandler.contact.company.push(Number(this.route.snapshot.paramMap.get(array))));
+	}
+
+	setEditContact(): void{
+		this.edit = true;
+		this.route.paramMap.subscribe(params => this.contactsDataHandler.getContact(Number(params.get('id'))));
 	}
 }

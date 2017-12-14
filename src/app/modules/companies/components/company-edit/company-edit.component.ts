@@ -1,13 +1,8 @@
-import 'rxjs/add/operator/switchMap';
 import { Component, OnInit, Input }        from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
 
 import { Company }        from '../../../../shared/classes/company';
-import { Country } from '../../../../shared/classes/country';
-import { Industry } from '../../../../shared/classes/industry';
-import { Employeesnum } from '../../../../shared/classes/employeesnum';
-import { Yearlyincome } from '../../../../shared/classes/yearlyincome';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
 
@@ -21,10 +16,6 @@ export class CompanyEditComponent implements OnInit {
   @Input() billing: boolean;
   @Input() mail: boolean;
   @Input() edit: boolean;
-  countries: Country[] = [];
-  industries: Industry[] = [];
-  employeesnums: Employeesnum[] = [];
-  yearlyincomes: Yearlyincome[] = [];
 
   constructor(
     private companiesApiService: CompaniesApiService,
@@ -34,38 +25,18 @@ export class CompanyEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCountries();
-    this.getIndustries();
-    this.getEmployeesnums();
-    this.getYearlyincomes();
+    this.getDatasForCompanyEdit();
   }
 
-  getCountries(): void{
-    this.companiesApiService
-        .getCountries()
-        .subscribe(countries => this.countries = countries);
-  }
-
-  getIndustries(): void{
-    this.companiesApiService
-        .getIndustries()
-        .subscribe(industries => this.industries = industries);
-  }
-
-  getEmployeesnums(): void{
-    this.companiesApiService
-        .getEmployeesnums()
-        .subscribe(employeesnums => this.employeesnums = employeesnums);
-  }
-
-  getYearlyincomes(): void{
-    this.companiesApiService
-        .getYearlyincomes()
-        .subscribe(yearlyincomes => this.yearlyincomes = yearlyincomes);
+  getDatasForCompanyEdit(): void{
+    this.companiesDataHandler.getCountries();
+    this.companiesDataHandler.getIndustries();
+    this.companiesDataHandler.getEmployeesnums();
+    this.companiesDataHandler.getYearlyincomes();
   }
 
   onChangeHqcountry(newValue, asd){
-    this.company.hq_country = this.countries.filter(x=>x.code==newValue)[0].country;
+    this.company.hq_country = this.companiesDataHandler.countries.filter(x=>x.code==newValue)[0].country;
     return newValue;
   }
 

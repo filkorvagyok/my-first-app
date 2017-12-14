@@ -3,8 +3,8 @@ import { Company } from '../classes/company';
 import { Project } from '../classes/project';
 import { Contact } from '../classes/contact';
 import { CompaniesApiService } from '../../modules/companies/companies-api.service';
-import { ProjectsService } from '../../modules/projects/projects.service';
-import { ContactsService } from '../../modules/contacts/contacts.service';
+import { ProjectsApiService } from '../../modules/projects/projects-api.service';
+import { ContactsApiService } from '../../modules/contacts/contacts-api.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/forkJoin';
@@ -17,8 +17,8 @@ export class SharedService{
 
 	constructor(
 		private companiesApiService: CompaniesApiService,
-		private projectsService: ProjectsService,
-		private contactsService: ContactsService,
+		private projectsApiService: ProjectsApiService,
+		private contactsApiService: ContactsApiService,
 		public dialog: MatDialog
 		){}
 
@@ -31,11 +31,11 @@ export class SharedService{
 	}
 
 	returnContacts(): Observable<Contact[]>{
-		return this.contactsService.getContacts();
+		return this.contactsApiService.getContacts();
 	}
 
 	getProjects(): void{
-		this.projectsService.getProjects()
+		this.projectsApiService.getProjects()
 			.subscribe(projects => this.projects = projects);
 	}
 
@@ -45,7 +45,7 @@ export class SharedService{
 	}
 
 	getContacts(): void{
-		this.contactsService.getContacts()
+		this.contactsApiService.getContacts()
 			.subscribe(contacts => this.contacts = contacts);
 	}
 
@@ -55,7 +55,7 @@ export class SharedService{
         	.forEach(company_project => {
         	this.projects
         		.filter(project => project.id == company_project)
-        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+        		.forEach(project => getProjects.push(this.projectsApiService.getProject(project)))
         	});
         return Observable.forkJoin(getProjects);
 	}
@@ -66,7 +66,7 @@ export class SharedService{
         	.forEach(company_contact => {
         	this.contacts
         		.filter(contact => contact.id == company_contact)
-        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+        		.forEach(contact => getContacts.push(this.contactsApiService.getContact(contact)))
         	});
         return Observable.forkJoin(getContacts);
 	}
@@ -90,7 +90,7 @@ export class SharedService{
 		        	.forEach(project_accountable => {
 		        	this.contacts
 		        		.filter(contact => contact.id == project_accountable)
-		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        		.forEach(contact => getContacts.push(this.contactsApiService.getContact(contact)))
 		        	});
 				break;
 			case 1:
@@ -98,7 +98,7 @@ export class SharedService{
 		        	.forEach(project_observer => {
 		        	this.contacts
 		        		.filter(contact => contact.id == project_observer)
-		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        		.forEach(contact => getContacts.push(this.contactsApiService.getContact(contact)))
 		        	});
 				break;
 			case 2:
@@ -106,7 +106,7 @@ export class SharedService{
 		        	.forEach(project_owner => {
 		        	this.contacts
 		        		.filter(contact => contact.id == project_owner)
-		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        		.forEach(contact => getContacts.push(this.contactsApiService.getContact(contact)))
 		        	});
 				break;
 			case 3:
@@ -114,7 +114,7 @@ export class SharedService{
 		        	.forEach(project_participant => {
 		        	this.contacts
 		        		.filter(contact => contact.id == project_participant)
-		        		.forEach(contact => getContacts.push(this.contactsService.getContact(contact)))
+		        		.forEach(contact => getContacts.push(this.contactsApiService.getContact(contact)))
 		        	});
 				break;
 			default:
@@ -131,7 +131,7 @@ export class SharedService{
 		        	.forEach(contact_accountable => {
 		        	this.projects
 		        		.filter(project => project.id == contact_accountable)
-		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        		.forEach(project => getProjects.push(this.projectsApiService.getProject(project)))
 		        	});
 				break;
 			case 1:
@@ -139,7 +139,7 @@ export class SharedService{
 		        	.forEach(contact_observer => {
 		        	this.projects
 		        		.filter(project => project.id == contact_observer)
-		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        		.forEach(project => getProjects.push(this.projectsApiService.getProject(project)))
 		        	});
 				break;
 			case 2:
@@ -147,7 +147,7 @@ export class SharedService{
 		        	.forEach(contact_owner => {
 		        	this.projects
 		        		.filter(project => project.id == contact_owner)
-		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        		.forEach(project => getProjects.push(this.projectsApiService.getProject(project)))
 		        	});
 				break;
 			case 3:
@@ -155,7 +155,7 @@ export class SharedService{
 		        	.forEach(contact_participant => {
 		        	this.projects
 		        		.filter(project => project.id == contact_participant)
-		        		.forEach(project => getProjects.push(this.projectsService.getProject(project)))
+		        		.forEach(project => getProjects.push(this.projectsApiService.getProject(project)))
 		        	});
 				break;
 			default:
@@ -241,7 +241,7 @@ export class SharedService{
 				break;
 		}
 		
-		return this.contactsService.updateContact(contact);
+		return this.contactsApiService.updateContact(contact);
 	}
 
 	deleteContactFromCompany(contact: Contact): Observable<Company[]>{
@@ -310,7 +310,7 @@ export class SharedService{
 				break;
 		}
 		
-		return this.projectsService.updateProject(project);
+		return this.projectsApiService.updateProject(project);
 	}
 
 	deleteCompanyFromProject(company: Company): Observable<Project[]>{
@@ -324,7 +324,7 @@ export class SharedService{
 	deleteCFP(company: Company, project: Project): Observable<Project>{
 		let index = project.company.indexOf(company.id);
 		project.company.splice(index,1);
-		return this.projectsService.updateProject(project);
+		return this.projectsApiService.updateProject(project);
 	}
 
 	deleteCompanyFromContact(company: Company): Observable<Contact[]>{
@@ -338,7 +338,7 @@ export class SharedService{
 	deleteComFCon(company: Company, contact: Contact): Observable<Contact>{
 		let index = contact.company.indexOf(company.id);
 		contact.company.splice(index,1);
-		return this.contactsService.updateContact(contact);
+		return this.contactsApiService.updateContact(contact);
 	}
 
 	openDeleteDialog(): MatDialogRef<DeleteDialog>{
@@ -380,7 +380,7 @@ export class SharedService{
   			default:
   				break;
   		}
-  		this.contactsService.updateContact(contacts.find(x=>x.id==i)).subscribe();
+  		this.contactsApiService.updateContact(contacts.find(x=>x.id==i)).subscribe();
   	}
 
   	addContactToCompany(i: number, contact: Contact, companies: Company[]): void{

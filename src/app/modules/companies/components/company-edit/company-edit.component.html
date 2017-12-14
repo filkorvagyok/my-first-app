@@ -37,7 +37,7 @@
 				<mat-form-field class="matffield">
 					<mat-select name="companyHqcountry" placeholder="Ország"
 					[ngModel]="company.country_code" (ngModelChange)="company.country_code = onChangeHqcountry($event)">
-						<mat-option *ngFor="let country of countries" [value]="country.code">
+						<mat-option *ngFor="let country of companiesDataHandler.countries" [value]="country.code">
 							{{country.country}}
 						</mat-option>
 					</mat-select>
@@ -86,7 +86,7 @@
 					<mat-form-field class="matffield">
 						<mat-select name="companyBicountry" placeholder="Ország"
 						[ngModel]="company.country_code" (ngModelChange)="company.bi_country = onChange($event)">
-							<mat-option *ngFor="let country of countries" [value]="country.code">
+							<mat-option *ngFor="let country of companiesDataHandler.countries" [value]="country.code">
 								{{country.country}}
 							</mat-option>
 						</mat-select>
@@ -132,7 +132,7 @@
 					<mat-form-field class="matffield">
 						<mat-select name="companyMailcountry" placeholder="Ország"
 						[ngModel]="company.country_code" (ngModelChange)="company.mail_country = onChange($event)">
-							<mat-option *ngFor="let country of countries" [value]="country.code">
+							<mat-option *ngFor="let country of companiesDataHandler.countries" [value]="country.code">
 								{{country.country}}
 							</mat-option>
 						</mat-select>
@@ -167,7 +167,7 @@
 				<mat-form-field class="matffield">
 					<mat-select name="companyIndustry_id" placeholder="Iparág"
 					[ngModel]="company.industry_id" (ngModelChange)="company.industry_id = onChange($event)">
-						<mat-option *ngFor="let industry of industries" [value]="industry.id">
+						<mat-option *ngFor="let industry of companiesDataHandler.industries" [value]="industry.id">
 							{{industry.name}}
 						</mat-option>
 					</mat-select>
@@ -177,7 +177,7 @@
 				<mat-form-field class="matffield">
 					<mat-select name="companyEmployeesnum_id" placeholder="Alkalmazottak száma"
 					[ngModel]="company.employeesnum_id" (ngModelChange)="company.employeesnum_id = onChange($event)">
-						<mat-option *ngFor="let employeesnum of employeesnums" [value]="employeesnum.id">
+						<mat-option *ngFor="let employeesnum of companiesDataHandler.employeesnums" [value]="employeesnum.id">
 							{{employeesnum.number}}
 						</mat-option>
 					</mat-select>
@@ -187,7 +187,7 @@
 				<mat-form-field class="matffield">
 					<mat-select name="companyYearlyincome_id" placeholder="Éves bevétel"
 					[ngModel]="company.yearlyincome_id" (ngModelChange)="company.yearlyincome_id = onChange($event)">
-						<mat-option *ngFor="let yearlyincome of yearlyincomes" [value]="yearlyincome.id">
+						<mat-option *ngFor="let yearlyincome of companiesDataHandler.yearlyincomes" [value]="yearlyincome.id">
 							{{yearlyincome.amount}}
 						</mat-option>
 					</mat-select>

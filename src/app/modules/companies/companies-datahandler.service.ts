@@ -5,11 +5,15 @@ import { Industry } from '../../shared/classes/industry';
 import { Employeesnum } from '../../shared/classes/employeesnum';
 import { Yearlyincome } from '../../shared/classes/yearlyincome';
 import { CompaniesApiService } from './companies-api.service';
+import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service'
 
 @Injectable()
 export class CompaniesDataHandler{
 
-	constructor(private companiesApiService: CompaniesApiService){}
+	constructor(
+    private companiesApiService: CompaniesApiService,
+    private sharedGetDataHandler: SharedGetDataHandler
+    ){}
   companies: Company[];
   countries: Country[];
   industries: Industry[];
@@ -24,9 +28,31 @@ export class CompaniesDataHandler{
       .subscribe(companies => {this.companies = companies; this.isLoading = false;});
   }
 
-  getCompany(company: Company | number): void{
+  getCompany(company: Company | number, detail: boolean): void{
     this.companiesApiService.getCompany(company)
-      .subscribe(company => {this.company = company; this.isLoadingData = false;});
+      .subscribe(company => {
+        this.company = company;
+        if(detail)
+        {
+          if(company.project.length > 0)
+          {
+            this.sharedGetDataHandler.getProjectsForCompanyDetail(company);
+          }
+          else{
+            this.sharedGetDataHandler.projects = [];
+            this.sharedGetDataHandler.isLoading += 1;
+          }
+          if(company.contact.length > 0)
+          {
+            this.sharedGetDataHandler.getContactsForCompanyDetail(company);
+          }
+          else{
+            this.sharedGetDataHandler.contacts = [];
+            this.sharedGetDataHandler.isLoading += 1;
+          }
+          this.isLoadingData = this.sharedGetDataHandler.isLoading >= 2 ? false : true;
+        }
+      });
   }
 
   setDefaultCompany(company: Company): Company{

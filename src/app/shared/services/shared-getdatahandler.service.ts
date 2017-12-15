@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Company } from '../classes/company';
 import { Project } from '../classes/project';
 import { Contact } from '../classes/contact';
+import { Proj } from '../classes/proj';
 import { CompaniesApiService } from '../../modules/companies/companies-api.service';
 import { ProjectsApiService } from '../../modules/projects/projects-api.service';
 import { ContactsApiService } from '../../modules/contacts/contacts-api.service';
@@ -17,6 +18,12 @@ export class SharedGetDataHandler{
 	projects: Project[];
 	companies: Company[];
 	contacts: Contact[];
+	accountables: Contact[];
+	owners: Contact[];
+	observers: Contact[];
+	participants: Contact[];
+	proj: Proj[];
+	isLoading: number = 0;
 
 	getProjects(): void{
 		this.projectsApiService.getProjects()
@@ -44,9 +51,88 @@ export class SharedGetDataHandler{
         return Observable.forkJoin(getProjects);
 	}*/
 	getProjectsForCompanyDetail(company: Company): void{
+		let projectsforcomp: Project[] = [];
         company.project.forEach(company_project => {
-        	this.projects = this.projects.filter(project => project.id == company_project)
-        	console.log(this.projects.filter(project => project.id == company_project))});
+        	projectsforcomp.push(this.projects.find(project => project.id == company_project));
+        });
+        this.projects = projectsforcomp;
+        this.isLoading += 1;
+	}
+
+	getContactsForCompanyDetail(company: Company): void{
+		let contactsforcomp: Contact[] = [];
+		company.contact.forEach(company_contact => {
+			contactsforcomp.push(this.contacts.find(contact => contact.id == company_contact));
+		});
+		this.contacts = contactsforcomp;
+		this.isLoading += 1;
+	}
+
+	getCompaniesForProjectDetail(project: Project): void{
+		let comforproj: Company[] = [];
+		project.company.forEach(project_company =>{
+			comforproj.push(this.companies.find(company => company.id == project_company));
+		});
+		this.companies = comforproj;
+		this.isLoading += 1
+	}
+
+	getContactsForProjectDetail(project: Project): void{
+		let acc: Contact[] = [];
+		let ow: Contact[] = [];
+		let ob: Contact[] = [];
+		let par: Contact[] = [];
+		project.accountable.forEach(project_acc => {
+			acc.push(this.contacts.find(contact => contact.id == project_acc));
+		});
+		project.owner.forEach(project_ow => {
+			ow.push(this.contacts.find(contact => contact.id == project_ow));
+		});
+		project.observer.forEach(project_ob => {
+			ob.push(this.contacts.find(contact => contact.id == project_ob));
+		});
+		project.participant.forEach(project_par => {
+			par.push(this.contacts.find(contact => contact.id == project_par));
+		});
+		this.accountables = acc;
+		this.owners = ow;
+		this.observers = ob;
+		this.participants = par;
+		this. isLoading += 1;
+	}
+
+	getCompaniesForContactDetail(contact: Contact): void{
+		let comforcon: Company[] = [];
+		contact.company.forEach(contact_company =>{
+			comforcon.push(this.companies.find(company => company.id == contact_company));
+		});
+		this.companies = comforcon;
+		this.isLoading += 1;
+	}
+
+	getProjectsForContactDetail(contact: Contact): void{
+		let proforcon: Project[] = [];
+		contact.project.forEach(contact_project =>{
+			console.log(contact_project.id);
+			proforcon.push(this.projects.find(project => project.id == contact_project.id));
+		});
+		let asd = [];
+		let asdII: number [] = [];
+		console.log(proforcon);
+		proforcon.forEach(project =>{
+			if(project.accountable.length > 0)
+			if(project.accountable.includes(contact.id))
+				asdII.push(0);
+			if(project.owner && project.owner.includes(contact.id))
+				asdII.push(1);
+			if(project.observer && project.observer.includes(contact.id))
+				asdII.push(2);
+			if(project.participant && project.participant.includes(contact.id))
+				asdII.push(3);
+			asd.push(project, asdII);
+		});
+		console.log(asdII);
+		this.isLoading += 1;
 	}
 
 	/*getContactsForCompanyDetail(company: Company): Observable<Contact[]>{

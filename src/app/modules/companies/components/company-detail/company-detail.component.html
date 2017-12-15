@@ -2,14 +2,12 @@
 	<mat-spinner></mat-spinner>
 </div>
 <div *ngIf="!companiesDataHandler.isLoadingData">
-	{{getCompany()}}
 <form *ngIf="companiesDataHandler.company; let company" class="panel panel-default">
 	<div class="panel-heading" color="primary">{{company.name}}</div>
 	<div  class="panel-body">
 		<div id="wide">
 			<div>
 				<h3>Projektek</h3>
-
 				<p *ngFor="let project of sharedGetDataHandler.projects">
 					{{project.name}}
 				</p>

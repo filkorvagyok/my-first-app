@@ -18,11 +18,6 @@ import { SharedGetDataHandler } from '../../../../shared/services/shared-getdata
   styleUrls: [ '../../../../shared/styles/detail.component.css' ]
 })
 export class CompanyDetailComponent implements OnInit {
-  projects: Project[] = [];
-  contacts: Contact[] = [];
-  isLoadingProjects: boolean = true;
-  isLoadingContacts: boolean = true;
-
 
   constructor(
     private companiesApiService: CompaniesApiService,
@@ -35,44 +30,12 @@ export class CompanyDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => this.companiesDataHandler.getCompany(Number(params.get('id'))));
+    this.companiesDataHandler.isLoadingData = true;
     this.sharedGetDataHandler.getProjects();
     this.sharedGetDataHandler.getContacts();
+    this.route.paramMap.subscribe(params => this.companiesDataHandler.getCompany(Number(params.get('id')), true));
     /*this.sharedService.getProjects();
     this.sharedService.getContacts();*/
-  }
-
-  getCompany(): void{
-    console.log(this.companiesDataHandler.company);
-    if(this.companiesDataHandler.company.project.length > 0)
-    {
-      //this.getProjects(this.companiesDataHandler.company);
-      this.sharedGetDataHandler.getProjectsForCompanyDetail(this.companiesDataHandler.company);
-    }
-    else
-    {
-      this.sharedGetDataHandler.projects = [];
-    }
-    /*if(this.companiesDataHandler.company.contact.length > 0)
-    {
-      this.getContacts(this.companiesDataHandler.company);
-    }
-    if(this.companiesDataHandler.company.project.length == 0)
-      this.isLoadingProjects = false;
-    if(this.companiesDataHandler.company.contact.length == 0)
-      this.isLoadingContacts = false;*/
-  }
-
-  getProjects(company: Company): void{
-    this.sharedService
-      .getProjectsForCompanyDetail(company)
-      .subscribe(projects => {this.projects = projects, this.isLoadingProjects = false})
-  }
-
-  getContacts(company: Company): void{
-    this.sharedService
-      .getContactsForCompanyDetail(company)
-      .subscribe(contacts => {this.contacts = contacts, this.isLoadingContacts = false});
   }
 
   goBack(): void {

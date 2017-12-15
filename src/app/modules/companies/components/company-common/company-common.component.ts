@@ -39,7 +39,7 @@ export class CompanyCommonComponent{
 	}
 
 	setEditCompany(): void{
-		this.route.paramMap.subscribe(params => this.companiesDataHandler.getCompany(Number(params.get('id'))));
+		this.route.paramMap.subscribe(params => this.companiesDataHandler.getCompany(Number(params.get('id')), false));
 		this.billing = false;
 		this.mail = false;
 	}

@@ -516,10 +516,7 @@ export class InMemoryDataService implements InMemoryDbService {
             rank: 'beosztott',
             greeting: 'csá',
             selected: false,
-            accountable: [1],
-            owner: [1],
-            observer: [],
-            participant: []
+            project: [{id: 1, rank: [0,1]}]
         }
     ];
 

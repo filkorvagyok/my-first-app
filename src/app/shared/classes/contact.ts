@@ -1,4 +1,4 @@
-import { Company } from './company';
+import { Proj } from './proj';
 
 export class Contact{
 	id: number;
@@ -14,8 +14,5 @@ export class Contact{
 	rank: string;
 	greeting: string;
 	selected: boolean;
-	accountable: number[];
-	owner: number[];
-	observer: number[];
-	participant: number[];
+	project: Proj[];
 }

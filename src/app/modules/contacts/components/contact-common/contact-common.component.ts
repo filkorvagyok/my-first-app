@@ -37,6 +37,6 @@ export class ContactCommonComponent implements OnInit{
 
 	setEditContact(): void{
 		this.edit = true;
-		this.route.paramMap.subscribe(params => this.contactsDataHandler.getContact(Number(params.get('id'))));
+		this.route.paramMap.subscribe(params => this.contactsDataHandler.getContact(Number(params.get('id')), false));
 	}
 }

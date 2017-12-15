@@ -37,6 +37,6 @@ export class ProjectCommonComponent implements OnInit{
 
 	setEditContact(): void{
 		this.edit = true;
-		this.route.paramMap.subscribe(params => this.projectsDataHandler.getProject(Number(params.get('id'))));
+		this.route.paramMap.subscribe(params => this.projectsDataHandler.getProject(Number(params.get('id')), false));
 	}
 }

@@ -1,28 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Contact } from '../../shared/classes/contact';
+import { Proj } from '../../shared/classes/proj';
 import { ContactsApiService } from './contacts-api.service';
+import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service'
 
 @Injectable()
 export class ContactsDataHandler{
 
-	constructor(private contactsApiService: ContactsApiService){}
+	constructor(
+    private contactsApiService: ContactsApiService,
+    private sharedGetDataHandler: SharedGetDataHandler
+    ){}
   contacts: Contact[];
   contact: Contact;
   isLoading: boolean = true;
-  isLoadingForDetail: boolean = true;
+  isLoadingData: boolean = true;
 
   getContacts(): void{
     this.contactsApiService.getContacts()
       .subscribe(contacts => {this.contacts = contacts; this.isLoading = false;});
   }
 
-  getContact(contact: Contact | number): void{
+  getContact(contact: Contact | number, detail: boolean): void{
     this.contactsApiService.getContact(contact)
-      .subscribe(contact => {this.contact = contact; this.isLoadingForDetail = false;});
+      .subscribe(contact => {
+        this.contact = contact;
+        if(detail)
+        {
+          if(contact.company.length > 0)
+          {
+            this.sharedGetDataHandler.getCompaniesForContactDetail(contact);
+          }
+          else{
+            this.sharedGetDataHandler.companies = [];
+            this.sharedGetDataHandler.isLoading += 1;
+          }
+          if(contact.project.length > 0)
+          {
+            this.sharedGetDataHandler.getProjectsForContactDetail(contact);
+          }
+        }
+      });
   }
 
   setDefaultContact(contact: Contact): Contact{
-    contact.accountable = [];
+    /*let project: Proj;
+    project.id = null;
+    project.rank = [];*/
     contact.company = [];
     contact.email = "";
     contact.forename = "";
@@ -30,9 +54,7 @@ export class ContactsDataHandler{
     contact.greeting = "";
     contact.middle_name = "";
     contact.nickname = "";
-    contact.observer = [];
-    contact.owner = [];
-    contact.participant = [];
+    contact.project = [];
     contact.phone = "";
     contact.primary_communication_chanel = "";
     contact.rank = "";

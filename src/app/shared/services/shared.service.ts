@@ -123,7 +123,8 @@ export class SharedService{
         return Observable.forkJoin(getContacts);
 	}
 
-	getProjectsForContactDetail(contact: Contact, which: number): Observable<Project[]>{
+	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A GET FUKCIÓ IS + ÁTKERÜL MÁSIK FÁJLBA
+	/*getProjectsForContactDetail(contact: Contact, which: number): Observable<Project[]>{
 		const getProjects: Array<Observable<Project>> = [];
 		switch (which) {
 			case 0:
@@ -162,7 +163,7 @@ export class SharedService{
 				break;
 		}
         return Observable.forkJoin(getProjects);
-	}
+	}*/
 
 	getCompaniesForContactDetail(contact: Contact): Observable<Company[]>{
 		const getCompanies: Array<Observable<Company>> = [];
@@ -189,7 +190,8 @@ export class SharedService{
 		return this.companiesApiService.updateCompany(company);
 	}
 
-	deleteProjectFromContact(project: Project, which: number): Observable<Contact[]>{
+	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS
+	/*deleteProjectFromContact(project: Project, which: number): Observable<Contact[]>{
 		const deletingProjects: Array<Observable<Contact>> = [];
 		switch (which) {
 			case 0:
@@ -216,9 +218,10 @@ export class SharedService{
 				break;
 		}
 		return Observable.forkJoin(deletingProjects);
-	}
+	}*/
 
-	deletePFCon(project: Project, contact: Contact, which: number): Observable<Contact>{
+	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS
+	/*deletePFCon(project: Project, contact: Contact, which: number): Observable<Contact>{
 		let index: number;
 		switch (which) {
 			case 0:
@@ -242,7 +245,7 @@ export class SharedService{
 		}
 		
 		return this.contactsApiService.updateContact(contact);
-	}
+	}*/
 
 	deleteContactFromCompany(contact: Contact): Observable<Company[]>{
 		const deletingContacts: Array<Observable<Company>> = [];
@@ -347,13 +350,18 @@ export class SharedService{
 	}
 
 	addProjectToCompany(i: number, project: Project, companies: Company[]): void{
+		console.log(i);
 		let company = companies.find(x=>x.id==i);
 		if(!(company.project.indexOf(project.id) > -1))
+		{
+			console.log(company.name, company.project);
   			company.project.push(project.id);
+		}
   		this.companiesApiService.updateCompany(company).subscribe();
   	}
 
-  	addProjectToContact(i: number, project: Project, contacts: Contact[], which: number): void{
+  	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A HOZZÁADÁS FUKCIÓ IS (MÁR MGETALÁLHATÓ A MEGFELELŐ SERVICEBEN)
+  	/*addProjectToContact(i: number, project: Project, contacts: Contact[], which: number): void{
   		let contact = contacts.find(x=>x.id==i);
   		console.log(contact);
   		switch (which) {
@@ -381,7 +389,7 @@ export class SharedService{
   				break;
   		}
   		this.contactsApiService.updateContact(contacts.find(x=>x.id==i)).subscribe();
-  	}
+  	}*/
 
   	addContactToCompany(i: number, contact: Contact, companies: Company[]): void{
   		let company = companies.find(x=>x.id==i);

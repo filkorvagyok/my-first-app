@@ -70,7 +70,8 @@ export class ProjectsComponent implements OnInit{
 				for (var i = 0; i < array.length; i++) {
 					if(array[i].selected)
 					{
-						this.delete(array[i]);
+						//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS
+						//this.delete(array[i]);
 					}
 				}
 				this.checked = false;
@@ -78,7 +79,8 @@ export class ProjectsComponent implements OnInit{
 		});
 	}
 
-	delete(project: Project): void {
+	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS (lásd fentebb)
+	/*delete(project: Project): void {
 		this.projectsDataHandler.projects = this.projectsDataHandler.projects.filter(h => h !== project);
 		if(project.company.length > 0)
 			this.sharedService.deleteProjectFromCompany(project).subscribe();
@@ -91,7 +93,7 @@ export class ProjectsComponent implements OnInit{
 		if(project.participant.length > 0)
 			this.sharedService.deleteProjectFromContact(project, 3).subscribe();
     	this.projectsApiService.delete(project).subscribe();
-	}
+	}*/
 
 	gotoEdit(): void{
   		let selectedProject = this.projectsDataHandler.projects.filter(project => project.selected === true)[0];

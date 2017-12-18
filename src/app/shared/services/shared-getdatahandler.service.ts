@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { Company } from '../classes/company';
 import { Project } from '../classes/project';
 import { Contact } from '../classes/contact';
-import { Proj } from '../classes/proj';
 import { CompaniesApiService } from '../../modules/companies/companies-api.service';
 import { ProjectsApiService } from '../../modules/projects/projects-api.service';
 import { ContactsApiService } from '../../modules/contacts/contacts-api.service';
+
+class ProjectForContact{
+	project: Project;
+	ranks: string[] = [];
+}
 
 @Injectable()
 
@@ -22,7 +26,7 @@ export class SharedGetDataHandler{
 	owners: Contact[];
 	observers: Contact[];
 	participants: Contact[];
-	proj: Proj[];
+	projectsForContact: ProjectForContact[] = [];
 	isLoading: number = 0;
 
 	getProjects(): void{
@@ -113,25 +117,25 @@ export class SharedGetDataHandler{
 	getProjectsForContactDetail(contact: Contact): void{
 		let proforcon: Project[] = [];
 		contact.project.forEach(contact_project =>{
-			console.log(contact_project.id);
-			proforcon.push(this.projects.find(project => project.id == contact_project.id));
+			console.log(contact_project);
+			proforcon.push(this.projects.find(project => project.id == contact_project));
 		});
-		let asd = [];
-		let asdII: number [] = [];
 		console.log(proforcon);
+		let ranks: string [] = [];
 		proforcon.forEach(project =>{
 			if(project.accountable.length > 0)
 			if(project.accountable.includes(contact.id))
-				asdII.push(0);
+				ranks.push('felelős');
 			if(project.owner && project.owner.includes(contact.id))
-				asdII.push(1);
+				ranks.push('tulajdonos');
 			if(project.observer && project.observer.includes(contact.id))
-				asdII.push(2);
+				ranks.push('megfigyelő');
 			if(project.participant && project.participant.includes(contact.id))
-				asdII.push(3);
-			asd.push(project, asdII);
+				ranks.push('résztvevő');
+			this.projectsForContact.push({project, ranks});
+			ranks = [];
 		});
-		console.log(asdII);
+		console.log('Project:',this.projectsForContact[0].project, 'Ranks:',this.projectsForContact[0].ranks);
 		this.isLoading += 1;
 	}
 

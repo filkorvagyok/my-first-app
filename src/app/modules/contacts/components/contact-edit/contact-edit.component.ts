@@ -4,7 +4,8 @@ import { Location } from '@angular/common';
 import { Contact } from '../../../../shared/classes/contact';
 import { Company } from '../../../../shared/classes/company';
 import { ContactsApiService } from '../../contacts-api.service';
-import { SharedService } from '../../../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
+import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
 
 
 @Component({
@@ -15,46 +16,43 @@ import { SharedService } from '../../../../shared/services/shared.service';
 export class ContactEditComponent implements OnInit{
 	constructor(
 		private contactsApiService: ContactsApiService,
-		private sharedService: SharedService,
+		private sharedGetDataHandler: SharedGetDataHandler,
+		private sharedAddDataHandler: SharedAddDataHandler,
 		private location: Location
 	) {}
 
 	@Input() contact: Contact;
 	@Input() edit: boolean;
-	companies: Company[];
 
 	ngOnInit(): void{
-		this.sharedService.returnCompanies()
-			.subscribe(companies => this.companies = companies);
+		this.sharedGetDataHandler.getCompanies();
+		this.sharedGetDataHandler.getProjects();
 	}
 
 	goBack(): void {
 		this.location.back();
 	}
 
-	save(): void {
-		let array = this.contact.company;
-		for (var i = 0; i < array.length; i++)
-        			this.addContactToCompany(array[i]);
+  	save(): void{
+		this.addContactTo(this.contact);
 		this.contactsApiService.updateContact(this.contact)
-			.subscribe(() => this.goBack());
+        	.subscribe(() => this.goBack())
 	}
 
-	/*save(): void {
-		this.contactsService.updateContact(this.contact)
-			.subscribe(() => this.goBack());
-	}*/
-
 	add(contact: Contact): void{
-		let array = this.contact.company;
-    	this.contactsApiService.addContact(contact)
+		this.contactsApiService.addContact(contact)
 			.subscribe(() => {
-        		array.forEach(arr => this.addContactToCompany(arr))
-				this.goBack()
+				this.addContactTo(contact);
+				this.goBack();
 			});
-  	}
+	}
 
-  	addContactToCompany(i: number): void{
-  		this.sharedService.addContactToCompany(i, this.contact, this.companies);
-  	}
+	addContactTo(contact: Contact)
+	{
+		if(contact.company.length > 0)
+			this.sharedAddDataHandler.addContactToCompany(contact);
+		/*if(contact.project.length > 0 || project.owner.length > 0 ||
+			project.observer.length > 0 || project.participant.length > 0)
+			this.sharedAddDataHandler.addProjectToContact(project);*/
+	}
 }

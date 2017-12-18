@@ -1,5 +1,3 @@
-import { Proj } from './proj';
-
 export class Contact{
 	id: number;
 	company: number[];
@@ -14,5 +12,5 @@ export class Contact{
 	rank: string;
 	greeting: string;
 	selected: boolean;
-	project: Proj[];
+	project: number[];
 }

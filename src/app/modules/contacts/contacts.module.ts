@@ -10,7 +10,9 @@ import { ContactEditComponent } from './components/contact-edit/contact-edit.com
 
 import { ContactsApiService } from './contacts-api.service';
 import { ContactsDataHandler } from './contacts-datahandler.service';
-import { SharedService } from '../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
+import { SharedAddDataHandler } from '../../shared/services/shared-adddatahandler.service';
 
 import { ContactRoutingModule } from './contacts-routing.module';
 
@@ -49,6 +51,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ContactCommonComponent,
     ContactEditComponent
   ],
-  providers: [ContactsApiService, ContactsDataHandler, SharedService]
+  providers: [ContactsApiService, ContactsDataHandler, SharedGetDataHandler,
+  SharedDeleteDataHandler, SharedAddDataHandler]
 })
 export class ContactsModule {}

@@ -4,7 +4,10 @@ import { Company } from '../../../../shared/classes/company';
 import { Project } from '../../../../shared/classes/project';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
-import { SharedService } from '../../../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
+import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 
 @Component({
@@ -17,16 +20,19 @@ export class CompaniesComponent implements OnInit{
 	constructor(
 		private companiesApiService: CompaniesApiService,
 		private companiesDataHandler: CompaniesDataHandler,
-		private sharedService: SharedService,
-		private router: Router
+		private sharedGetDataHandler: SharedGetDataHandler,
+		private sharedDeleteDataHandler: SharedDeleteDataHandler,
+		private router: Router,
+		private dialog: MatDialog
 	){}
 
 	checked: boolean = false;
 	disabled: boolean = true;
 
 	ngOnInit(): void{
-		this.sharedService.getProjects();
-		this.sharedService.getContacts();
+		this.companiesDataHandler.isLoading = true;
+		this.sharedGetDataHandler.getProjects();
+    	this.sharedGetDataHandler.getContacts();
 		this.companiesDataHandler.getCompanies();
 	}
 
@@ -49,11 +55,11 @@ export class CompaniesComponent implements OnInit{
 	}
 
 
-	openDeleteDialog(): void{
-		let dialogRef = this.sharedService.openDeleteDialog();
+	clickOnDeleteProductButton(): void{
+		let dialogRef = this.dialog.open(DeleteDialog);
 		dialogRef.afterClosed().subscribe(result => {
-			console.log('The dialog was closed');
-			if(dialogRef.componentInstance.delete)
+			console.log(`Dialog result: ${result}`);
+			if(result===true)
 			{
 				let array=this.companiesDataHandler.companies;
 				for (var i = 0; i < array.length; i++) {
@@ -69,8 +75,8 @@ export class CompaniesComponent implements OnInit{
 
 	delete(company: Company): void {
 		this.companiesDataHandler.companies = this.companiesDataHandler.companies.filter(h => h !== company);
-		this.sharedService.deleteCompanyFromProject(company).subscribe();
-		this.sharedService.deleteCompanyFromContact(company).subscribe();
+		this.sharedDeleteDataHandler.deleteCompanyFromProject(company);
+		this.sharedDeleteDataHandler.deleteCompanyFromContact(company);
     	this.companiesApiService.delete(company).subscribe();
 	}
 

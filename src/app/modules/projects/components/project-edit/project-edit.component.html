@@ -20,7 +20,7 @@
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<mat-select [(ngModel)]="project.company" name="projectCompany" placeholder="Cég" multiple>
-						<mat-option *ngFor="let company of companies" [value]="company.id">{{company.name}}</mat-option>
+						<mat-option *ngFor="let company of sharedGetDataHandler.companies" [value]="company.id">{{company.name}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
@@ -32,28 +32,28 @@
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<mat-select [(ngModel)]="project.accountable" name="projectAccountable" placeholder="Felelős" multiple>
-						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<mat-select [(ngModel)]="project.owner" name="projectOwner" placeholder="Tulajdonos" multiple>
-						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<mat-select [(ngModel)]="project.observer" name="projectObserver" placeholder="Megfigyelő" multiple>
-						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<mat-select [(ngModel)]="project.participant" name="projectParticipant" placeholder="Résztvevő" multiple>
-						<mat-option *ngFor="let contact of contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>

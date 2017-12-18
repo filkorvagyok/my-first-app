@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Contact } from '../../shared/classes/contact';
-import { Proj } from '../../shared/classes/proj';
 import { ContactsApiService } from './contacts-api.service';
 import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service'
 
@@ -39,6 +38,11 @@ export class ContactsDataHandler{
           {
             this.sharedGetDataHandler.getProjectsForContactDetail(contact);
           }
+          else{
+            this.sharedGetDataHandler.projects = [];
+            this.sharedGetDataHandler.isLoading += 1;
+          }
+          this.isLoadingData = this.sharedGetDataHandler.isLoading >= 2 ? false : true;
         }
       });
   }

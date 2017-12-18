@@ -11,15 +11,12 @@ export class DeleteDialog{
     public dialogRef: MatDialogRef<DeleteDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  public delete: boolean = false;
-
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   onYesClick(): void {
-  	this.delete = true;
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
 }

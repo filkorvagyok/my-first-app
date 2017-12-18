@@ -5,7 +5,7 @@
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<mat-select [(ngModel)]="contact.company" name="contactCompany" placeholder="Cég" multiple>
-						<mat-option *ngFor="let company of companies" [value]="company.id">{{company.name}}</mat-option>
+						<mat-option *ngFor="let company of sharedGetDataHandler.companies" [value]="company.id">{{company.name}}</mat-option>
 					</mat-select>
 					<!--<mat-select [(ngModel)]="contact.company" name="contactCompany" placeholder="Cég" multiple>
 						<mat-option *ngFor="let company of companies" [value]="company">{{company.name}}</mat-option>

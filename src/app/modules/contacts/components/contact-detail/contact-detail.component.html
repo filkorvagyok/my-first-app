@@ -1,7 +1,7 @@
-<div *ngIf="contactsDataHandler.isLoadingForDetail">
+<div *ngIf="contactsDataHandler.isLoadingData">
 	<mat-spinner></mat-spinner>
 </div>
-<div *ngIf="!contactsDataHandler.isLoadingForDetail">
+<div *ngIf="!contactsDataHandler.isLoadingData">
 <form *ngIf="contactsDataHandler.contact; let contact" class="panel panel-default">
 	<div class="panel-heading" color="primary">{{contact.full_name}}</div>
 	<div  class="panel-body">
@@ -39,14 +39,19 @@
 		<div id="narrow">
 			<div>
 				<h3>Cégek</h3>
-				<p *ngFor="let company of companies">
+				<p *ngFor="let company of sharedGetDataHandler.companies">
 					{{company.name}}
 				</p>
 			</div>
 			<hr>
 			<div class="projects">
 				<h3>Projektek</h3>
-				<p *ngFor="let accountable of accountables">
+				<p *ngFor="let pfc of sharedGetDataHandler.projectsForContact">
+					{{pfc.project.name}} - <span *ngFor="let rank of pfc.ranks; let isLast = last">
+						{{rank}}{{isLast ? '' : ', '}}
+					</span>
+				</p>
+				<!--<p *ngFor="let accountable of accountables">
 					<strong>{{accountable}}</strong> - Felelős
 				</p>
 				<p *ngFor="let owner of owners">
@@ -57,7 +62,7 @@
 				</p>
 				<p *ngFor="let participant of participants">
 					<strong>{{participant}}</strong> - Résztvevő
-				</p>
+				</p>-->
 				<!--<div *ngFor="let accountable of accountables">
 					<div *ngFor="let owner of owners">
 						<div *ngFor="let observer of observers">
@@ -107,7 +112,7 @@
 				<mat-icon class="fa fa-pencil"></mat-icon>
 				<span>Szerkesztés</span>
 			</button>
-			<button mat-menu-item (click)="openDeleteDialog()">
+			<button mat-menu-item (click)="clickOnDeleteProductButton()">
 				<mat-icon class="fa fa-trash"></mat-icon>
 				<span>Törlés</span>
 			</button>

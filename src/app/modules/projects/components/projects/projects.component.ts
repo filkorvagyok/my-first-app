@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsApiService } from '../../projects-api.service';
 import { ProjectsDataHandler } from '../../projects-datahandler.service';
-import { SharedService } from '../../../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
 import { Router } from '@angular/router';
 import { Project } from '../../../../shared/classes/project';
+import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
 	selector: 'my-projects',
@@ -15,8 +18,10 @@ export class ProjectsComponent implements OnInit{
 	constructor(
 		private projectsApiService: ProjectsApiService,
 		private projectsDataHandler: ProjectsDataHandler,
-		private sharedService: SharedService,
-		private router: Router
+		private sharedGetDataHandler: SharedGetDataHandler,
+		private sharedDeleteDataHandler: SharedDeleteDataHandler,
+		private router: Router,
+		private dialog: MatDialog
 	){}
 
 	checked: boolean = false;
@@ -24,8 +29,9 @@ export class ProjectsComponent implements OnInit{
 	disabled: boolean = true;
 
 	ngOnInit(): void{
-		this.sharedService.getContacts();
-		this.sharedService.getProjects();
+		this.projectsDataHandler.isLoading = true;
+		this.sharedGetDataHandler.getCompanies();
+    	this.sharedGetDataHandler.getContacts();
 		this.projectsDataHandler.getProjects();
 	}
 
@@ -60,18 +66,17 @@ export class ProjectsComponent implements OnInit{
 		return num.toString()+' nap';
 	}
 
-	openDeleteDialog(): void{
-		let dialogRef = this.sharedService.openDeleteDialog();
+	clickOnDeleteProductButton(): void{
+		let dialogRef = this.dialog.open(DeleteDialog);
 		dialogRef.afterClosed().subscribe(result => {
 			console.log('The dialog was closed');
-			if(dialogRef.componentInstance.delete)
+			if(result === true)
 			{
 				let array=this.projectsDataHandler.projects;
 				for (var i = 0; i < array.length; i++) {
 					if(array[i].selected)
 					{
-						//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS
-						//this.delete(array[i]);
+						this.delete(array[i]);
 					}
 				}
 				this.checked = false;
@@ -79,21 +84,13 @@ export class ProjectsComponent implements OnInit{
 		});
 	}
 
-	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS (lásd fentebb)
-	/*delete(project: Project): void {
+	delete(project: Project): void{
 		this.projectsDataHandler.projects = this.projectsDataHandler.projects.filter(h => h !== project);
-		if(project.company.length > 0)
-			this.sharedService.deleteProjectFromCompany(project).subscribe();
-		if(project.accountable.length > 0)
-			this.sharedService.deleteProjectFromContact(project, 0).subscribe();
-		if(project.owner.length > 0)
-			this.sharedService.deleteProjectFromContact(project, 1).subscribe();
-		if(project.observer.length > 0)
-			this.sharedService.deleteProjectFromContact(project, 2).subscribe();
-		if(project.participant.length > 0)
-			this.sharedService.deleteProjectFromContact(project, 3).subscribe();
-    	this.projectsApiService.delete(project).subscribe();
-	}*/
+		this.sharedDeleteDataHandler.deleteProjectFromCompany(project);
+		this.sharedDeleteDataHandler.deleteProjectFromContact(project);
+		this.projectsApiService.delete(project).subscribe();
+	}
+
 
 	gotoEdit(): void{
   		let selectedProject = this.projectsDataHandler.projects.filter(project => project.selected === true)[0];

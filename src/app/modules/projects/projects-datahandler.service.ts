@@ -23,6 +23,7 @@ export class ProjectsDataHandler{
   getProject(project: Project | number, detail: boolean): void{
     this.projectsApiService.getProject(project)
       .subscribe(project => {
+        console.log(project);
       	this.project = project;
       	if(detail)
       	{

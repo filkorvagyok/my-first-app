@@ -10,7 +10,9 @@ import { ProjectEditComponent } from './components/project-edit/project-edit.com
 
 import { ProjectsApiService } from './projects-api.service';
 import { ProjectsDataHandler } from './projects-datahandler.service';
-import { SharedService } from '../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
+import { SharedAddDataHandler } from '../../shared/services/shared-adddatahandler.service';
 
 import { ProjectRoutingModule } from './projects-routing.module';
 
@@ -53,7 +55,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ProjectCommonComponent,
     ProjectEditComponent
   ],
-  providers: [ProjectsApiService, ProjectsDataHandler, SharedService,
-    {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}]
+  providers: [ProjectsApiService, ProjectsDataHandler, SharedGetDataHandler,
+  SharedDeleteDataHandler, SharedAddDataHandler, {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}]
 })
 export class ProjectsModule {}

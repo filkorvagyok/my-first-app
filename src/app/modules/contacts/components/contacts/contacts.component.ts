@@ -3,8 +3,11 @@ import { Contact } from '../../../../shared/classes/contact';
 import { Company } from '../../../../shared/classes/company';
 import { ContactsApiService } from '../../contacts-api.service';
 import { ContactsDataHandler } from '../../contacts-datahandler.service';
-import { SharedService } from '../../../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
 import { Router } from '@angular/router';
+import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
 	selector: 'my-contacts',
@@ -16,8 +19,10 @@ export class ContactsComponent implements OnInit{
 	constructor(
 		private contactsApiService: ContactsApiService,
 		private contactsDataHandler: ContactsDataHandler,
-		private sharedService: SharedService,
-		private router: Router
+		private sharedGetDataHandler: SharedGetDataHandler,
+		private sharedDeleteDataHandler: SharedDeleteDataHandler,
+		private router: Router,
+		private dialog: MatDialog
 	){}
 
 	checked: boolean = false;
@@ -26,8 +31,9 @@ export class ContactsComponent implements OnInit{
 
 
 	ngOnInit(): void{
-		this.sharedService.getCompanies();
-		this.sharedService.getProjects();
+		this.contactsDataHandler.isLoading = true;
+		this.sharedGetDataHandler.getCompanies();
+		this.sharedGetDataHandler.getProjects();
 		this.contactsDataHandler.getContacts();
 	}
 
@@ -57,18 +63,17 @@ export class ContactsComponent implements OnInit{
 		this.router.navigate(["/people/new"]);
 	}
 
-	openDeleteDialog(): void{
-		let dialogRef = this.sharedService.openDeleteDialog();
+	clickOnDeleteProductButton(): void{
+		let dialogRef = this.dialog.open(DeleteDialog);
 	    dialogRef.afterClosed().subscribe(result => {
 	    	console.log('The dialog was closed');
-	      	if(dialogRef.componentInstance.delete)
+	      	if(result === true)
 	      	{
 	      		let array=this.contactsDataHandler.contacts;
 	      		for (var i = 0; i < array.length; i++) {
 	      			if(array[i].selected)
 	      			{
-	      				//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS
-	      				 //this.delete(array[i]);
+	      				 this.delete(array[i]);
 	      			}
 	      		}
 	      		this.checked = false;
@@ -76,6 +81,21 @@ export class ContactsComponent implements OnInit{
 	    });
 	}
 
+	delete(contact: Contact): void{
+		this.contactsDataHandler.contacts = this.contactsDataHandler.contacts.filter(cont => cont != contact);
+		this.sharedDeleteDataHandler.deleteContactFromCompany(contact);
+		this.sharedDeleteDataHandler.deleteContactFromProject(contact);
+		this.contactsApiService.delete(contact).subscribe();
+	}
+
+	/*
+	delete(project: Project): void{
+		this.projectsDataHandler.projects = this.projectsDataHandler.projects.filter(h => h !== project);
+		this.sharedDeleteDataHandler.deleteProjectFromCompany(project);
+		this.sharedDeleteDataHandler.deleteProjectFromContact(project);
+		this.projectsApiService.delete(project).subscribe();
+	}
+	*/
 	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS (lásd fentebb)
 	/*delete(contact: Contact): void {
 		this.contactsDataHandler.contacts = this.contactsDataHandler.contacts.filter(h => h !== contact);

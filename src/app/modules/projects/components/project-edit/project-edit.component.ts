@@ -5,7 +5,8 @@ import { Project } from '../../../../shared/classes/project';
 import { Company } from '../../../../shared/classes/company';
 import { Contact } from '../../../../shared/classes/contact';
 import { ProjectsApiService } from '../../projects-api.service';
-import { SharedService } from '../../../../shared/services/shared.service';
+import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
+import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
 
 @Component({
   selector: 'project-edit',
@@ -16,89 +17,43 @@ import { SharedService } from '../../../../shared/services/shared.service';
 export class ProjectEditComponent implements OnInit {
 	constructor(
 		private projectsApiService: ProjectsApiService,
-		private sharedService: SharedService,
+		private sharedGetDataHandler: SharedGetDataHandler,
+		private sharedAddDataHandler: SharedAddDataHandler,
 		private location: Location
 	) {}
 
 	@Input() project: Project;
 	@Input() edit: boolean;
-	companies: Company[];
-	contacts: Contact[];
 
 	ngOnInit(): void{
-		this.sharedService.returnCompanies()
-			.subscribe(companies => this.companies = companies);
-		this.sharedService.returnContacts()
-			.subscribe(contacts => this.contacts = contacts);
+		this.sharedGetDataHandler.getCompanies();
+		this.sharedGetDataHandler.getContacts();
 	}
 
 	goBack(): void {
 		this.location.back();
 	}
 
-	save(): void {
-		let companies=this.project.company;
-		companies.forEach(
-			company => this.addProjectToCompany(company, this.project));
-		let accountables = this.project.accountable;
-		let observers = this.project.observer;
-		let owners = this.project.owner;
-		let participants = this.project.participant;
-		accountables.forEach(
-			accountable => this.addProjectToContact(accountable, this.project, 0));
-		observers.forEach(
-			observer => this.addProjectToContact(observer, this.project, 1));
-		owners.forEach(
-			owner => this.addProjectToContact(owner, this.project, 2));
-		participants.forEach(
-			participant => this.addProjectToContact(participant, this.project, 3));
-      this.projectsApiService.updateProject(this.project)
-        .subscribe(() => this.goBack());
+	save(): void{
+		this.addProjectTo(this.project);
+		this.projectsApiService.updateProject(this.project)
+        	.subscribe(() => this.goBack())
 	}
 
 	add(project: Project): void{
 		this.projectsApiService.addProject(project)
 			.subscribe(() => {
-				this.addToCompany(project);
-				this.addToContact(project);
+				this.addProjectTo(project);
 				this.goBack();
 			});
 	}
 
-	addToCompany(project: Project): void{
-		let companies=project.company;
-		companies.forEach(
-			company => this.addProjectToCompany(company, this.project));
-  	}
-
-  	addProjectToCompany(i: number, project: Project): void{
-  		this.sharedService.addProjectToCompany(i, project, this.companies);
-  	}
-
-  	addToContact(project: Project): void{
-		if(project.accountable)
-		{
-			project.accountable.forEach(
-				accountable => this.addProjectToContact(accountable, project, 0))
-		}
-		if(project.observer)
-		{
-			project.observer.forEach(
-				observer => this.addProjectToContact(observer, project, 1))
-		}
-		if(project.owner)
-		{
-			project.owner.forEach(
-				owner => this.addProjectToContact(owner, project, 2))
-		}
-		if(project.participant)
-		{
-			project.participant.forEach(
-				participant => this.addProjectToContact(participant, project, 3))
-		}
-  	}
-
-  	addProjectToContact(i: number, project: Project, which: number): void{
-  		this.sharedService.addProjectToContact(i, project, this.contacts, which);
-  	}
+	addProjectTo(project: Project)
+	{
+		if(project.company.length > 0)
+			this.sharedAddDataHandler.addProjectToCompany(project);
+		if(project.accountable.length > 0 || project.owner.length > 0 ||
+			project.observer.length > 0 || project.participant.length > 0)
+			this.sharedAddDataHandler.addProjectToContact(project);
+	}
 }

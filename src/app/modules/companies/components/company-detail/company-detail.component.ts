@@ -9,8 +9,11 @@ import { Project }        from '../../../../shared/classes/project';
 import { Contact }        from '../../../../shared/classes/contact';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
-import { SharedService } from '../../../../shared/services/shared.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
+
+import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'company-detail',
@@ -22,11 +25,12 @@ export class CompanyDetailComponent implements OnInit {
   constructor(
     private companiesApiService: CompaniesApiService,
     private companiesDataHandler: CompaniesDataHandler,
-    private sharedService: SharedService,
     private sharedGetDataHandler: SharedGetDataHandler,
+    private sharedDeleteDataHandler: SharedDeleteDataHandler,
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -46,11 +50,11 @@ export class CompanyDetailComponent implements OnInit {
     this.router.navigate(['/company/edit', this.companiesDataHandler.company.id]);
   }
 
-  openDeleteDialog(): void{
-    let dialogRef = this.sharedService.openDeleteDialog();
+  clickOnDeleteProductButton(): void{
+    let dialogRef = this.dialog.open(DeleteDialog);
     dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-          if(dialogRef.componentInstance.delete)
+          if(result === true)
           {
             this.delete(this.companiesDataHandler.company);
           }
@@ -58,8 +62,9 @@ export class CompanyDetailComponent implements OnInit {
   }
 
   delete(company: Company): void {
-      this.sharedService.deleteCompanyFromProject(company).subscribe();
-      this.sharedService.deleteCompanyFromContact(company).subscribe();
+
+      this.sharedDeleteDataHandler.deleteCompanyFromProject(company);
+      this.sharedDeleteDataHandler.deleteCompanyFromContact(company);
       this.companiesApiService.delete(company).subscribe();
       this.router.navigate(['company/list']);
   }

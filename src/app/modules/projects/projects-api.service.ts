@@ -20,6 +20,11 @@ export class ProjectsApiService{
 		){}
 
 	getProjects(): Observable<Project[]> {
+		console.log(this.http.get<Project[]>(this.projectsUrl)
+			.pipe(
+				tap(projects => (`fetched projects`)),
+        		catchError(this.handleError('getProjects', []))
+			).subscribe(project => console.log(project)));
 		return this.http.get<Project[]>(this.projectsUrl)
 			.pipe(
 				tap(projects => (`fetched projects`)),
@@ -30,6 +35,9 @@ export class ProjectsApiService{
 	getProject(project: Project | number): Observable<Project> {
 		const id = typeof project === 'number' ? project : project.id;
 		const url = `${this.projectsUrl}/${id}`;
+		console.log(this.http.get<Project>(url).pipe(
+			tap(_ => (`fetched project id=${id}`)),
+			catchError(this.handleError<Project>(`getProject id=${id}`))).subscribe(project => console.log(project)));
 		return this.http.get<Project>(url).pipe(
 			tap(_ => (`fetched project id=${id}`)),
 			catchError(this.handleError<Project>(`getProject id=${id}`))
@@ -53,6 +61,7 @@ export class ProjectsApiService{
 	}
 
 	updateProject (project: Project): Observable<any> {
+		console.log('lefut');
 		return this.http.put(this.projectsUrl, project, httpOptions).pipe(
 			tap(_ => (`updated project id=${project.id}`)),
 			catchError(this.handleError<any>('updateProject'))

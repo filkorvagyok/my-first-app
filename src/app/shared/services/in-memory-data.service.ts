@@ -31,7 +31,7 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 8,
             founded: 1962,
             selected: false,
-            project: [],
+            project: [1],
             contact: []
         },
         {
@@ -63,7 +63,7 @@ export class InMemoryDataService implements InMemoryDbService {
             yearlyincome_id: 2,
             founded: 2017,
             selected: false,
-            project: [],
+            project: [1],
             contact: []
         },
         {
@@ -484,7 +484,7 @@ export class InMemoryDataService implements InMemoryDbService {
             name: 'Projekt1',
             description: 'Ez a projekt1',
             checklist: false,
-            company: [],
+            company: [1,2],
             file: 'file',
             accountable: [1],
             owner: [1],
@@ -516,7 +516,7 @@ export class InMemoryDataService implements InMemoryDbService {
             rank: 'beosztott',
             greeting: 'csá',
             selected: false,
-            project: [{id: 1, rank: [0,1]}]
+            project: [1]
         }
     ];
 

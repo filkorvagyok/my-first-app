@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Contact } from '../../shared/classes/contact';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,6 +18,9 @@ export class ContactsApiService{
     	private http: HttpClient,
     ){}
 
+	/*Visszaad egy Observable-t a névjegy tömbről, melyet
+	  a webapi-ból nyert ki. Később ha ezt a metódust meghívják
+	  és feliratkoznak rá, ki tudják nyerni az adatokat belőle.*/
     getContacts (): Observable<Contact[]> {
     return this.http.get<Contact[]>(this.contactsUrl)
       .pipe(
@@ -26,6 +29,8 @@ export class ContactsApiService{
       );
 	}
 
+	/*Lásd: getContacts, csak itt egy darab névjegyre végeztük el,
+  	melyet a paraméterben megkapott névjegy, vagy id alapján azonosítunk*/
 	getContact(contact: Contact | number): Observable<Contact> {
 		const id = typeof contact === 'number' ? contact : contact.id;
 		const url = `${this.contactsUrl}/${id}`;
@@ -35,6 +40,8 @@ export class ContactsApiService{
 		);
 	}
 
+	/*A paraméterben kapott névjegy vagy id alapján azonosítja a törölni
+  	kivánt névjegyet és küld egy kérést a http.delete segítségével az apinak.*/
 	delete(contact: Contact | number): Observable<Contact> {
 		const id = typeof contact === 'number' ? contact : contact.id;
 		const url = `${this.contactsUrl}/${id}`;
@@ -45,12 +52,16 @@ export class ContactsApiService{
 		);
 	}
 
+	/*A paraméterben kapott névjegy alapján azonosítja a hozzáadni kívánt
+  	névjegyet és küld egy kérést a http.post segítségével az apinak.*/
 	addContact(contact: Contact): Observable<Contact>{
 		return this.http.post<Contact>(this.contactsUrl, contact, httpOptions).pipe(
 			catchError(this.handleError<Contact>('addContact'))
 		);
 	}
 
+	/*A paraméterben kapott névjegy alapján azonosítja a módosítani kívánt
+  	névjegyet és küld egy kérést a http.put segítségével az apinak.*/
 	updateContact (contact: Contact): Observable<any> {
 		return this.http.put(this.contactsUrl, contact, httpOptions).pipe(
 			tap(_ => (`updated contact id=${contact.id}`)),
@@ -58,6 +69,7 @@ export class ContactsApiService{
 		);
 	}
 
+	//Hibakezelő
 	private handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 

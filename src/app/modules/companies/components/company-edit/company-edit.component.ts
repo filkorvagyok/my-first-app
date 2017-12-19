@@ -1,7 +1,5 @@
 import { Component, OnInit, Input }        from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
-
 import { Company }        from '../../../../shared/classes/company';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
@@ -20,14 +18,15 @@ export class CompanyEditComponent implements OnInit {
   constructor(
     private companiesApiService: CompaniesApiService,
     private companiesDataHandler: CompaniesDataHandler,
-    private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
     this.getDatasForCompanyEdit();
   }
 
+  /*Kilistázzuk mind az országokat, iparokat, munkások számát és
+  az éves bevételeket a szerkesztéshez vagy új cég hozzáadásához*/
   getDatasForCompanyEdit(): void{
     this.companiesDataHandler.getCountries();
     this.companiesDataHandler.getIndustries();
@@ -35,7 +34,8 @@ export class CompanyEditComponent implements OnInit {
     this.companiesDataHandler.getYearlyincomes();
   }
 
-  onChangeHqcountry(newValue, asd){
+  //TODO: átszervezni az összes országokkal kapcsolatos mezőket.
+  onChangeHqcountry(newValue){
     this.company.hq_country = this.companiesDataHandler.countries.filter(x=>x.code==newValue)[0].country;
     return newValue;
   }
@@ -54,11 +54,12 @@ export class CompanyEditComponent implements OnInit {
   }
 
   add(company: Company): void{
-    console.log(company)
     this.companiesDataHandler.addCompany(company);
     this.goBack();
   }
 
+  /*Ha be van pipálva, hogy a számlázási adatok azonosak,
+  akkor hajtódik végre és lemásolja a székhely adatokat*/
   billing_datas(company: Company): void{
     this.company.bi_address = company.hq_address;
     this.company.bi_country = company.hq_country;
@@ -67,6 +68,8 @@ export class CompanyEditComponent implements OnInit {
     this.company.bi_zipcode = company.hq_zipcode;
   }
 
+  /*Ha be van pipálva, hogy a levelezési adatok azonosak,
+  akkor hajtódik végre és lemásolja a székhely adatokat*/
   mail_datas(company: Company): void{
     this.company.mail_address = company.hq_address;
     this.company.mail_country = company.hq_country;

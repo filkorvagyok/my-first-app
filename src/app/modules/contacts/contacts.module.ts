@@ -17,9 +17,8 @@ import { SharedAddDataHandler } from '../../shared/services/shared-adddatahandle
 import { ContactRoutingModule } from './contacts-routing.module';
 
 import {
-  MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,
-  MatInputModule, MatIconModule, MatCheckboxModule, MatButtonModule,
-  MatTableModule, MatRadioModule, MatMenuModule, MatDialogModule,
+  MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule,
+  MatButtonModule, MatRadioModule, MatMenuModule, MatDialogModule,
   MatSelectModule
 } from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -30,16 +29,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     CommonModule,
     FormsModule,
     ContactRoutingModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatTableModule,
-    MatRadioModule,
     MatMenuModule,
     MatDialogModule,
     MatSelectModule,

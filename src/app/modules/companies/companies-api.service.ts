@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Company } from '../../shared/classes/company';
-import { Project } from '../../shared/classes/project';
 import { Country } from '../../shared/classes/country';
 import { Industry } from '../../shared/classes/industry';
 import { Employeesnum } from '../../shared/classes/employeesnum';
 import { Yearlyincome } from '../../shared/classes/yearlyincome';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 
 
@@ -30,6 +29,9 @@ export class CompaniesApiService{
     private http: HttpClient,
     ){}
 
+  /*Visszaad egy Observable-t a company tömbről, melyet
+  a webapi-ból nyert ki. Később ha ezt a metódust meghívják
+  és feliratkoznak rá, ki tudják nyerni az adatokat belőle.*/
 	getCompanies (): Observable<Company[]> {
     return this.http.get<Company[]>(this.companiesUrl)
       .pipe(
@@ -38,6 +40,7 @@ export class CompaniesApiService{
       );
 	}
 
+  //Lásd: getCompanies, csak itt országok tömbre végeztük el
   getCountries (): Observable<Country[]> {
     return this.http.get<Country[]>(this.countriesUrl)
       .pipe(
@@ -46,6 +49,7 @@ export class CompaniesApiService{
       );
   }
 
+  //Lásd: getCompanies, csak itt ipar tömbre végeztük el
   getIndustries (): Observable<Industry[]> {
     return this.http.get<Industry[]>(this.industriesUrl)
       .pipe(
@@ -54,6 +58,7 @@ export class CompaniesApiService{
       );
   }
 
+  //Lásd: getCompanies, csak itt a dolgozók száma tömbre végeztük el
   getEmployeesnums(): Observable<Employeesnum[]> {
     return this.http.get<Employeesnum[]>(this.employeesnumsUrl)
       .pipe(
@@ -62,6 +67,7 @@ export class CompaniesApiService{
       );
   }
 
+  //Lásd: getCompanies, csak itt az éves bevétel tömbre végeztük el
   getYearlyincomes(): Observable<Yearlyincome[]> {
     return this.http.get<Yearlyincome[]>(this.yearlyincomesUrl)
       .pipe(
@@ -70,6 +76,8 @@ export class CompaniesApiService{
       );
   }
 
+  /*Lásd: getCompanies, csak itt egy darab cégre végeztük el,
+  melyet a paraméterben megkapott cég, vagy id alapján azonosítunk*/
   getCompany(company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;
     const url = `${this.companiesUrl}/${id}`;
@@ -79,6 +87,8 @@ export class CompaniesApiService{
     );
   }
 
+  /*A paraméterben kapott cég vagy id alapján azonosítja a törölni
+  kivánt céget és küld egy kérést a http.delete segítségével az apinak.*/
   delete(company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;
     const url = `${this.companiesUrl}/${id}`;
@@ -89,12 +99,16 @@ export class CompaniesApiService{
     );
   }
 
+  /*A paraméterben kapott cég alapján azonosítja a hozzáadni kívánt
+  céget és küld egy kérést a http.post segítségével az apinak.*/
   addCompany(company: Company): Observable<Company>{
     return this.http.post<Company>(this.companiesUrl, company, httpOptions).pipe(
         catchError(this.handleError<Company>('addHero'))
       );
   }
 
+  /*A paraméterben kapott cég alapján azonosítja a módosítani kívánt
+  céget és küld egy kérést a http.put segítségével az apinak.*/
   updateCompany (company: Company): Observable<any> {
     return this.http.put(this.companiesUrl, company, httpOptions).pipe(
       tap(_ => (`updated company id=${company.id}`)),
@@ -104,7 +118,7 @@ export class CompaniesApiService{
 
   
 
-
+  //Hibakezelő
 	private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

@@ -27,8 +27,9 @@
 						<td>
 							<strong class="company_name">{{count(project)}}</strong>
 						</td>
-						<td rowspan="2">
-							{{project.income}}
+						<td rowspan="2" (click)="$event.stopPropagation();">
+							<p *ngIf="!editIncome" (click)="editIncome = true">{{project.income}}</p>
+							<input *ngIf="editIncome" matInput [(ngModel)]="project.income" name="projectIncome" placeholder="Bevétel">
 						</td>
 						<td rowspan="2">
 							{{project.expenditure}}
@@ -43,7 +44,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="2"  class="newcompany_btn">
-							<button  mat-raised-button color="primary" (click)="gotoNew()">
+							<button type="button" mat-raised-button color="primary" (click)="gotoNew()">
 								<i class="fa fa-plus"></i> Új projekt hozzáadása
 							</button>
 						</td>
@@ -52,7 +53,7 @@
 							<mat-form-field>
 							    <input #projectName matInput name="projectName" placeholder="Új projekt hozzáadása instant">
 						  	</mat-form-field>
-						  	<button  mat-raised-button color="primary" (click)="addInstant(projectName.value); projectName.value='';">
+						  	<button type="submit" mat-raised-button color="primary" (click)="addInstant(projectName.value); projectName.value='';">
 								<i class="fa fa-plus"></i>
 							</button>
 							</div>

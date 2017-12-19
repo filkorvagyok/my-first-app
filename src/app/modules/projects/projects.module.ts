@@ -17,9 +17,8 @@ import { SharedAddDataHandler } from '../../shared/services/shared-adddatahandle
 import { ProjectRoutingModule } from './projects-routing.module';
 
 import {
-  MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,
-  MatInputModule, MatIconModule, MatCheckboxModule, MatButtonModule,
-  MatTableModule, MatRadioModule, MatMenuModule, MatDialogModule,
+  MatFormFieldModule, MatInputModule, MatIconModule, MatCheckboxModule,
+  MatButtonModule, MatRadioModule, MatMenuModule, MatDialogModule,
   MatSelectModule, MatNativeDateModule, MAT_DATE_LOCALE 
 } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -32,22 +31,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommonModule,
     FormsModule,
     ProjectRoutingModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatTableModule,
-    MatRadioModule,
     MatMenuModule,
     MatDialogModule,
     MatSelectModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDatepickerModule
   ],
   declarations: [
     ProjectsComponent,

@@ -49,7 +49,9 @@
 			<div>
 				<h3>Cégek</h3>
 				<p *ngFor="let company of sharedGetDataHandler.companies">
-					{{company.name}}
+					<a mat-list-item class="linkTo" routerLink="/company/shown/{{company.id}}" routerLinkActive="active">
+						{{company.name}}
+					</a>
 				</p>
 			</div>
 			<hr>
@@ -58,22 +60,38 @@
 				<ng-template [ngIf]="sharedGetDataHandler.accountables.length == 1"><h4>Felelős:</h4></ng-template>
 				<ng-template [ngIf]="sharedGetDataHandler.accountables.length > 1"><h4>Felelősök:</h4></ng-template>
 				<ul *ngFor="let accountable of sharedGetDataHandler.accountables">
-					<li>{{accountable.full_name}}</li>
+					<li>
+						<a mat-list-item class="linkTo" routerLink="/people/shown/{{accountable.id}}" routerLinkActive="active">
+							{{accountable.full_name}}
+						</a>
+					</li>
 				</ul>
 				<ng-template [ngIf]="sharedGetDataHandler.owners.length == 1"><h4>Tulajdonos:</h4></ng-template>
 				<ng-template [ngIf]="sharedGetDataHandler.owners.length > 1"><h4>Tulajdonosok:</h4></ng-template>
 				<ul *ngFor="let owner of sharedGetDataHandler.owners">
-					<li>{{owner.full_name}}</li>
+					<li>
+						<a mat-list-item class="linkTo" routerLink="/people/shown/{{owner.id}}" routerLinkActive="active">
+							{{owner.full_name}}
+						</a>
+					</li>
 				</ul>
 				<ng-template [ngIf]="sharedGetDataHandler.observers.length == 1"><h4>Megfigyelő:</h4></ng-template>
 				<ng-template [ngIf]="sharedGetDataHandler.observers.length > 1"><h4>Megfigyelők:</h4></ng-template>
 				<ul *ngFor="let observer of sharedGetDataHandler.observers">
-					<li>{{observer.full_name}}</li>
+					<li>
+						<a mat-list-item class="linkTo" routerLink="/people/shown/{{observer.id}}" routerLinkActive="active">
+							{{observer.full_name}}
+						</a>
+					</li>
 				</ul>
 				<ng-template [ngIf]="sharedGetDataHandler.participants.length == 1"><h4>Résztvevő:</h4></ng-template>
 				<ng-template [ngIf]="sharedGetDataHandler.participants.length > 1"><h4>Résztvevők:</h4></ng-template>
 				<ul *ngFor="let participant of sharedGetDataHandler.participants">
-					<li>{{participant.full_name}}</li>
+					<li>
+						<a mat-list-item class="linkTo" routerLink="/people/shown/{{participant.id}}" routerLinkActive="active">
+							{{participant.full_name}}
+						</a>
+					</li>
 				</ul>
 			</div>
 		</div>

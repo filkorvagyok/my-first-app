@@ -12,18 +12,21 @@ export class ProjectsDataHandler{
 		){}
   projects: Project[];
   project: Project;
-  isLoading: boolean = true;
-  isLoadingData: boolean = true;
+  isLoading: boolean = true; //Ez a lista nézetben fontos, amikor csak a névjegy információira van szükségünk.
+  isLoadingData: boolean = true; //Ekkor meg kell várnunk még kilistázzuk a névjegyhez tartozó cégeket és projekteket is.
 
+  /*A ProjectsApiService-ben meghívjuk a getProjects metódust, ami egy observable névjegy tömböt ad vissza,
+  amire feliratkozva kinyerhetjük a projektek adatait.*/
   getProjects(): void{
     this.projectsApiService.getProjects()
       .subscribe(projects => {this.projects = projects; this.isLoading = false;});
   }
 
+  /*A ProjectsApiService-ben meghívjuk a getProject metódust, ami egy observable névjegyet ad vissza,
+  amire feliratkozva kinyerhetjük a projekt adatait.*/
   getProject(project: Project | number, detail: boolean): void{
     this.projectsApiService.getProject(project)
       .subscribe(project => {
-        console.log(project);
       	this.project = project;
       	if(detail)
       	{
@@ -51,6 +54,7 @@ export class ProjectsDataHandler{
       });
   }
 
+  //Alapállapotba helyezzük a projektet.
 	setDefaultProject(project: Project): Project{
 		project.accountable = [];
 		project.checklist = false;

@@ -24,3 +24,12 @@ h3.contact{
 div.projects p{
 	padding-left: 10px;
 }
+
+.linkTo{
+	color: black;
+	margin-left: 5px;
+}
+
+.linkTo:hover{
+	text-decoration: none;
+}

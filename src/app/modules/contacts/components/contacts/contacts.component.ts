@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../../../../shared/classes/contact';
-import { Company } from '../../../../shared/classes/company';
 import { ContactsApiService } from '../../contacts-api.service';
 import { ContactsDataHandler } from '../../contacts-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
@@ -26,7 +25,6 @@ export class ContactsComponent implements OnInit{
 	){}
 
 	checked: boolean = false;
-	days: number;
 	disabled: boolean = true;
 
 
@@ -37,6 +35,9 @@ export class ContactsComponent implements OnInit{
 		this.contactsDataHandler.getContacts();
 	}
 
+
+	/*Megvizsgáljuk a checkbox-okat és ha 1 vagy több 'checked'
+	állapotban van, akkor megjelenítjük a fabbutton-t, különben nem.*/
 	showChbox(): void{
 		var show = 0;
 		this.disabled = false;
@@ -63,6 +64,12 @@ export class ContactsComponent implements OnInit{
 		this.router.navigate(["/people/new"]);
 	}
 
+
+	/*A kiválasztott lista elem selected mezője automatikusan
+	true-ra változik. Ez alapján a törléshez kiválogatjuk azon
+	listaelemeket, melyek select-je true és ha a megjelenő DeleDialog-on
+	megerősítjük a törlést, akkor meghívjuk az adott névjegyre a törlés
+	metódust egyenként.*/
 	clickOnDeleteProductButton(): void{
 		let dialogRef = this.dialog.open(DeleteDialog);
 	    dialogRef.afterClosed().subscribe(result => {
@@ -81,6 +88,8 @@ export class ContactsComponent implements OnInit{
 	    });
 	}
 
+	/*Tölés esetén a névjeggyel összekapcsolt cég(ek) és projekt(ek) közül is ki kell törölnünk az adott névjegyet,
+	tehát ezzel kezdünk és csak ezután hívjuk meg a companiesApiService delete metódusát*/
 	delete(contact: Contact): void{
 		this.contactsDataHandler.contacts = this.contactsDataHandler.contacts.filter(cont => cont != contact);
 		this.sharedDeleteDataHandler.deleteContactFromCompany(contact);
@@ -88,35 +97,16 @@ export class ContactsComponent implements OnInit{
 		this.contactsApiService.delete(contact).subscribe();
 	}
 
-	/*
-	delete(project: Project): void{
-		this.projectsDataHandler.projects = this.projectsDataHandler.projects.filter(h => h !== project);
-		this.sharedDeleteDataHandler.deleteProjectFromCompany(project);
-		this.sharedDeleteDataHandler.deleteProjectFromContact(project);
-		this.projectsApiService.delete(project).subscribe();
-	}
-	*/
-	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS (lásd fentebb)
-	/*delete(contact: Contact): void {
-		this.contactsDataHandler.contacts = this.contactsDataHandler.contacts.filter(h => h !== contact);
-		if(contact.company.length > 0)
-			this.sharedService.deleteContactFromCompany(contact).subscribe();
-		if(contact.accountable.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 0).subscribe();
-		if(contact.owner.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 1).subscribe();
-		if(contact.observer.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 2).subscribe();
-		if(contact.participant.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 3).subscribe();
-    	this.contactsApiService.delete(contact).subscribe();
-	}*/
-
 	gotoEdit(): void{
   		let selectedContact = this.contactsDataHandler.contacts.filter(contact => contact.selected === true)[0];
   		this.router.navigate(['/people/edit', selectedContact.id]);
   	}
 
+
+  	/*A lista nézetben egy teljes név mező kötelető kitöltésével tudunk
+  	létrehozni új névjegyet. Megadható továbbá a telefonszám és e-mail-cím
+  	is. A névjegy további mezőit alaphelyzetbe állítjuk.*/
+  	//TODO: megvalósítani a focust!
   	addInstant(full_name: string, phone: string, email: string): void{
   		let contact = new Contact();
   		contact = this.contactsDataHandler.setDefaultContact(contact);

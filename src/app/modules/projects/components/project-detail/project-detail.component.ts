@@ -7,7 +7,6 @@ import { ProjectsApiService } from '../../projects-api.service';
 import { ProjectsDataHandler } from '../../projects-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
-
 import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -45,6 +44,9 @@ export class ProjectDetailComponent implements OnInit{
 		this.router.navigate(['/project/edit', this.projectsDataHandler.project.id]);
 	}
 
+
+	/*Megjelenik a DeleteDialog és ha ott megerősítettük a törlést,
+  	akkor meghívjuk a törlés funkciót*/
 	clickOnDeleteProductButton(): void{
 		let dialogRef = this.dialog.open(DeleteDialog);
 		dialogRef.afterClosed().subscribe(result => {
@@ -56,6 +58,10 @@ export class ProjectDetailComponent implements OnInit{
 		});
 	}
 
+
+	/*Ha van(nak) hozzátartozó cég(ek) vagy névjegy(ek), akkor először
+	  onnan kitöröljük a névjegyet a SharedDeleteDataHandler segítségével, majd
+	  a projectsApiService.delete metódusát hajtjuk végre*/
 	delete(project: Project): void{
 		this.sharedDeleteDataHandler.deleteProjectFromCompany(project);
 		this.sharedDeleteDataHandler.deleteProjectFromContact(project);

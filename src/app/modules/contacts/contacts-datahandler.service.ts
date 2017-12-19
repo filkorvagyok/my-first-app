@@ -12,14 +12,18 @@ export class ContactsDataHandler{
     ){}
   contacts: Contact[];
   contact: Contact;
-  isLoading: boolean = true;
-  isLoadingData: boolean = true;
+  isLoading: boolean = true; //Ez a lista nézetben fontos, amikor csak a névjegy információira van szükségünk.
+  isLoadingData: boolean = true; //Ekkor meg kell várnunk még kilistázzuk a névjegyhez tartozó cégeket és projekteket is.
 
+  /*A ContactsApiService-ben meghívjuk a getContacts metódust, ami egy observable névjegy tömböt ad vissza,
+  amire feliratkozva kinyerhetjük a névjegyek adatait.*/
   getContacts(): void{
     this.contactsApiService.getContacts()
       .subscribe(contacts => {this.contacts = contacts; this.isLoading = false;});
   }
 
+  /*A ContactsApiService-ben meghívjuk a getContact metódust, ami egy observable névjegyet ad vissza,
+  amire feliratkozva kinyerhetjük a névjegy adatait.*/
   getContact(contact: Contact | number, detail: boolean): void{
     this.contactsApiService.getContact(contact)
       .subscribe(contact => {
@@ -47,10 +51,8 @@ export class ContactsDataHandler{
       });
   }
 
+  //Alapállapotba helyezzük a névjegyet.
   setDefaultContact(contact: Contact): Contact{
-    /*let project: Proj;
-    project.id = null;
-    project.rank = [];*/
     contact.company = [];
     contact.email = "";
     contact.forename = "";

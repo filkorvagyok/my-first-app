@@ -20,14 +20,18 @@ export class CompaniesDataHandler{
   employeesnums: Employeesnum[];
   yearlyincomes: Yearlyincome[];
   company: Company;
-  isLoading: boolean = true;
-  isLoadingData: boolean = true;
+  isLoading: boolean = true; //Ez a lista nézetben fontos, amikor csak a cégek információira van szükségünk.
+  isLoadingData: boolean = true; //Ekkor meg kell várnunk még kilistázzuk a céghez tartozó projekteket és névjegyeket is.
 
+  /*A CompaniesApiService-ben meghívjuk a getCompanies metódust, ami egy observable cég tömböt ad vissza,
+  amire feliratkozva kinyerhetjük a cégek adatait.*/
   getCompanies(): void{
     this.companiesApiService.getCompanies()
       .subscribe(companies => {this.companies = companies; this.isLoading = false;});
   }
 
+  /*A CompaniesApiService-ben meghívjuk a getCompany metódust, ami egy observable céget ad vissza,
+  amire feliratkozva kinyerhetjük a cég adatait.*/
   getCompany(company: Company | number, detail: boolean): void{
     this.companiesApiService.getCompany(company)
       .subscribe(company => {
@@ -55,6 +59,8 @@ export class CompaniesDataHandler{
       });
   }
 
+
+  //Alapállapotba helyezzük a céget.
   setDefaultCompany(company: Company): Company{
     company.bi_address = "";
     company.bi_country = "";
@@ -93,6 +99,8 @@ export class CompaniesDataHandler{
       .subscribe(company => this.companies.push(company));
   }
 
+
+  //Lásd getCompanies, csak itt országokra
   getCountries(): void{
     this.companiesApiService.getCountries()
       .subscribe(countries => {
@@ -100,6 +108,8 @@ export class CompaniesDataHandler{
       });
   }
 
+
+  //Lásd getCompanies, csak itt iparokra
   getIndustries(): void{
     this.companiesApiService.getIndustries()
       .subscribe(industries => {
@@ -107,6 +117,8 @@ export class CompaniesDataHandler{
       });
   }
 
+
+  //Lásd getCompanies, csak itt dolgozók számára
   getEmployeesnums(): void{
     this.companiesApiService.getEmployeesnums()
       .subscribe(employeesnums => {
@@ -114,6 +126,8 @@ export class CompaniesDataHandler{
       });
   }
 
+
+  //Lásd getCompanies, csak itt éves bevételre
   getYearlyincomes(): void{
     this.companiesApiService.getYearlyincomes()
       .subscribe(yearlyincomes => {

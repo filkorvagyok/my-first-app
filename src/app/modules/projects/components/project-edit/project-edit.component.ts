@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { Project } from '../../../../shared/classes/project';
-import { Company } from '../../../../shared/classes/company';
-import { Contact } from '../../../../shared/classes/contact';
 import { ProjectsApiService } from '../../projects-api.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
@@ -48,6 +45,13 @@ export class ProjectEditComponent implements OnInit {
 			});
 	}
 
+
+	/*Ha a project company mezőjében letároltunk 1 vagy több cég id-ját,
+	akkor ez a metódus a sharedAddDataHandler segítségével rögzíti a megfelelő
+	cég project mezőjében ennek a projektnek az id-ját. Hasonlóan működik, ha
+	a project accountable, owner,observer vagy participant mezőjében lárolunk
+	legalább 1 névjegy id-t, csak ott a névjegy project mezőjébe szúrjuk be a
+	project id-ját.*/
 	addProjectTo(project: Project)
 	{
 		if(project.company.length > 0)

@@ -9,7 +9,9 @@
 			<div>
 				<h3>Projektek</h3>
 				<p *ngFor="let project of sharedGetDataHandler.projects">
-					{{project.name}}
+					<a mat-list-item class="linkTo" routerLink="/project/shown/{{project.id}}" routerLinkActive="active">
+						{{project.name}}
+					</a>
 				</p>
 			</div>
 			<hr id="line">
@@ -43,7 +45,9 @@
 			<div>
 				<h3>Névjegyek</h3>
 				<p *ngFor="let contact of sharedGetDataHandler.contacts">
-					{{contact.full_name}}
+					<a mat-list-item class="linkTo" routerLink="/people/shown/{{contact.id}}" routerLinkActive="active">
+						{{contact.full_name}}
+					</a>
 				</p>
 			</div>
 		</div>

@@ -40,53 +40,22 @@
 			<div>
 				<h3>Cégek</h3>
 				<p *ngFor="let company of sharedGetDataHandler.companies">
-					{{company.name}}
+					<a mat-list-item class="linkTo" routerLink="/company/shown/{{company.id}}" routerLinkActive="active">
+						{{company.name}}
+					</a>
 				</p>
 			</div>
 			<hr>
 			<div class="projects">
 				<h3>Projektek</h3>
 				<p *ngFor="let pfc of sharedGetDataHandler.projectsForContact">
-					{{pfc.project.name}} - <span *ngFor="let rank of pfc.ranks; let isLast = last">
+					<span><a mat-list-item class="linkTo" routerLink="/project/shown/{{pfc.project.id}}" routerLinkActive="active">
+						{{pfc.project.name}}
+					</a></span>
+					 - <span *ngFor="let rank of pfc.ranks; let isLast = last">
 						{{rank}}{{isLast ? '' : ', '}}
 					</span>
 				</p>
-				<!--<p *ngFor="let accountable of accountables">
-					<strong>{{accountable}}</strong> - Felelős
-				</p>
-				<p *ngFor="let owner of owners">
-					<strong>{{owner}}</strong> - Tulajdonos
-				</p>
-				<p *ngFor="let observer of observers">
-					<strong>{{observer}}</strong> - Megfigyelő
-				</p>
-				<p *ngFor="let participant of participants">
-					<strong>{{participant}}</strong> - Résztvevő
-				</p>-->
-				<!--<div *ngFor="let accountable of accountables">
-					<div *ngFor="let owner of owners">
-						<div *ngFor="let observer of observers">
-							<div *ngFor="let participant of participants">
-								<ng-template [ngIf]="accountable == owner && observer == participant && accountable == observer">
-									<p><strong>{{accountable}}</strong> - Felelős, Tulajdonos, Megfigyelő, Résztvevő</p>
-								</ng-template>
-								<ng-container *ngIf="accountable == owner && observer == participant && accountable == observer;else second">
-									<p><strong>{{accountable}}</strong> - Felelős, Tulajdonos, Megfigyelő, Résztvevő</p>
-								</ng-container>
-								
-							</div>
-							<ng-container *ngIf="accountable == owner && accountable == observer && !participant;else second">
-								<p><strong>{{accountable}}</strong> - Felelős, Tulajdonos, Megfigyelő</p>
-							</ng-container>
-							<ng-template #second>
-							    <ng-container *ngIf="accountable == owner && accountable == observer;else third">
-							    	<p><strong>{{accountable}}</strong> - Felelős, Tulajdonos, Megfigyelő</p>
-							    </ng-container>
-							</ng-template>
-						</div>
-						<ng-template #third></ng-template>
-					</div>
-				</div>-->
 			</div>
 		</div>
 		</div>

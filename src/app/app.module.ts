@@ -10,13 +10,10 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './shared/services/in-memory-data.service';
 
 import {
-  MatToolbarModule, MatSidenavModule, MatListModule, MatFormFieldModule,
+  MatToolbarModule, MatSidenavModule, MatFormFieldModule,
   MatInputModule, MatIconModule, MatCheckboxModule, MatButtonModule,
-  MatTableModule, MatRadioModule, MatMenuModule, MatDialogModule,
-  MatSelectModule, MatNativeDateModule, MAT_DATE_LOCALE 
+  MatMenuModule, MatSelectModule
 } from '@angular/material';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { DateTimePickerModule } from 'ng-pick-datetime';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -51,25 +48,16 @@ import { AppRoutingModule }     from './app-routing.module';
     ReactiveFormsModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatTableModule,
-    MatRadioModule,
     MatMenuModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    DateTimePickerModule,
     CompaniesModule,
     ProjectsModule,
     ContactsModule
   ],
-  providers: [{provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialog]
 })

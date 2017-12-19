@@ -17,6 +17,11 @@ export class SharedAddDataHandler{
 		private sharedGetDataHandler: SharedGetDataHandler
 	){}
 
+  /*Hozzáadjuk a projekt id-ját a megfelelő company project mezőjéhez,
+  ha a projekt company mezőjében találunk adatot.
+  De mindezek előtt megvizsgáljuk, hogy szerepel-e a projekt id-je
+  olyan cég adatai között, melynek id-ja nem szerepel a paraméterben kapott
+  projekt company mezőjében. Ha van ilyen, akkor onnan kitöröljük a projekt id-t.*/
   addProjectToCompany(project: Project): void{
     let companyToBeModified = this.sharedGetDataHandler.companies
       .filter(x => x.project.includes(project.id))
@@ -34,6 +39,13 @@ export class SharedAddDataHandler{
     });
   }
 
+  /*Hozzáadjuk a projekt id-ját a megfelelő contact project mezőjéhez,
+  ha a projekt accountable, owner, observer vagy participant mezőjében
+  találunk adatot.
+  De mindezek előtt megvizsgáljuk, hogy szerepel-e a projekt id-je
+  olyan névjegy adatai között, melynek id-ja nem szerepel a paraméterben kapott
+  projekt accountable, owner, observer vagy participant mezőjében. Ha van ilyen,
+  akkor onnan kitöröljük a projekt id-t.*/
   addProjectToContact(project: Project): void{
     let accountableToBeModified = this.sharedGetDataHandler.contacts
       .filter(x => x.project.includes(project.id))
@@ -93,6 +105,11 @@ export class SharedAddDataHandler{
       });
   }
 
+  /*Hozzáadjuk a névjegy id-ját a megfelelő company contact mezőjéhez,
+  ha a névjegy company mezőjében találunk adatot.
+  De mindezek előtt megvizsgáljuk, hogy szerepel-e a névjegy id-je
+  olyan cég adatai között, melynek id-ja nem szerepel a paraméterben kapott
+  névjegy contact mezőjében. Ha van ilyen, akkor onnan kitöröljük a névjegy id-t.*/
   addContactToCompany(contact: Contact): void{
     let companyToBeModified = this.sharedGetDataHandler.companies
       .filter(x => x.contact.includes(contact.id))

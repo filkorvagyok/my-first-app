@@ -58,7 +58,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="2"  class="newcompany_btn">
-							<button  mat-raised-button color="primary" (click)="gotoNew()">
+							<button  type="button" mat-raised-button color="primary" tabindex="0" (click)="gotoNew()">
 								<i class="fa fa-plus"></i> Új cég hozzáadása
 							</button>
 						</td>
@@ -67,7 +67,7 @@
 							<mat-form-field>
 							    <input #companyName matInput name="companyName" placeholder="Új cég hozzáadása instant">
 						  	</mat-form-field>
-						  	<button  mat-raised-button color="primary" (click)="addInstant(companyName.value); companyName.value='';">
+						  	<button #addInstantButton type="submit"  mat-raised-button color="primary" tabindex="-1" (click)="addInstant(companyName.value); companyName.value='';">
 								<i class="fa fa-plus"></i>
 							</button>
 							</div>

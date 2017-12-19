@@ -27,6 +27,7 @@ export class ProjectsComponent implements OnInit{
 	checked: boolean = false;
 	days: number;
 	disabled: boolean = true;
+	editIncome: boolean = false;
 
 	ngOnInit(): void{
 		this.projectsDataHandler.isLoading = true;
@@ -35,6 +36,8 @@ export class ProjectsComponent implements OnInit{
 		this.projectsDataHandler.getProjects();
 	}
 
+	/*Megvizsgáljuk a checkbox-okat és ha 1 vagy több 'checked'
+	állapotban van, akkor megjelenítjük a fabbutton-t, különben nem.*/
 	showChbox(): void{
 		var show = 0;
 		this.disabled = false;
@@ -61,11 +64,18 @@ export class ProjectsComponent implements OnInit{
 		this.router.navigate(["/project/new"]);
 	}
 
+	//Kiszámoljuk, hogy a határidő és a mai nap között hány nap különbség van.
 	count(project: Project): string{
 		let num: number = Math.round((new Date(project.deadline).getTime() - new Date().getTime())/86400000+0.5);
 		return num.toString()+' nap';
 	}
 
+
+	/*A kiválasztott lista elem selected mezője automatikusan
+	true-ra változik. Ez alapján a törléshez kiválogatjuk azon
+	listaelemeket, melyek select-je true és ha a megjelenő DeleDialog-on
+	megerősítjük a törlést, akkor meghívjuk az adott névjegyre a törlés
+	metódust egyenként.*/
 	clickOnDeleteProductButton(): void{
 		let dialogRef = this.dialog.open(DeleteDialog);
 		dialogRef.afterClosed().subscribe(result => {
@@ -84,6 +94,8 @@ export class ProjectsComponent implements OnInit{
 		});
 	}
 
+	/*Tölés esetén a projekttel összekapcsolt cég(ek) és névjegy(ek) közül is ki kell törölnünk az adott projektet,
+	tehát ezzel kezdünk és csak ezután hívjuk meg a projectsApiService delete metódusát*/
 	delete(project: Project): void{
 		this.projectsDataHandler.projects = this.projectsDataHandler.projects.filter(h => h !== project);
 		this.sharedDeleteDataHandler.deleteProjectFromCompany(project);
@@ -97,6 +109,9 @@ export class ProjectsComponent implements OnInit{
   		this.router.navigate(['/project/edit', selectedProject.id]);
   	}
 
+  	/*A lista nézetben egy név mező kötelető kitöltésével tudunk létrehozni
+  	új projektet. A projekt további mezőit alaphelyzetbe állítjuk.*/
+  	//TODO: megvalósítani a focust!
   	addInstant(name: string): void{
   		let project = new Project();
   		this.projectsDataHandler.setDefaultProject(project);

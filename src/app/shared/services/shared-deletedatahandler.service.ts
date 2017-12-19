@@ -19,17 +19,21 @@ export class SharedDeleteDataHandler{
 		private contactsApiService: ContactsApiService,
 	){}
 
+	/*Megvizsgáljuk, hogy mely projektek company mezőjében található
+	meg a paraméterként kapott company id-je és ezekből egyesével
+	ki is szedjük ezt az értéket, majd ProjectsApiService segítségével
+	update-ljük a projektet.*/
 	deleteCompanyFromProject(company: Company): void{
 		this.sharedGetDataHandler.projects
 			.filter(project => project.company.includes(company.id))
 			.forEach(project => {
 				project.company.splice(project.company.indexOf(company.id), 1);
-				console.log(project);
 				this.projectsApiService.updateProject(project).subscribe();
 			});
-		console.log(this.sharedGetDataHandler.projects);
 	}
 
+	/*Lásd: deleteCompanyFromProject, csak itt a névjegyek company mezőjét
+	vizsgáljuk.*/
 	deleteCompanyFromContact(company: Company): void{
 		this.sharedGetDataHandler.contacts
 			.filter(contact => contact.company.includes(company.id))
@@ -39,6 +43,9 @@ export class SharedDeleteDataHandler{
 			});
 	}
 
+
+	/*Lásd: deleteCompanyFromProject, csak itt azt vizsgáljuk hogy a projekt id szerepel-e
+	a cég project mezőjében.*/
 	deleteProjectFromCompany(project: Project): void{
 		this.sharedGetDataHandler.companies
 			.filter(company => company.project.includes(project.id))
@@ -48,6 +55,8 @@ export class SharedDeleteDataHandler{
 			});
 	}
 
+	/*Lásd: deleteCompanyFromProject, csak itt a névjegyek project mezőjét
+	vizsgáljuk.*/
 	deleteProjectFromContact(project: Project): void{
 		this.sharedGetDataHandler.contacts
 			.filter(contact => contact.project.includes(project.id))
@@ -57,6 +66,8 @@ export class SharedDeleteDataHandler{
 			});
 	}
 
+	/*Lásd: deleteCompanyFromProject, csak itt azt vizsgáljuk hogy a névjegy id szerepel-e
+	a cég contact mezőjében.*/
 	deleteContactFromCompany(contact: Contact): void{
 		this.sharedGetDataHandler.companies
 			.filter(compnay => compnay.contact.includes(contact.id))
@@ -66,6 +77,8 @@ export class SharedDeleteDataHandler{
 			});
 	}
 
+	/*Lásd: deleteContactFromCompany, csak itt a projektek accountable, owner, observer
+	és participant mezőit vizsgáljuk.*/
 	deleteContactFromProject(contact: Contact): void{
 		this.sharedGetDataHandler.projects
 			.filter(project => project.accountable.includes(contact.id))

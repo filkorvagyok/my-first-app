@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { Contact } from '../../../../shared/classes/contact';
 import { ContactsDataHandler } from '../../contacts-datahandler.service';
 
@@ -10,7 +9,7 @@ import { ContactsDataHandler } from '../../contacts-datahandler.service';
 })
 
 export class ContactCommonComponent implements OnInit{
-	edit = false;
+	edit = false; //Ezen mező alapján tudja a contact-edit.component, hogy szerkeszteni kell vagy új névjegyet létrehozni
 
 	constructor(
 		private contactsDataHandler: ContactsDataHandler,
@@ -20,14 +19,18 @@ export class ContactCommonComponent implements OnInit{
 	ngOnInit(): void {
 		if(this.route.snapshot.routeConfig.path == "people/new")
 		{
+			//Ha az url "people/new"-val egyenlő, akkor teljesül
 			this.setNewContact();
 		}
+		/*TODO: mivel így nem csak "people/new/:id" esetén hajtja ezt végre,
+		ezért ki kell javítani*/
 		else
 		{
 			this.setEditContact();
 		}
 	}
 
+	//Létrehozunk egy üres contact példányt és alaphelyzetbe állítjuk
 	setNewContact(): void{
 		let arr = this.route.snapshot.paramMap.keys;
 		this.contactsDataHandler.contact = new Contact;
@@ -35,6 +38,7 @@ export class ContactCommonComponent implements OnInit{
 		arr.forEach(array => this.contactsDataHandler.contact.company.push(Number(this.route.snapshot.paramMap.get(array))));
 	}
 
+	//Az url-ben kapott id alapján lekéri a webapiból a megfelelő névjegy adatokat.
 	setEditContact(): void{
 		this.edit = true;
 		this.route.paramMap.subscribe(params => this.contactsDataHandler.getContact(Number(params.get('id')), false));

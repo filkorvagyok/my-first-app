@@ -1,12 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { Contact } from '../../../../shared/classes/contact';
-import { Company } from '../../../../shared/classes/company';
 import { ContactsApiService } from '../../contacts-api.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
-
 
 @Component({
   selector: 'contact-edit',
@@ -18,7 +15,7 @@ export class ContactEditComponent implements OnInit{
 		private contactsApiService: ContactsApiService,
 		private sharedGetDataHandler: SharedGetDataHandler,
 		private sharedAddDataHandler: SharedAddDataHandler,
-		private location: Location
+		private location: Location,
 	) {}
 
 	@Input() contact: Contact;
@@ -47,10 +44,16 @@ export class ContactEditComponent implements OnInit{
 			});
 	}
 
+	/*Ha a contact company mezőjében letároltunk 1 vagy több cég id-ját,
+	akkor ez a metódus a sharedAddDataHandler segítségével rögzíti a megfelelő
+	cég contact mezőjében ennek a névjegynek az id-ját. Hasonlóan működik, ha
+	a contact project mezőjében lárolunk legalább 1 projekt id-t, csak ott a projekt
+	megfelő mezőjébe szúrjuk be a contact id-ját.*/
 	addContactTo(contact: Contact)
 	{
 		if(contact.company.length > 0)
 			this.sharedAddDataHandler.addContactToCompany(contact);
+		//TODO: megvalósítani a contact projekthez adását.
 		/*if(contact.project.length > 0 || project.owner.length > 0 ||
 			project.observer.length > 0 || project.participant.length > 0)
 			this.sharedAddDataHandler.addProjectToContact(project);*/

@@ -7,7 +7,6 @@ import { ContactsApiService } from '../../contacts-api.service';
 import { ContactsDataHandler } from '../../contacts-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
-
 import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -45,6 +44,8 @@ export class ContactDetailComponent implements OnInit{
 		this.router.navigate(['/people/edit', this.contactsDataHandler.contact.id]);
 	}
 
+	/*Megjelenik a DeleteDialog és ha ott megerősítettük a törlést,
+  	akkor meghívjuk a törlés funkciót*/
 	clickOnDeleteProductButton(): void{
 		let dialogRef = this.dialog.open(DeleteDialog);
 		dialogRef.afterClosed().subscribe(result => {
@@ -56,26 +57,13 @@ export class ContactDetailComponent implements OnInit{
 		});
 	}
 
+	/*Ha van(nak) hozzátartozó cég(ek) vagy projekt(ek), akkor először
+	  onnan kitöröljük a névjegyet a SharedDeleteDataHandler segítségével, majd
+	  a contactsApiService.delete metódusát hajtjuk végre*/
 	delete(contact: Contact): void{
 		this.sharedDeleteDataHandler.deleteContactFromCompany(contact);
 		this.sharedDeleteDataHandler.deleteContactFromProject(contact);
 		this.contactsApiService.delete(contact).subscribe();
 		this.router.navigate(['people/list']);
 	}
-
-	//FONTOS: ÁT LETT ALAKÍTVA A CONTACT CLASS, EMIATT VÁLOZOTT A TÖRLÉS FUKCIÓ IS (lásd fentebb)
-	/*delete(contact: Contact): void {
-		if(contact.company.length > 0)
-			this.sharedService.deleteContactFromCompany(contact).subscribe();
-		if(contact.accountable.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 0).subscribe();
-		if(contact.owner.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 1).subscribe();
-		if(contact.observer.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 2).subscribe();
-		if(contact.participant.length > 0)
-			this.sharedService.deleteContactFromProject(contact, 3).subscribe();
-		this.contactsApiService.delete(contact).subscribe();
-		this.location.back();
-	}*/
 }

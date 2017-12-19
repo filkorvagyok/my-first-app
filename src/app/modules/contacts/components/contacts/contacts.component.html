@@ -34,7 +34,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="2"  class="newcompany_btn">
-							<button  mat-raised-button color="primary" (click)="gotoNew()">
+							<button type="button" mat-raised-button color="primary" (click)="gotoNew()">
 								<i class="fa fa-plus"></i> Új névjegy hozzáadása
 							</button>
 						</td>
@@ -49,7 +49,7 @@
 						  	<mat-form-field>
 							    <input #contactEmail matInput name="contactEmail" placeholder="E-mail"/>
 						  	</mat-form-field>
-						  	<button  mat-raised-button color="primary" (click)="addInstant(contactFullName.value, contactPhone.value, contactEmail.value); contactFullName.value=''; contactPhone.value=''; contactEmail.value='';">
+						  	<button type="submit" mat-raised-button color="primary" (click)="addInstant(contactFullName.value, contactPhone.value, contactEmail.value); contactFullName.value=''; contactPhone.value=''; contactEmail.value='';">
 								<i class="fa fa-plus"></i>
 							</button>
 							</div>

@@ -27,7 +27,8 @@ export class ProjectsComponent implements OnInit{
 	checked: boolean = false;
 	days: number;
 	disabled: boolean = true;
-	editIncome: boolean = false;
+	valami: Date;
+	changedate: boolean = false;
 
 	ngOnInit(): void{
 		this.projectsDataHandler.isLoading = true;
@@ -118,5 +119,23 @@ export class ProjectsComponent implements OnInit{
   		project.name = name.trim();
     	if (!name) { return; }
     	this.projectsDataHandler.addProject(project);
+  	}
+
+  	changeProject(project: Project)
+  	{
+  		if(this.changedate && typeof this.valami.getMonth === 'function')
+  			project.deadline = this.valami;
+  		this.projectsApiService.updateProject(project).subscribe();
+  		console.log("valami van:", project.deadline);
+  	}
+
+  	changeDate(project: Project, date)
+  	{
+  		let asd = new Date(date);
+  		if(!isNaN( asd.getTime() ))
+  		{
+  			this.valami = new Date(date);
+  			this.changedate = true;
+  		}
   	}
 }

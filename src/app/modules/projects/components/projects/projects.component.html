@@ -28,16 +28,18 @@
 							<strong class="company_name">{{count(project)}}</strong>
 						</td>
 						<td rowspan="2" (click)="$event.stopPropagation();">
-							<p *ngIf="!editIncome" (click)="editIncome = true">{{project.income}}</p>
-							<input *ngIf="editIncome" matInput [(ngModel)]="project.income" name="projectIncome" placeholder="Bevétel">
+							<!--<p (click)="editIncome = true">{{project.income}}</p>-->
+							<input #projectIncome matInput [(ngModel)]="project.income" name="projectIncome" (focusout)="changeProject(project)" (keyup.enter)="projectIncome.blur()" style="width: inherit;">
 						</td>
-						<td rowspan="2">
-							{{project.expenditure}}
+						<td rowspan="2" (click)="$event.stopPropagation();">
+							<!--{{project.expenditure}}-->
+							<input #projectExpenditure matInput [(ngModel)]="project.expenditure" name="projectExpenditure" (focusout)="changeProject(project)" (keyup.enter)="projectExpenditure.blur()" style="width: inherit;">
 						</td>
 					</tr>
 					<tr>
-						<td class="collapsed">
-							{{project.deadline | date:'yyyy-MM-dd HH:mm'}}
+						<td class="collapsed" (click)="$event.stopPropagation();">
+							<!--{{project.deadline | date:'yyyy-MM-dd HH:mm'}}-->
+							<input #projectDeadline matInput [ngModel]="project.deadline | date:'yyyy.MM.dd HH:mm'" (ngModelChange)="changeDate(project, $event)" name="projectDeadline" (focusout)="changeProject(project)" (keyup.enter)="projectDeadline.blur()" style="width: inherit;">
 						</td>
 					</tr>
 				</tbody>

@@ -12,8 +12,11 @@ import { InMemoryDataService } from './shared/services/in-memory-data.service';
 import {
   MatToolbarModule, MatSidenavModule, MatFormFieldModule,
   MatInputModule, MatIconModule, MatCheckboxModule, MatButtonModule,
-  MatMenuModule, MatSelectModule
+  MatMenuModule, MatSelectModule, MatNativeDateModule,
+  MAT_DATE_LOCALE
 } from '@angular/material';
+import { DateTimePickerModule } from 'ng-pick-datetime';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -56,8 +59,15 @@ import { AppRoutingModule }     from './app-routing.module';
     MatMenuModule,
     CompaniesModule,
     ProjectsModule,
-    ContactsModule
+    ContactsModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    DateTimePickerModule,
+
   ],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialog]
 })

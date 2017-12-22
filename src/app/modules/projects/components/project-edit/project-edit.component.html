@@ -58,11 +58,7 @@
 				</mat-form-field>
 			</div>
 			<div>
-				<mat-form-field>
-				<input matInput [(ngModel)]="project.deadline" name="projectDeadline" [matDatepicker]="picker" placeholder="Choose a date">
-				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-				<mat-datepicker #picker></mat-datepicker>
-				</mat-form-field>
+				<datetime [ngModel]="project.deadline" name="projectDeadline" [timepicker]="{ icon: 'fa fa-clock-o' }" [datepicker]="{ icon: 'fa fa-calendar' }" style="width: 40px;"></datetime>
 			</div>
 			<!--<div>
 				<owl-date-time [(ngModel)]="project.deadline" ></owl-date-time>

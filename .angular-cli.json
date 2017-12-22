@@ -19,12 +19,16 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css",
+        "../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css",
         "styles.css",
         "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js"
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js",
+        "../node_modules/bootstrap-timepicker/js/bootstrap-timepicker.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -59,9 +63,7 @@
   },
   "defaults": {
     "styleExt": "css",
-    "class": {
-      "spec": false
-    },
-    "component": {}
+    "component": {
+    }
   }
 }

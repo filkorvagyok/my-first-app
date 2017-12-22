@@ -21,6 +21,7 @@ export class ProjectEditComponent implements OnInit {
 
 	@Input() project: Project;
 	@Input() edit: boolean;
+	asd =new Date();
 
 	ngOnInit(): void{
 		this.sharedGetDataHandler.getCompanies();
@@ -59,5 +60,9 @@ export class ProjectEditComponent implements OnInit {
 		if(project.accountable.length > 0 || project.owner.length > 0 ||
 			project.observer.length > 0 || project.participant.length > 0)
 			this.sharedAddDataHandler.addProjectToContact(project);
+	}
+
+	datepickerOpts = {
+		defaultTime: 'current'
 	}
 }

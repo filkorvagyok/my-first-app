@@ -24,6 +24,7 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateTimePickerModule } from 'ng-pick-datetime';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDialogModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NKDatetimeModule
   ],
   declarations: [
     ProjectsComponent,

@@ -29,6 +29,7 @@ export class ProjectsComponent implements OnInit{
 	disabled: boolean = true;
 	valami: Date;
 	changedate: boolean = false;
+	//asd = new Date();
 
 	ngOnInit(): void{
 		this.projectsDataHandler.isLoading = true;
@@ -67,6 +68,7 @@ export class ProjectsComponent implements OnInit{
 
 	//Kiszámoljuk, hogy a határidő és a mai nap között hány nap különbség van.
 	count(project: Project): string{
+		console.log(project.deadline);
 		let num: number = Math.round((new Date(project.deadline).getTime() - new Date().getTime())/86400000+0.5);
 		return num.toString()+' nap';
 	}
@@ -138,4 +140,15 @@ export class ProjectsComponent implements OnInit{
   			this.changedate = true;
   		}
   	}
+
+  	datepickerOpts = {
+	    autoclose: true,
+	    todayBtn: 'linked',
+	    todayHighlight: true,
+	    assumeNearbyYear: true,
+	    format: 'yyyy. MM d.',
+	    weekStart: 1,
+  		showMeridian : false,
+  		maxHours: 24
+	}
 }

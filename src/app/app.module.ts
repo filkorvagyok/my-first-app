@@ -19,6 +19,8 @@ import { DateTimePickerModule } from 'ng-pick-datetime';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+  
+import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 
 import { CompaniesModule }            from './modules/companies/companies.module';
 import { ProjectsModule }            from './modules/projects/projects.module';
@@ -65,6 +67,7 @@ import { AppRoutingModule }     from './app-routing.module';
     MatDatepickerModule,
     MatNativeDateModule,
     DateTimePickerModule,
+    NKDatetimeModule
 
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}],

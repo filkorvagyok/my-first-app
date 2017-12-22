@@ -39,7 +39,8 @@
 					<tr>
 						<td class="collapsed" (click)="$event.stopPropagation();">
 							<!--{{project.deadline | date:'yyyy-MM-dd HH:mm'}}-->
-							<input #projectDeadline matInput [ngModel]="project.deadline | date:'yyyy.MM.dd HH:mm'" (ngModelChange)="changeDate(project, $event)" name="projectDeadline" (focusout)="changeProject(project)" (keyup.enter)="projectDeadline.blur()" style="width: inherit;">
+							<!--<p *ngIf="!change" (mouseover)="asd = true" (mouseleave)="asd=false">{{project.deadline | date:'yyyy.MM.dd. HH:mm'}} <mat-icon (click)="change = true" class="fa fa-pencil" *ngIf="asd"></mat-icon></p>-->
+							<datetime [ngModel]="project.deadline" name="projectDeadline"></datetime>
 						</td>
 					</tr>
 				</tbody>

@@ -9,7 +9,8 @@ const companiesRoutes: Routes = [
   { path: 'company/list', component:CompaniesComponent },
   { path: 'company/shown/:id', component:CompanyDetailComponent },
   { path: 'company/edit/:id', component:CompanyCommonComponent },
-  { path: 'company/new',  component:CompanyCommonComponent }
+  { path: 'company/new',  component:CompanyCommonComponent },
+  { path: 'company/new/:projects[]',  component:CompanyCommonComponent },
 ];
 
 @NgModule({

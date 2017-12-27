@@ -65,4 +65,27 @@ export class CompanyDetailComponent implements OnInit {
       this.companiesApiService.delete(company).subscribe();
       this.router.navigate(['company/list']);
   }
+
+  /*Átadjuk a céget az új projekt létrehozásához, így
+    automatikusan belekerül a projekt company mezőjébe.*/
+    createNewProject(): void{
+      let companiesArray: number[] = [];
+      companiesArray.push(this.companiesDataHandler.company.id);
+      this.gotoNewProject(companiesArray);
+    }
+
+    gotoNewProject(array: number[]): void{
+      this.router.navigate(['/project/new/', array]);
+    }
+
+    //Lásd.: createNewProject, csak itt projekt helyett névjegyre alkalmazzuk
+    createNewContact(): void {
+      let companiesArray: number[] = [];
+      companiesArray.push(this.companiesDataHandler.company.id);
+      this.gotoNewContact(companiesArray);
+    }
+
+    gotoNewContact(array: number[]): void{
+      this.router.navigate(['/people/new/', array]);
+    }
 }

@@ -490,13 +490,33 @@ export class InMemoryDataService implements InMemoryDbService {
             owner: [1],
             observer: [],
             participant: [],
-            deadline: new Date('2017-11-30'),
+            deadline: new Date('2017-12-31'),
             status: 'Elindítva',
             priority: 'magas',
             stickers: '',
             currency: 'HUF',
             income: 500000000,
             expenditure: 2000000,
+            selected: false,
+        },
+        {
+            id: 2,
+            name: 'Projekt2',
+            description: 'Ez a projekt2',
+            checklist: false,
+            company: [3,4],
+            file: 'file2',
+            accountable: [],
+            owner: [],
+            observer: [1],
+            participant: [1],
+            deadline: new Date('2018-08-16'),
+            status: 'Valami',
+            priority: 'közepes',
+            stickers: '',
+            currency: 'HUF',
+            income: 70000000,
+            expenditure: 900000,
             selected: false,
         }
     ];
@@ -516,7 +536,7 @@ export class InMemoryDataService implements InMemoryDbService {
             rank: 'beosztott',
             greeting: 'csá',
             selected: false,
-            project: [1]
+            project: [1,2]
         }
     ];
 

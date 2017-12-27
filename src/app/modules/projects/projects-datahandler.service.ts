@@ -14,19 +14,27 @@ export class ProjectsDataHandler{
   project: Project;
   isLoading: boolean = true; //Ez a lista nézetben fontos, amikor csak a névjegy információira van szükségünk.
   isLoadingData: boolean = true; //Ekkor meg kell várnunk még kilistázzuk a névjegyhez tartozó cégeket és projekteket is.
+  //myDate: Date;
 
   /*A ProjectsApiService-ben meghívjuk a getProjects metódust, ami egy observable névjegy tömböt ad vissza,
-  amire feliratkozva kinyerhetjük a projektek adatait.*/
+  amire feliratkozva kinyerhetjük a projektek adatait.
+  + Határidő dátummá alakítása.*/
   getProjects(): void{
     this.projectsApiService.getProjects()
-      .subscribe(projects => {this.projects = projects; this.isLoading = false;});
+      .subscribe(projects => {
+        projects.forEach(project => project.deadline = new Date(project.deadline));
+        this.projects = projects;
+        this.isLoading = false;
+      });
   }
 
   /*A ProjectsApiService-ben meghívjuk a getProject metódust, ami egy observable névjegyet ad vissza,
-  amire feliratkozva kinyerhetjük a projekt adatait.*/
+  amire feliratkozva kinyerhetjük a projekt adatait.
+  + Határidő dátummá alakítása.*/
   getProject(project: Project | number, detail: boolean): void{
     this.projectsApiService.getProject(project)
       .subscribe(project => {
+        project.deadline = new Date(project.deadline);
       	this.project = project;
       	if(detail)
       	{
@@ -78,6 +86,9 @@ export class ProjectsDataHandler{
 
   addProject(project: Project): void{
     this.projectsApiService.addProject(project)
-      .subscribe(project => this.projects.push(project));
+      .subscribe(project => {
+        project.deadline = new Date(project.deadline);
+        this.projects.push(project);
+      });
   }
 }

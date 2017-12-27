@@ -62,7 +62,15 @@ export class ProjectEditComponent implements OnInit {
 			this.sharedAddDataHandler.addProjectToContact(project);
 	}
 
+	//Dátumválasztó beállítása
 	datepickerOpts = {
-		defaultTime: 'current'
+	    autoclose: true,
+	    todayBtn: 'linked',
+	    todayHighlight: true,
+	    assumeNearbyYear: true,
+	    format: 'yyyy. MM d.',
+  		showMeridian : false,
+  		maxHours: 24,
+  		language: 'hu'
 	}
 }

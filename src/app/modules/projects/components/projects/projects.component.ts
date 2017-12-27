@@ -29,14 +29,16 @@ export class ProjectsComponent implements OnInit{
 	disabled: boolean = true;
 	valami: Date;
 	changedate: boolean = false;
-	//asd = new Date();
+	asd = new Date();
 
 	ngOnInit(): void{
 		this.projectsDataHandler.isLoading = true;
 		this.sharedGetDataHandler.getCompanies();
     	this.sharedGetDataHandler.getContacts();
 		this.projectsDataHandler.getProjects();
+		
 	}
+
 
 	/*Megvizsgáljuk a checkbox-okat és ha 1 vagy több 'checked'
 	állapotban van, akkor megjelenítjük a fabbutton-t, különben nem.*/
@@ -118,6 +120,7 @@ export class ProjectsComponent implements OnInit{
   	addInstant(name: string): void{
   		let project = new Project();
   		this.projectsDataHandler.setDefaultProject(project);
+  		project.deadline = new Date(project.deadline);
   		project.name = name.trim();
     	if (!name) { return; }
     	this.projectsDataHandler.addProject(project);
@@ -125,30 +128,43 @@ export class ProjectsComponent implements OnInit{
 
   	changeProject(project: Project)
   	{
-  		if(this.changedate && typeof this.valami.getMonth === 'function')
-  			project.deadline = this.valami;
   		this.projectsApiService.updateProject(project).subscribe();
-  		console.log("valami van:", project.deadline);
   	}
 
-  	changeDate(project: Project, date)
+  	changeDate()
   	{
-  		let asd = new Date(date);
-  		if(!isNaN( asd.getTime() ))
-  		{
-  			this.valami = new Date(date);
-  			this.changedate = true;
-  		}
+  		this.projectsDataHandler.projects.forEach(project =>{
+  			project.deadline = new Date(project.deadline);
+  		});
   	}
 
+  	//Dátumválasztó beállítása
   	datepickerOpts = {
 	    autoclose: true,
 	    todayBtn: 'linked',
 	    todayHighlight: true,
 	    assumeNearbyYear: true,
 	    format: 'yyyy. MM d.',
-	    weekStart: 1,
   		showMeridian : false,
-  		maxHours: 24
+  		maxHours: 24,
+  		language: 'hu'
 	}
+
+	/*Átadjuk a kiválasztott projekteket az új cég létrehozásához, és
+	miután létrehoztuk a céget, a kiválogatott projektek company mezőjébe
+	bele is helyezzük őket.*/
+  	createNewCompany(): void{
+  		let projectsArray: number[] = [];
+  		this.projectsDataHandler.projects.forEach( project =>{
+  			if(project.selected)
+  			{
+  				projectsArray.push(project.id);
+  			}
+  		});
+  		this.gotoNewCompany(projectsArray);
+  	}
+
+  	gotoNewCompany(array: number[]): void{
+  		this.router.navigate(['/company/new/', array]);
+  	}
 }

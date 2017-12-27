@@ -29,18 +29,18 @@
 						</td>
 						<td rowspan="2" (click)="$event.stopPropagation();">
 							<!--<p (click)="editIncome = true">{{project.income}}</p>-->
-							<input #projectIncome matInput [(ngModel)]="project.income" name="projectIncome" (focusout)="changeProject(project)" (keyup.enter)="projectIncome.blur()" style="width: inherit;">
+							<input #projectIncome matInput [(ngModel)]="project.income" name="{{'projectIncome' + project.id}}" (focusout)="changeProject(project)" (keyup.enter)="projectIncome.blur()" style="width: inherit;">
 						</td>
 						<td rowspan="2" (click)="$event.stopPropagation();">
 							<!--{{project.expenditure}}-->
-							<input #projectExpenditure matInput [(ngModel)]="project.expenditure" name="projectExpenditure" (focusout)="changeProject(project)" (keyup.enter)="projectExpenditure.blur()" style="width: inherit;">
+							<input #projectExpenditure matInput [(ngModel)]="project.expenditure" name="{{'projectExpenditure' + project.id}}" (focusout)="changeProject(project)" (keyup.enter)="projectExpenditure.blur()" style="width: inherit;">
 						</td>
 					</tr>
 					<tr>
 						<td class="collapsed" (click)="$event.stopPropagation();">
 							<!--{{project.deadline | date:'yyyy-MM-dd HH:mm'}}-->
 							<!--<p *ngIf="!change" (mouseover)="asd = true" (mouseleave)="asd=false">{{project.deadline | date:'yyyy.MM.dd. HH:mm'}} <mat-icon (click)="change = true" class="fa fa-pencil" *ngIf="asd"></mat-icon></p>-->
-							<datetime [ngModel]="project.deadline" name="projectDeadline"></datetime>
+							<datetime [(ngModel)]="project.deadline" [datepicker]="datepickerOpts" [timepicker]="false" [datepicker]="{ icon: 'fa fa-calendar' }" name="{{'projectDeadline' + project.id}}"></datetime>
 						</td>
 					</tr>
 				</tbody>
@@ -93,7 +93,7 @@
 			<mat-icon class="fa fa-file"></mat-icon>
 			<span>Új feladat</span>
 		</button>
-		<button mat-menu-item>
+		<button mat-menu-item (click)="createNewCompany()">
 			<mat-icon class="fa fa-industry"></mat-icon>
 			<span>Új cég</span>
 		</button>

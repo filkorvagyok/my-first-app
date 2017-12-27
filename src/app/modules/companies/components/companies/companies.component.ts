@@ -100,7 +100,7 @@ export class CompaniesComponent implements OnInit{
   		this.router.navigate(["/company/new"]);
   	}
 
-  	/*Átadjuk a kiválasztott cégeket, az új projekt létrehozásához, így
+  	/*Átadjuk a kiválasztott cégeket az új projekt létrehozásához, így
   	automatikusan belekerülnek a projekt company mezőjébe.*/
   	createNewProject(): void{
   		let companiesArray: number[] = [];

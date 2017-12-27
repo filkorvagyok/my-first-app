@@ -126,4 +126,14 @@ export class SharedAddDataHandler{
         this.companiesApiService.updateCompany(actualCompany).subscribe();
     });
   }
+
+  addCompanyToProjects(projects: number[], companyID: number): void{
+    let currentProjects = this.sharedGetDataHandler.projects.filter(project => {
+      projects.includes(project.id)
+    });
+    currentProjects.forEach(project => {
+      project.company.push(companyID);
+      this.projectsApiService.updateProject(project).subscribe();
+    });
+  }
 }

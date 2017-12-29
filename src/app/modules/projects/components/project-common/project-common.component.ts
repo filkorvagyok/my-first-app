@@ -30,7 +30,8 @@ export class ProjectCommonComponent implements OnInit{
 		}
 	}
 
-	//Létrehozunk egy üres project példányt és alaphelyzetbe állítjuk
+	/*Létrehozunk egy üres project példányt és alaphelyzetbe állítjuk, ha van tömb az url-ben akkor
+	a benne lévő id-kat belerakjuk a company mezőbe*/
 	setNewContact(): void{
 		let arr = this.route.snapshot.paramMap.keys;
 		this.projectsDataHandler.project = new Project;

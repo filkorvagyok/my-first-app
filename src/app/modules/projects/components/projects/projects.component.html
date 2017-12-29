@@ -22,10 +22,10 @@
 							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
 						</td>
 						<td rowspan="2">
-							<strong class="company_name">{{project.name}}</strong>
+							<strong class="projectName">{{project.name}}</strong>
 						</td>
-						<td>
-							<strong class="company_name">{{count(project)}}</strong>
+						<td (click)="$event.stopPropagation();">
+							<p><input #projectCount matInput [ngModel]="count(project)" name="{{'projectCount' + project.id}}" (focusout)="changeDate(project, projectCount.value)" (keyup.enter)="projectCount.blur()" style="width: 32px; text-align: right;"><span> nap</span></p>
 						</td>
 						<td rowspan="2" (click)="$event.stopPropagation();">
 							<!--<p (click)="editIncome = true">{{project.income}}</p>-->
@@ -40,7 +40,7 @@
 						<td class="collapsed" (click)="$event.stopPropagation();">
 							<!--{{project.deadline | date:'yyyy-MM-dd HH:mm'}}-->
 							<!--<p *ngIf="!change" (mouseover)="asd = true" (mouseleave)="asd=false">{{project.deadline | date:'yyyy.MM.dd. HH:mm'}} <mat-icon (click)="change = true" class="fa fa-pencil" *ngIf="asd"></mat-icon></p>-->
-							<datetime [(ngModel)]="project.deadline" [datepicker]="datepickerOpts" [timepicker]="false" [datepicker]="{ icon: 'fa fa-calendar' }" name="{{'projectDeadline' + project.id}}"></datetime>
+							<datetime [(ngModel)]="project.deadline" (ngModelChange)="changeProject(project)" [datepicker]="datepickerOpts" [timepicker]="false" [datepicker]="{ icon: 'fa fa-calendar' }" name="{{'projectDeadline' + project.id}}"></datetime>
 						</td>
 					</tr>
 				</tbody>
@@ -97,7 +97,7 @@
 			<mat-icon class="fa fa-industry"></mat-icon>
 			<span>Új cég</span>
 		</button>
-		<button mat-menu-item>
+		<button mat-menu-item [matMenuTriggerFor]="contact">
 			<mat-icon class="fa fa-user-plus"></mat-icon>
 			<span>Új felhasználó</span>
 		</button>
@@ -108,6 +108,24 @@
 		<button mat-menu-item (click)="clickOnDeleteProductButton()">
 			<mat-icon class="fa fa-trash"></mat-icon>
 			<span>Törlés</span>
+		</button>
+	</mat-menu>
+	<mat-menu #contact="matMenu">
+		<button mat-menu-item>
+			<mat-icon class="fa fa-user-plus"></mat-icon>
+			<span>Felelős</span>
+		</button>
+		<button mat-menu-item>
+			<mat-icon class="fa fa-user-plus"></mat-icon>
+			<span>Tulajdonos</span>
+		</button>
+		<button mat-menu-item>
+			<mat-icon class="fa fa-user-plus"></mat-icon>
+			<span>Megfigyelő</span>
+		</button>
+		<button mat-menu-item>
+			<mat-icon class="fa fa-user-plus"></mat-icon>
+			<span>Résztvevő</span>
 		</button>
 	</mat-menu>
 </div>

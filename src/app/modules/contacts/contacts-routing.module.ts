@@ -9,7 +9,7 @@ const contactsRoutes: Routes = [
   { path: 'people/list', component:ContactsComponent },
   { path: 'people/shown/:id', component:ContactDetailComponent },
   { path: 'people/edit/:id', component:ContactCommonComponent },
-  { path: 'people/new/:companies[]',  component:ContactCommonComponent },
+  { path: 'people/new/:array[]:num:rank',  component:ContactCommonComponent },
   { path: 'people/new',  component:ContactCommonComponent }
 ];
 

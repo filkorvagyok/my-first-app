@@ -3,6 +3,8 @@ import { Location }                 from '@angular/common';
 import { Company }        from '../../../../shared/classes/company';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
+import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
+import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
 
 @Component({
   selector: 'company-edit',
@@ -18,11 +20,15 @@ export class CompanyEditComponent implements OnInit {
   constructor(
     private companiesApiService: CompaniesApiService,
     private companiesDataHandler: CompaniesDataHandler,
+    private sharedGetDataHandler: SharedGetDataHandler,
+    private sharedAddDataHandler: SharedAddDataHandler,
     private location: Location,
   ) {}
 
   ngOnInit(): void {
     this.getDatasForCompanyEdit();
+    this.sharedGetDataHandler.getProjects();
+    this.sharedGetDataHandler.getContacts();
   }
 
   /*Kilistázzuk mind az országokat, iparokat, munkások számát és
@@ -54,8 +60,11 @@ export class CompanyEditComponent implements OnInit {
   }
 
   add(company: Company): void{
-    this.companiesDataHandler.addCompany(company);
-    this.goBack();
+    this.companiesApiService.addCompany(company)
+      .subscribe(() => {
+        this.addCompanyTo(company);
+        this.goBack();
+      });
   }
 
   /*Ha be van pipálva, hogy a számlázási adatok azonosak,
@@ -76,5 +85,16 @@ export class CompanyEditComponent implements OnInit {
     this.company.mail_name = company.name;
     this.company.mail_settlement = company.hq_settlement;
     this.company.mail_zipcode = company.hq_zipcode;
+  }
+
+  /*Ha a company project mezőjében letároltunk 1 vagy több projekt id-ját,
+  akkor ez a metódus a sharedAddDataHandler segítségével rögzíti a megfelelő
+  projekt company mezőjében ennek a cégnek az id-ját.*/
+  addCompanyTo(company: Company)
+  {
+    if(company.project.length > 0)
+      this.sharedAddDataHandler.addCompanyToProject(company);
+    if(company.contact.length > 0)
+      this.sharedAddDataHandler.addCompanyToContact(company);
   }
 }

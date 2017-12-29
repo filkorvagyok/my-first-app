@@ -130,7 +130,7 @@ export class CompaniesComponent implements OnInit{
   	}
 
   	gotoNewContact(array: number[]): void{
-  		this.router.navigate(['/people/new/', array]);
+  		this.router.navigate(['/people/new/', {array:array, num:0, rank:-1}]);
   	}
 
   	/*A lista nézetben egy név mező kitöltésével tudunk létrehozni

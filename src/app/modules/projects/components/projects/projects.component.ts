@@ -35,6 +35,7 @@ export class ProjectsComponent implements OnInit{
 		this.projectsDataHandler.isLoading = true;
 		this.sharedGetDataHandler.getCompanies();
     	this.sharedGetDataHandler.getContacts();
+    	this.sharedGetDataHandler.getProjects();
 		this.projectsDataHandler.getProjects();
 		
 	}
@@ -69,10 +70,12 @@ export class ProjectsComponent implements OnInit{
 	}
 
 	//Kiszámoljuk, hogy a határidő és a mai nap között hány nap különbség van.
-	count(project: Project): string{
-		console.log(project.deadline);
-		let num: number = Math.round((new Date(project.deadline).getTime() - new Date().getTime())/86400000+0.5);
-		return num.toString()+' nap';
+	count(project: Project): number{
+		let num: number;
+		project.deadline.setHours(0,0,0,0);
+		let newDate = new Date();
+		newDate.setHours(0,0,0,0);
+		return Math.round((project.deadline.getTime() - newDate.getTime())/86400000);
 	}
 
 
@@ -131,11 +134,11 @@ export class ProjectsComponent implements OnInit{
   		this.projectsApiService.updateProject(project).subscribe();
   	}
 
-  	changeDate()
+  	//Átírjuk a határidőt a kapott napok számával növelt mai dátumra.
+  	changeDate(project: Project, days:number)
   	{
-  		this.projectsDataHandler.projects.forEach(project =>{
-  			project.deadline = new Date(project.deadline);
-  		});
+  		project.deadline = new Date(new Date().getTime() + days * (1000 * 60 * 60 * 24));
+  		this.changeProject(project);
   	}
 
   	//Dátumválasztó beállítása
@@ -165,6 +168,24 @@ export class ProjectsComponent implements OnInit{
   	}
 
   	gotoNewCompany(array: number[]): void{
-  		this.router.navigate(['/company/new/', array]);
+  		this.router.navigate(['/company/new/', {array:array, num:1}]);
+  	}
+
+  	/*Átadjuk a kiválasztott projekteket az új cég létrehozásához, és
+	miután létrehoztuk a céget, a kiválogatott projektek company mezőjébe
+	bele is helyezzük őket.*/
+  	createNewContact(rank: number): void{
+  		let projectsArray: number[] = [];
+  		this.projectsDataHandler.projects.forEach( project =>{
+  			if(project.selected)
+  			{
+  				projectsArray.push(project.id);
+  			}
+  		});
+  		this.gotoNewContact(projectsArray, rank);
+  	}
+
+  	gotoNewContact(array: number[], rank: number): void{
+  		this.router.navigate(['/people/new/', {array:array, num:1, rank:rank}]);
   	}
 }

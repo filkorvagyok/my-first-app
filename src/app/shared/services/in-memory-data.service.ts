@@ -497,7 +497,7 @@ export class InMemoryDataService implements InMemoryDbService {
             currency: 'HUF',
             income: 500000000,
             expenditure: 2000000,
-            selected: false,
+            selected: false
         },
         {
             id: 2,
@@ -517,7 +517,7 @@ export class InMemoryDataService implements InMemoryDbService {
             currency: 'HUF',
             income: 70000000,
             expenditure: 900000,
-            selected: false,
+            selected: false
         }
     ];
 

@@ -117,4 +117,21 @@ export class ContactsComponent implements OnInit{
     	this.contactsDataHandler.addContact(contact);
   	}
 
+  	/*Átadjuk a kiválasztott projekteket az új cég létrehozásához, és
+	miután létrehoztuk a céget, a kiválogatott projektek company mezőjébe
+	bele is helyezzük őket.*/
+  	createNewCompany(): void{
+  		let contactsArray: number[] = [];
+  		this.contactsDataHandler.contacts.forEach( contact =>{
+  			if(contact.selected)
+  			{
+  				contactsArray.push(contact.id);
+  			}
+  		});
+  		this.gotoNewCompany(contactsArray);
+  	}
+
+  	gotoNewCompany(array: number[]): void{
+  		this.router.navigate(['/company/new/', {array:array, num:2}]);
+  	}
 }

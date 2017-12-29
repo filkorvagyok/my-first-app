@@ -127,13 +127,47 @@ export class SharedAddDataHandler{
     });
   }
 
-  addCompanyToProjects(projects: number[], companyID: number): void{
-    let currentProjects = this.sharedGetDataHandler.projects.filter(project => {
-      projects.includes(project.id)
-    });
-    currentProjects.forEach(project => {
-      project.company.push(companyID);
+  /*Hozzáadjuk a cég id-ját a megfelelő project company mezőjéhez,
+  ha a company project mezőjében találunk adatot.
+  De mindezek előtt megvizsgáljuk, hogy szerepel-e a cég id-je
+  olyan projekt adatai között, melynek id-ja nem szerepel a paraméterben kapott
+  cég project mezőjében. Ha van ilyen, akkor onnan kitöröljük a cég id-t.*/
+  addCompanyToProject(company: Company): void{
+    let projectToBeModified = this.sharedGetDataHandler.projects
+      .filter(x => x.company.includes(company.id))
+      .filter(project => !company.project.includes(project.id));
+    projectToBeModified.forEach(project => {
+      project.company.splice(project.company.indexOf(company.id), 1)
       this.projectsApiService.updateProject(project).subscribe();
+    });
+    company.project
+      .forEach(proj => {
+        let actualProject = this.sharedGetDataHandler.projects.find(x => x.id == proj);
+        if(!actualProject.company.includes(company.id))
+          actualProject.company.push(company.id)
+        this.projectsApiService.updateProject(actualProject).subscribe();
+    });
+  }
+
+  /*Hozzáadjuk a cég id-ját a megfelelő contact company mezőjéhez,
+  ha a company contact mezőjében találunk adatot.
+  De mindezek előtt megvizsgáljuk, hogy szerepel-e a cég id-je
+  olyan névjegy adatai között, melynek id-ja nem szerepel a paraméterben kapott
+  cég contact mezőjében. Ha van ilyen, akkor onnan kitöröljük a cég id-t.*/
+  addCompanyToContact(company: Company): void{
+    let contactToBeModified = this.sharedGetDataHandler.contacts
+      .filter(x => x.company.includes(company.id))
+      .filter(contact => !company.contact.includes(contact.id));
+    contactToBeModified.forEach(contact => {
+      contact.company.splice(contact.company.indexOf(company.id), 1)
+      this.contactsApiService.updateContact(contact).subscribe();
+    });
+    company.contact
+      .forEach(cont => {
+        let actualContact = this.sharedGetDataHandler.contacts.find(x => x.id == cont);
+        if(!actualContact.company.includes(company.id))
+          actualContact.company.push(company.id)
+        this.contactsApiService.updateContact(actualContact).subscribe();
     });
   }
 }

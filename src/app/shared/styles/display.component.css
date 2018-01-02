@@ -57,12 +57,5 @@ mat-spinner{
 .fa-2x{
 	display: inline-block;
 	vertical-align: middle;
-}
-
-.logo, .icon_letter{
-	margin: 0 0 6px 0.15px;
-}
-
-.faaasz {
-  color: currentColor; 
+	text-align: center;
 }

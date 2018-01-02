@@ -69,13 +69,13 @@
 				<mat-icon class="fa fa-file"></mat-icon>
 				<span>Új feladat</span>
 			</button>
-			<button mat-menu-item>
+			<button mat-menu-item [matMenuTriggerFor]="project">
 				<mat-icon class="fa fa-folder"></mat-icon>
 				<span>Új projekt</span>
 			</button>
-			<button mat-menu-item>
-				<mat-icon class="fa fa-user-plus"></mat-icon>
-				<span>Új felhasználó</span>
+			<button mat-menu-item (click)="createNewCompany()">
+				<mat-icon class="fa fa-industry"></mat-icon>
+				<span>Új cég</span>
 			</button>
 			<button mat-menu-item (click)="gotoEdit()">
 				<mat-icon class="fa fa-pencil"></mat-icon>
@@ -86,6 +86,24 @@
 				<span>Törlés</span>
 			</button>
 		</mat-menu>
+		<mat-menu #project="matMenu">
+		<button mat-menu-item (click)="createNewProject(0)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint felelős</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject(1)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint tulajdonos</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject(2)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint megfigyelő</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject(3)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint résztvevő</span>
+		</button>
+	</mat-menu>
 	</div>
 </form>
 <div id="back">

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Company } from '../../../../shared/classes/company';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
-import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
-import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
 
 @Component({
   selector: 'company-common',

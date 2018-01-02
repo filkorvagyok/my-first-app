@@ -111,19 +111,19 @@
 		</button>
 	</mat-menu>
 	<mat-menu #contact="matMenu">
-		<button mat-menu-item>
+		<button mat-menu-item (click)="createNewContact(0)">
 			<mat-icon class="fa fa-user-plus"></mat-icon>
 			<span>Felelős</span>
 		</button>
-		<button mat-menu-item>
+		<button mat-menu-item (click)="createNewContact(1)">
 			<mat-icon class="fa fa-user-plus"></mat-icon>
 			<span>Tulajdonos</span>
 		</button>
-		<button mat-menu-item>
+		<button mat-menu-item (click)="createNewContact(2)">
 			<mat-icon class="fa fa-user-plus"></mat-icon>
 			<span>Megfigyelő</span>
 		</button>
-		<button mat-menu-item>
+		<button mat-menu-item (click)="createNewContact(3)">
 			<mat-icon class="fa fa-user-plus"></mat-icon>
 			<span>Résztvevő</span>
 		</button>

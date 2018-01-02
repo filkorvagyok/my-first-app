@@ -82,7 +82,7 @@
 			<mat-icon class="fa fa-file"></mat-icon>
 			<span>Új feladat</span>
 		</button>
-		<button mat-menu-item (click)="createNewProject()">
+		<button mat-menu-item [matMenuTriggerFor]="project">
 			<mat-icon class="fa fa-folder"></mat-icon>
 			<span>Új projekt</span>
 		</button>
@@ -97,6 +97,24 @@
 		<button mat-menu-item (click)="clickOnDeleteProductButton()">
 			<mat-icon class="fa fa-trash"></mat-icon>
 			<span>Törlés</span>
+		</button>
+	</mat-menu>
+	<mat-menu #project="matMenu">
+		<button mat-menu-item (click)="createNewProject(0)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint felelős</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject(1)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint tulajdonos</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject(2)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint megfigyelő</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject(3)">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Mint résztvevő</span>
 		</button>
 	</mat-menu>
 </div>

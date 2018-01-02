@@ -30,13 +30,43 @@ export class ProjectCommonComponent implements OnInit{
 		}
 	}
 
-	/*Létrehozunk egy üres project példányt és alaphelyzetbe állítjuk, ha van tömb az url-ben akkor
-	a benne lévő id-kat belerakjuk a company mezőbe*/
+	/*Létrehozunk egy üres project példányt és alaphelyzetbe állítjuk, ha van tömb az url-ben, akkor
+	megnézzük a num értékét is és ha egyenlő 0-val, akkor a tömbben lévő id-kat belerakjuk a company mezőbe,
+	ha pedig 2-vel egyelnő, akkor pedig a rank értékét is megvizsgáljuk és ezek alapján vagy az accountable,
+	vagy az owner, vagy az observer, vagy pedig a participant mezőbe rakjuk a tömb értékeit.*/
 	setNewContact(): void{
-		let arr = this.route.snapshot.paramMap.keys;
 		this.projectsDataHandler.project = new Project;
 		this.projectsDataHandler.project = this.projectsDataHandler.setDefaultProject(this.projectsDataHandler.project);
-		arr.forEach(array => this.projectsDataHandler.project.company.push(Number(this.route.snapshot.paramMap.get(array))));
+		switch (Number(this.route.snapshot.params['num'])) {
+			case 0:
+				this.route.snapshot.params['array'].split(",").forEach(x =>
+					this.projectsDataHandler.project.company.push(Number(x)));
+				break;
+			case 2:
+				switch (Number(this.route.snapshot.params['rank'])) {
+					case 0:
+						this.route.snapshot.params['array'].split(",").forEach(x =>
+							this.projectsDataHandler.project.accountable.push(Number(x)));
+						break;
+					case 1:
+						this.route.snapshot.params['array'].split(",").forEach(x =>
+							this.projectsDataHandler.project.owner.push(Number(x)));
+						break;
+					case 2:
+						this.route.snapshot.params['array'].split(",").forEach(x =>
+							this.projectsDataHandler.project.observer.push(Number(x)));
+						break;
+					case 3:
+						this.route.snapshot.params['array'].split(",").forEach(x =>
+							this.projectsDataHandler.project.participant.push(Number(x)));
+						break;
+					default:
+						break;
+				}
+				break;
+			default:
+				break;
+		}
 	}
 
 	//Az url-ben kapott id alapján lekéri a webapiból a megfelelő projekt adatokat.

@@ -20,6 +20,7 @@ export class ContactEditComponent implements OnInit{
 
 	@Input() contact: Contact;
 	@Input() edit: boolean;
+	@Input() rank: number;
 
 	ngOnInit(): void{
 		this.sharedGetDataHandler.getCompanies();
@@ -57,5 +58,9 @@ export class ContactEditComponent implements OnInit{
 		/*if(contact.project.length > 0 || project.owner.length > 0 ||
 			project.observer.length > 0 || project.participant.length > 0)
 			this.sharedAddDataHandler.addProjectToContact(project);*/
+		if(contact.project.length > 0)
+		{
+			this.sharedAddDataHandler.addContactToProject(contact, this.rank);
+		}
 	}
 }

@@ -9,7 +9,7 @@ const projectsRoutes: Routes = [
   { path: 'project/list', component:ProjectsComponent },
   { path: 'project/edit/:id', component:ProjectCommonComponent },
   { path: 'project/new',  component:ProjectCommonComponent },
-  { path: 'project/new/:company[]',  component:ProjectCommonComponent },
+  { path: 'project/new/:array[]:num:rank',  component:ProjectCommonComponent },
   { path: 'project/shown/:id', component:ProjectDetailComponent }
 ];
 

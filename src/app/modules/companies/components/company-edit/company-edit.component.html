@@ -1,4 +1,23 @@
-<form class="panel panel-default" *ngIf="company">
+
+<div *ngIf='company'>
+	<form class="panel panel-default" [formGroup]="companyForm" (ngSubmit)="onSubmit(company)">
+		<div class="panel-heading" color="primary">Cég</div>
+		<div  class="panel-body" >
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="company.name" formControlName="companyName" placeholder="Név*">
+			  	</mat-form-field>
+			  	<mat-error *ngIf="!companyForm.controls['companyName'].valid && companyForm.controls['companyName'].touched">
+			      Ne hagyja üresen a név mezőt!
+			    </mat-error>
+			</div>
+			<div class="btn_primary">
+				<button type="submit" mat-raised-button color="primary">Mentés</button>
+			</div>
+		</div>
+	</form>
+</div>
+<!--<form class="panel panel-default" *ngIf="company">
 	<div class="panel-heading" color="primary">Cég</div>
 	<div  class="panel-body" >
 		<div class="inputpanel">
@@ -206,4 +225,4 @@
 			<button mat-raised-button href="company/list" (click)="goBack()">Mégse</button>
 		</div>
 	</div>
-</form>
+</form>-->

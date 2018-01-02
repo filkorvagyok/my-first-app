@@ -66,4 +66,26 @@ export class ContactDetailComponent implements OnInit{
 		this.contactsApiService.delete(contact).subscribe();
 		this.router.navigate(['people/list']);
 	}
+
+	/*Átadjuk a névjegyet az új projekt létrehozásához.*/
+    createNewProject(rank: number): void{
+      let contactsArray: number[] = [];
+      contactsArray.push(this.contactsDataHandler.contact.id);
+      this.gotoNewProject(contactsArray, rank);
+    }
+
+    gotoNewProject(array: number[], rank: number): void{
+      this.router.navigate(['/project/new/', {array:array, num:2, rank:rank}]);
+    }
+
+    //Lásd.: createNewProject, csak itt projekt helyett cégre alkalmazzuk
+    createNewCompany(): void {
+      let contactsArray: number[] = [];
+      contactsArray.push(this.contactsDataHandler.contact.id);
+      this.gotoNewCompany(contactsArray);
+    }
+
+    gotoNewCompany(array: number[]): void{
+      this.router.navigate(['/company/new/', {array:array, num:2}]);
+    }
 }

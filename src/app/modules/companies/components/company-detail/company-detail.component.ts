@@ -75,7 +75,7 @@ export class CompanyDetailComponent implements OnInit {
     }
 
     gotoNewProject(array: number[]): void{
-      this.router.navigate(['/project/new/', array]);
+      this.router.navigate(['/project/new/', {array:array, num:0, rank:-1}]);
     }
 
     //Lásd.: createNewProject, csak itt projekt helyett névjegyre alkalmazzuk
@@ -86,6 +86,6 @@ export class CompanyDetailComponent implements OnInit {
     }
 
     gotoNewContact(array: number[]): void{
-      this.router.navigate(['/people/new/', array]);
+      this.router.navigate(['/people/new/', {array:array, num:0, rank:-1}]);
     }
 }

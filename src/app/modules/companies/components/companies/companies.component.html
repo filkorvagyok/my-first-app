@@ -30,7 +30,7 @@
 								<img src={{company.logo}} class="logo" alt="logo">
 							</button>-->
 						</td>
-						<td rowspan="2" *ngIf="company.logo==''">
+						<td rowspan="2" *ngIf="company.logo==''" class="fasz">
 							<span class="fa-stack fa-2x" (click)="$event.stopPropagation();">
 							  <i class="fa fa-circle fa-stack-2x icon-background2"></i>
 							  <i class="fa fa-stack-1x"><span class="icon_letter">{{company.name.slice(0,1)}}</span></i>

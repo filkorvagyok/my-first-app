@@ -170,4 +170,44 @@ export class SharedAddDataHandler{
         this.contactsApiService.updateContact(actualContact).subscribe();
     });
   }
+
+  /*Hozzáadjuk a contact id-ját a megfelelő projektek mezőjéhez,
+  ha a contact company mezőjében találunk adatot.
+  Mivel a névjegyek szerkesztésénél nem lehet módosítani a hozzátartozó projekteket,
+  ezért nem is kell megvizsgálnunk, hogy már szerepelt-e az adott névjegy id-ja
+  valamely projekt contact mezőjében.*/
+  addContactToProject(contact: Contact, rank: number): void{
+    switch (rank) {
+      case 0:
+        contact.project.forEach(proj => {
+          let actualProject = this.sharedGetDataHandler.projects.find(x => x.id == proj);
+          actualProject.accountable.push(contact.id);
+          this.projectsApiService.updateProject(actualProject).subscribe();
+        });
+        break;
+      case 1:
+        contact.project.forEach(proj => {
+          let actualProject = this.sharedGetDataHandler.projects.find(x => x.id == proj);
+          actualProject.owner.push(contact.id);
+          this.projectsApiService.updateProject(actualProject).subscribe();
+        });
+        break;
+      case 2:
+        contact.project.forEach(proj => {
+          let actualProject = this.sharedGetDataHandler.projects.find(x => x.id == proj);
+          actualProject.observer.push(contact.id);
+          this.projectsApiService.updateProject(actualProject).subscribe();
+        });
+        break;
+      case 3:
+        contact.project.forEach(proj => {
+          let actualProject = this.sharedGetDataHandler.projects.find(x => x.id == proj);
+          actualProject.participant.push(contact.id);
+          this.projectsApiService.updateProject(actualProject).subscribe();
+        });
+        break;
+      default:
+        break;
+    }
+  }
 }

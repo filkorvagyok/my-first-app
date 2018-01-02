@@ -68,4 +68,26 @@ export class ProjectDetailComponent implements OnInit{
 		this.projectsApiService.delete(project).subscribe();
 		this.router.navigate(['project/list']);
 	}
+
+	/*Átadjuk a projektet az új névjegy létrehozásához.*/
+    createNewContact(rank: number): void{
+      let projectsArray: number[] = [];
+      projectsArray.push(this.projectsDataHandler.project.id);
+      this.gotoNewContact(projectsArray, rank);
+    }
+
+    gotoNewContact(array: number[], rank: number): void{
+      this.router.navigate(['/people/new/', {array:array, num:1, rank:rank}]);
+    }
+
+    //Lásd.: createNewProject, csak itt névjegy helyett cégre alkalmazzuk
+    createNewCompany(): void {
+      let projectsArray: number[] = [];
+      projectsArray.push(this.projectsDataHandler.project.id);
+      this.gotoNewCompany(projectsArray);
+    }
+
+    gotoNewCompany(array: number[]): void{
+      this.router.navigate(['/company/new/', {array:array, num:1}]);
+    }
 }

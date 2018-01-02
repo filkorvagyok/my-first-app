@@ -114,7 +114,7 @@ export class CompaniesComponent implements OnInit{
   	}
 
   	gotoNewProject(array: number[]): void{
-  		this.router.navigate(['/project/new/', array]);
+  		this.router.navigate(['/project/new/', {array:array, num:0, rank:-1}]);
   	}
 
   	//Lásd.: createNewProject, csak itt projekt helyett névjegyre alkalmazzuk

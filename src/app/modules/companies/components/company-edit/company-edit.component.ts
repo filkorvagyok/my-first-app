@@ -1,4 +1,5 @@
 import { Component, OnInit, Input }        from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators }   from '@angular/forms';
 import { Location }                 from '@angular/common';
 import { Company }        from '../../../../shared/classes/company';
 import { CompaniesApiService } from '../../companies-api.service';
@@ -16,6 +17,7 @@ export class CompanyEditComponent implements OnInit {
   @Input() billing: boolean;
   @Input() mail: boolean;
   @Input() edit: boolean;
+  companyForm: FormGroup;
 
   constructor(
     private companiesApiService: CompaniesApiService,
@@ -23,7 +25,12 @@ export class CompanyEditComponent implements OnInit {
     private sharedGetDataHandler: SharedGetDataHandler,
     private sharedAddDataHandler: SharedAddDataHandler,
     private location: Location,
-  ) {}
+    private fb: FormBuilder
+  ) {
+    this.companyForm = fb.group({
+      'companyName': [null, Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     this.getDatasForCompanyEdit();
@@ -96,5 +103,23 @@ export class CompanyEditComponent implements OnInit {
       this.sharedAddDataHandler.addCompanyToProject(company);
     if(company.contact.length > 0)
       this.sharedAddDataHandler.addCompanyToContact(company);
+  }
+
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+
+  onSubmit(company: Company){
+    if(this.companyForm.valid)
+      this.edit? this.save() : this.add(company);
+    else
+      this.validateAllFormFields(this.companyForm);
   }
 }

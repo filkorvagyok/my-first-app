@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Contact } from '../../../../shared/classes/contact';
 import { ContactsDataHandler } from '../../contacts-datahandler.service';
+import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
 
 @Component({
   selector: 'contact-common',
@@ -10,9 +11,11 @@ import { ContactsDataHandler } from '../../contacts-datahandler.service';
 
 export class ContactCommonComponent implements OnInit{
 	edit = false; //Ezen mező alapján tudja a contact-edit.component, hogy szerkeszteni kell vagy új névjegyet létrehozni
+	rank: number = -1; //Ebbe a változóba lesz tárolva, hogy milyen pozícióban van a projekben a felhasználó.
 
 	constructor(
 		private contactsDataHandler: ContactsDataHandler,
+		private sharedAddDataHandler: SharedAddDataHandler,
 		private route: ActivatedRoute
 	) {}
 
@@ -30,13 +33,25 @@ export class ContactCommonComponent implements OnInit{
 		}
 	}
 
-	/*Létrehozunk egy üres contact példányt és alaphelyzetbe állítjuk, ha van tömb az url-ben akkor
-	a benne lévő id-kat belerakjuk a company mezőbe*/
+	/*Létrehozunk egy üres contact példányt és alaphelyzetbe állítjuk, ha van tömb az url-ben, akkor
+	megnézzük a num értékét is és ha egyenlő 0-val, akkor a tömbben lévő id-kat belerakjuk a company mezőbe,
+	ha pedig 1-el egyelnő, akkor pedig a project mezőbe rakjuk az értékeket.*/
 	setNewContact(): void{
-		let arr = this.route.snapshot.paramMap.keys;
 		this.contactsDataHandler.contact = new Contact;
 		this.contactsDataHandler.contact = this.contactsDataHandler.setDefaultContact(this.contactsDataHandler.contact);
-		arr.forEach(array => this.contactsDataHandler.contact.company.push(Number(this.route.snapshot.paramMap.get(array))));
+		this.rank = Number(this.route.snapshot.params['rank']);
+		switch (Number(this.route.snapshot.params['num'])) {
+			case 0:
+				this.route.snapshot.params['array'].split(",").forEach(x =>
+					this.contactsDataHandler.contact.company.push(Number(x)));
+				break;
+			case 1:
+				this.route.snapshot.params['array'].split(",").forEach(x =>
+					this.contactsDataHandler.contact.project.push(Number(x)));
+				break;
+			default:
+				break;
+		}
 	}
 
 	//Az url-ben kapott id alapján lekéri a webapiból a megfelelő névjegy adatokat.

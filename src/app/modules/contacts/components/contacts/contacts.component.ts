@@ -117,8 +117,8 @@ export class ContactsComponent implements OnInit{
     	this.contactsDataHandler.addContact(contact);
   	}
 
-  	/*Átadjuk a kiválasztott projekteket az új cég létrehozásához, és
-	miután létrehoztuk a céget, a kiválogatott projektek company mezőjébe
+  	/*Átadjuk a kiválasztott névjegyeket az új cég létrehozásához, és
+	miután létrehoztuk a céget, a kiválogatott névjegyek company mezőjébe
 	bele is helyezzük őket.*/
   	createNewCompany(): void{
   		let contactsArray: number[] = [];
@@ -133,5 +133,23 @@ export class ContactsComponent implements OnInit{
 
   	gotoNewCompany(array: number[]): void{
   		this.router.navigate(['/company/new/', {array:array, num:2}]);
+  	}
+
+  	/*Átadjuk a kiválasztott névjegyeket az új projekt létrehozásához, és
+	miután létrehoztuk a projektet, a kiválogatott névjegyek project mezőjébe
+	bele is helyezzük őket.*/
+  	createNewProject(rank: number): void{
+  		let contactsArray: number[] = [];
+  		this.contactsDataHandler.contacts.forEach( contact =>{
+  			if(contact.selected)
+  			{
+  				contactsArray.push(contact.id);
+  			}
+  		});
+  		this.gotoNewProject(contactsArray, rank);
+  	}
+
+  	gotoNewProject(array: number[], rank: number): void{
+  		this.router.navigate(['/project/new/', {array:array, num:2, rank:rank}]);
   	}
 }

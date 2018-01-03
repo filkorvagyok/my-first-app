@@ -1,6 +1,5 @@
-
-<div *ngIf='company'>
-	<form class="panel panel-default" [formGroup]="companyForm" (ngSubmit)="onSubmit(company)">
+<div id="maindiv" style="height: 89vh;overflow: auto;" *ngIf='company && companiesDataHandler.countries'>
+	<form class="panel panel-default" [formGroup]="companyForm" (ngSubmit)="onSubmit(company)" ngNativeValidate>
 		<div class="panel-heading" color="primary">Cég</div>
 		<div  class="panel-body" >
 			<div class="inputfield">	
@@ -8,43 +7,40 @@
 				    <input matInput [(ngModel)]="company.name" formControlName="companyName" placeholder="Név*">
 			  	</mat-form-field>
 			  	<mat-error *ngIf="!companyForm.controls['companyName'].valid && companyForm.controls['companyName'].touched">
-			      Ne hagyja üresen a név mezőt!
+			      A név mező megadása <strong>kötelező</strong>!
 			    </mat-error>
 			</div>
-			<div class="btn_primary">
-				<button type="submit" mat-raised-button color="primary">Mentés</button>
-			</div>
-		</div>
-	</form>
-</div>
-<!--<form class="panel panel-default" *ngIf="company">
-	<div class="panel-heading" color="primary">Cég</div>
-	<div  class="panel-body" >
-		<div class="inputpanel">
-			<div class="inputfield">	
+			<div class="inputfield">
 				<mat-form-field class="matffield">
-				    <input matInput [(ngModel)]="company.name" name="companyName" placeholder="Név">
-			  	</mat-form-field>
+					<input matInput type="tel" [(ngModel)]="company.phone" formControlName="companyPhone" placeholder="Telefonszám">
+				</mat-form-field>
+				<mat-error *ngIf="!companyForm.controls['companyPhone'].valid && companyForm.controls['companyPhone'].touched">
+			      Nem megfelelő telefonszám!
+			    </mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.phone" name="companyPhone" placeholder="Telefonszám">
+					<input matInput [(ngModel)]="company.email" formControlName="companyEmail" placeholder="E-mail-cím">
 				</mat-form-field>
+				<mat-error *ngIf="!companyForm.controls['companyEmail'].valid && companyForm.controls['companyEmail'].touched">
+			      Nem megfelelő e-mail-cím!
+			    </mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.email" name="companyEmail" placeholder="E-mail cím">
+					<input matInput [(ngModel)]="company.website" formControlName="companyWebsite" placeholder="Weboldal">
 				</mat-form-field>
+				<mat-error *ngIf="!companyForm.controls['companyWebsite'].valid && companyForm.controls['companyWebsite'].touched">
+			      Nem megfelelő url!
+			    </mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.website" name="companyWebsite" placeholder="Weboldal">
+					<input matInput [(ngModel)]="company.facebook" formControlName="companyFacebook" placeholder="Facebook">
 				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.facebook" name="companyFacebook" placeholder="Facebook">
-				</mat-form-field>
+				<mat-error *ngIf="!companyForm.controls['companyFacebook'].valid && companyForm.controls['companyFacebook'].touched">
+			      Nem megfelelő Facebook oldal!
+			    </mat-error>
 			</div>
 			<div class="hr_style">
 				<hr>
@@ -54,9 +50,9 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select name="companyHqcountry" placeholder="Ország"
+					<mat-select formControlName="companyCountry" placeholder="Ország"
 					[ngModel]="company.country_code" (ngModelChange)="company.country_code = onChangeHqcountry($event)">
-						<mat-option *ngFor="let country of companiesDataHandler.countries" [value]="country.code">
+						<mat-option *ngFor="let country of countries" [value]="country.code">
 							{{country.country}}
 						</mat-option>
 					</mat-select>
@@ -64,17 +60,20 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.hq_zipcode" name="companyHqzipcode" placeholder="Irányítószám">
+					<input matInput [(ngModel)]="company.hq_zipcode" formControlName="companyZipcode" placeholder="Irányítószám">
 				</mat-form-field>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.hq_settlement" name="companyHqsettlement" placeholder="Település">
+					<input matInput [(ngModel)]="company.hq_settlement" formControlName="companyHqSettlement" placeholder="Település">
 				</mat-form-field>
+				<mat-error *ngIf="!companyForm.controls['companyHqSettlement'].valid && companyForm.controls['companyHqSettlement'].touched">
+			      Nem megfelelő település!
+			    </mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.hq_address" name="companyHqaddress" placeholder="Cím">
+					<input matInput [(ngModel)]="company.hq_address" formControlName="companyAddress" placeholder="Cím">
 				</mat-form-field>
 			</div>
 			<div *ngIf="!edit">
@@ -98,14 +97,14 @@
 			<div *ngIf="!billing">
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.bi_name" name="companyBiname" placeholder="Számlázási név">
+						<input matInput [(ngModel)]="company.bi_name" formControlName="companyBiname" placeholder="Számlázási név">
 					</mat-form-field>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<mat-select name="companyBicountry" placeholder="Ország"
+						<mat-select formControlName="companyCountry" placeholder="Ország"
 						[ngModel]="company.country_code" (ngModelChange)="company.bi_country = onChange($event)">
-							<mat-option *ngFor="let country of companiesDataHandler.countries" [value]="country.code">
+							<mat-option *ngFor="let country of countries" [value]="country.code">
 								{{country.country}}
 							</mat-option>
 						</mat-select>
@@ -113,17 +112,20 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.bi_zipcode" name="companyBizipcode" placeholder="Irányítószám">
+						<input matInput [(ngModel)]="company.bi_zipcode" formControlName="companyZipcode" placeholder="Irányítószám">
 					</mat-form-field>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.bi_settlement" name="companyBisettlement" placeholder="Település">
+						<input matInput [(ngModel)]="company.bi_settlement" formControlName="companyBiSettlement" placeholder="Település">
 					</mat-form-field>
+					<mat-error *ngIf="!companyForm.controls['companyBiSettlement'].valid && companyForm.controls['companyBiSettlement'].touched">
+				      Nem megfelelő település!
+				    </mat-error>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.bi_address" name="companyBiaddress" placeholder="Cím">
+						<input matInput [(ngModel)]="company.bi_address" formControlName="companyAddress" placeholder="Cím">
 					</mat-form-field>
 				</div>
 			</div>
@@ -132,8 +134,11 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.taxnumber" name="companyTaxnumber" placeholder="Adószám">
+					<input matInput [(ngModel)]="company.taxnumber" formControlName="companyTaxnumber" placeholder="Adószám">
 				</mat-form-field>
+				<mat-error *ngIf="!companyForm.controls['companyTaxnumber'].valid && companyForm.controls['companyTaxnumber'].touched">
+			      Nem megfelelő adószám!
+			    </mat-error>
 			</div>
 			<div class="hr_style">
 				<hr>
@@ -144,14 +149,14 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.mail_name" name="companyMailname" placeholder="Levelezési név">
+						<input matInput [(ngModel)]="company.mail_name" formControlName="companyMailname" placeholder="Levelezési név">
 					</mat-form-field>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<mat-select name="companyMailcountry" placeholder="Ország"
+						<mat-select formControlName="companyCountry" placeholder="Ország"
 						[ngModel]="company.country_code" (ngModelChange)="company.mail_country = onChange($event)">
-							<mat-option *ngFor="let country of companiesDataHandler.countries" [value]="country.code">
+							<mat-option *ngFor="let country of countries" [value]="country.code">
 								{{country.country}}
 							</mat-option>
 						</mat-select>
@@ -159,17 +164,20 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.mail_zipcode" name="companyMailzipcode" placeholder="Irányítószám">
+						<input matInput [(ngModel)]="company.mail_zipcode" formControlName="companyZipcode" placeholder="Irányítószám">
 					</mat-form-field>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.mail_settlement" name="companyMailsettlement" placeholder="Település">
+						<input matInput [(ngModel)]="company.mail_settlement" formControlName="companyMailSettlement" placeholder="Település">
 					</mat-form-field>
+					<mat-error *ngIf="!companyForm.controls['companyMailSettlement'].valid && companyForm.controls['companyMailSettlement'].touched">
+				      Nem megfelelő település!
+				    </mat-error>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.mail_address" name="companyMailaddress" placeholder="Cím">
+						<input matInput [(ngModel)]="company.mail_address" formControlName="companyAddress" placeholder="Cím">
 					</mat-form-field>
 				</div>
 				<div class="hr_style">
@@ -184,9 +192,9 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select name="companyIndustry_id" placeholder="Iparág"
+					<mat-select formControlName="companyIndustry" placeholder="Iparág"
 					[ngModel]="company.industry_id" (ngModelChange)="company.industry_id = onChange($event)">
-						<mat-option *ngFor="let industry of companiesDataHandler.industries" [value]="industry.id">
+						<mat-option *ngFor="let industry of industries" [value]="industry.id">
 							{{industry.name}}
 						</mat-option>
 					</mat-select>
@@ -194,9 +202,9 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select name="companyEmployeesnum_id" placeholder="Alkalmazottak száma"
+					<mat-select formControlName="companyEmployeesnum" placeholder="Alkalmazottak száma"
 					[ngModel]="company.employeesnum_id" (ngModelChange)="company.employeesnum_id = onChange($event)">
-						<mat-option *ngFor="let employeesnum of companiesDataHandler.employeesnums" [value]="employeesnum.id">
+						<mat-option *ngFor="let employeesnum of employeesnums" [value]="employeesnum.id">
 							{{employeesnum.number}}
 						</mat-option>
 					</mat-select>
@@ -204,9 +212,9 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select name="companyYearlyincome_id" placeholder="Éves bevétel"
+					<mat-select formControlName="companyYearlyincome" placeholder="Éves bevétel"
 					[ngModel]="company.yearlyincome_id" (ngModelChange)="company.yearlyincome_id = onChange($event)">
-						<mat-option *ngFor="let yearlyincome of companiesDataHandler.yearlyincomes" [value]="yearlyincome.id">
+						<mat-option *ngFor="let yearlyincome of yearlyincomes" [value]="yearlyincome.id">
 							{{yearlyincome.amount}}
 						</mat-option>
 					</mat-select>
@@ -214,15 +222,18 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.founded" name="companyFounded" placeholder="Alapítva">
+					<input matInput [(ngModel)]="company.founded" formControlName="companyFounded" placeholder="Alapítva">
 				</mat-form-field>
+				<mat-error *ngIf="!companyForm.controls['companyFounded'].valid && companyForm.controls['companyFounded'].touched">
+			      Nem megfelelő évszám!
+			    </mat-error>
+			</div>
+			<div class="btn_primary">
+				<button type="submit" mat-raised-button color="primary">Mentés</button>
+			</div>
+			<div class="btn_primary">
+				<button mat-raised-button href="company/list" (click)="goBack()">Mégse</button>
 			</div>
 		</div>
-		<div class="btn_primary">
-			<button mat-raised-button color="primary" (click)="edit? save() : add(company)">Mentés</button>
-		</div>
-		<div class="btn_primary">
-			<button mat-raised-button href="company/list" (click)="goBack()">Mégse</button>
-		</div>
-	</div>
-</form>-->
+	</form>
+</div>

@@ -19,6 +19,7 @@ export class CompanyCommonComponent{
 	) {}
 
 	ngOnInit(): void {
+		this.getDatasForCompanyEdit();
 		if(this.route.snapshot.routeConfig.path == "company/new")
 		{
 			//Ha az url "company/new"-val egyenlő, akkor teljesül
@@ -29,6 +30,7 @@ export class CompanyCommonComponent{
 		else
 		{
 			this.setEditCompany();
+			this.companiesDataHandler.yearlyincomes
 		}
 	}
 
@@ -58,5 +60,14 @@ export class CompanyCommonComponent{
 		this.route.paramMap.subscribe(params => this.companiesDataHandler.getCompany(Number(params.get('id')), false));
 		this.billing = false;
 		this.mail = false;
+	}
+
+	/*Kilistázzuk mind az országokat, iparokat, munkások számát és
+	az éves bevételeket a szerkesztéshez vagy új cég hozzáadásához*/
+	getDatasForCompanyEdit(): void{
+		this.companiesDataHandler.getCountries();
+		this.companiesDataHandler.getIndustries();
+		this.companiesDataHandler.getEmployeesnums();
+		this.companiesDataHandler.getYearlyincomes();
 	}
 }

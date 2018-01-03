@@ -22,6 +22,7 @@ export class CompaniesDataHandler{
   company: Company;
   isLoading: boolean = true; //Ez a lista nézetben fontos, amikor csak a cégek információira van szükségünk.
   isLoadingData: boolean = true; //Ekkor meg kell várnunk még kilistázzuk a céghez tartozó projekteket és névjegyeket is.
+  isLoadingForEdit: number = 0;
 
   /*A CompaniesApiService-ben meghívjuk a getCompanies metódust, ami egy observable cég tömböt ad vissza,
   amire feliratkozva kinyerhetjük a cégek adatait.*/
@@ -99,12 +100,12 @@ export class CompaniesDataHandler{
       .subscribe(company => this.companies.push(company));
   }
 
-
   //Lásd getCompanies, csak itt országokra
   getCountries(): void{
     this.companiesApiService.getCountries()
       .subscribe(countries => {
         this.countries = countries;
+        this.isLoadingForEdit += 1;
       });
   }
 
@@ -114,6 +115,7 @@ export class CompaniesDataHandler{
     this.companiesApiService.getIndustries()
       .subscribe(industries => {
         this.industries = industries;
+        this.isLoadingForEdit += 1;
       });
   }
 
@@ -123,6 +125,7 @@ export class CompaniesDataHandler{
     this.companiesApiService.getEmployeesnums()
       .subscribe(employeesnums => {
         this.employeesnums = employeesnums;
+        this.isLoadingForEdit += 1;
       });
   }
 
@@ -132,6 +135,7 @@ export class CompaniesDataHandler{
     this.companiesApiService.getYearlyincomes()
       .subscribe(yearlyincomes => {
         this.yearlyincomes = yearlyincomes;
+        this.isLoadingForEdit += 1;
       });
   }
 }

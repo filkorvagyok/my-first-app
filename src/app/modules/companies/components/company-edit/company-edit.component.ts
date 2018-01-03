@@ -7,16 +7,29 @@ import { CompaniesDataHandler } from '../../companies-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
 
+const TEL_REGEXP = /^\s*(?:\+?\d{1,3})?[- (]*\d{3}(?:[- )]*\d{3})?[- ]*\d{4}(?: *[x/#]\d+)?\s*$/;
+const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const URL_REGEXP = "^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$";
+const FACEBOOK_REGEXP = /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/;
+const SETTLEMENT_REGEXP = /^[a-zA-Z\u0080-\u024F\s\/\-\)\(\`\.\"\']+$/;
+const TAX_REGEXP = /^[a-zA-Z0-9_/-]*$/;
+const NUMBER_REGEXP = /^[0-9]*$/;
+
 @Component({
   selector: 'company-edit',
   templateUrl: './company-edit.component.html',
   styleUrls: [ '../../../../shared/styles/edit.component.css' ]
 })
+
 export class CompanyEditComponent implements OnInit {
   @Input() company: Company;
   @Input() billing: boolean;
   @Input() mail: boolean;
   @Input() edit: boolean;
+  @Input() countries;
+  @Input() industries;
+  @Input() employeesnums;
+  @Input() yearlyincomes;
   companyForm: FormGroup;
 
   constructor(
@@ -26,30 +39,56 @@ export class CompanyEditComponent implements OnInit {
     private sharedAddDataHandler: SharedAddDataHandler,
     private location: Location,
     private fb: FormBuilder
-  ) {
-    this.companyForm = fb.group({
-      'companyName': [null, Validators.required]
+  ) {}
+
+  initform(): void{
+    this.companyForm = this.fb.group({
+      'companyName': [null, Validators.required],
+      'companyPhone': [null, Validators.pattern(TEL_REGEXP)],
+      'companyEmail': [null, Validators.pattern(EMAIL_REGEXP)],
+      'companyWebsite': [null, Validators.pattern(URL_REGEXP)],
+      'companyFacebook': [null, Validators.pattern(FACEBOOK_REGEXP)],
+      'companyCountry': [],
+      'companyZipcode':[],
+      'companyHqSettlement': [null, Validators.pattern(SETTLEMENT_REGEXP)],
+      'companyBiSettlement': [null, Validators.pattern(SETTLEMENT_REGEXP)],
+      'companyMailSettlement': [null, Validators.pattern(SETTLEMENT_REGEXP)],
+      'companyAddress': [],
+      'companyBiname': [],
+      'companyTaxnumber': [null, Validators.pattern(TAX_REGEXP)],
+      'companyMailname': [],
+      'companyIndustry': [],
+      'companyEmployeesnum': [],
+      'companyYearlyincome': [],
+      'companyFounded': [null, Validators.compose(
+        [Validators.min(578), Validators.max(Number(new Date().getFullYear())),
+        Validators.pattern(NUMBER_REGEXP)]
+      )],
     });
   }
 
   ngOnInit(): void {
-    this.getDatasForCompanyEdit();
+    //this.getDatasForCompanyEdit();
     this.sharedGetDataHandler.getProjects();
     this.sharedGetDataHandler.getContacts();
+    this.initform();
+    console.log();
   }
 
   /*Kilistázzuk mind az országokat, iparokat, munkások számát és
   az éves bevételeket a szerkesztéshez vagy új cég hozzáadásához*/
-  getDatasForCompanyEdit(): void{
+  /*getDatasForCompanyEdit(): void{
     this.companiesDataHandler.getCountries();
     this.companiesDataHandler.getIndustries();
     this.companiesDataHandler.getEmployeesnums();
     this.companiesDataHandler.getYearlyincomes();
-  }
+  }*/
 
   //TODO: átszervezni az összes országokkal kapcsolatos mezőket.
   onChangeHqcountry(newValue){
-    this.company.hq_country = this.companiesDataHandler.countries.filter(x=>x.code==newValue)[0].country;
+    let actualCountry = this.companiesDataHandler.countries.filter(x=>x.code==newValue)[0]
+    if(actualCountry)
+      this.company.hq_country = actualCountry.country;
     return newValue;
   }
 
@@ -120,6 +159,7 @@ export class CompanyEditComponent implements OnInit {
     if(this.companyForm.valid)
       this.edit? this.save() : this.add(company);
     else
+      $(document.getElementById('maindiv')).animate({ scrollTop: 0 }, 1000);
       this.validateAllFormFields(this.companyForm);
   }
 }

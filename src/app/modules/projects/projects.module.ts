@@ -1,6 +1,6 @@
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
 import { ProjectsComponent }    from './components/projects/projects.component';
@@ -31,6 +31,7 @@ import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ProjectRoutingModule,
     MatFormFieldModule,
     MatInputModule,

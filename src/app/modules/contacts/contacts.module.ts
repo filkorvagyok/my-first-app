@@ -1,6 +1,6 @@
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
 import { ContactsComponent }    from './components/contacts/contacts.component';
@@ -28,6 +28,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ContactRoutingModule,
     MatFormFieldModule,
     MatInputModule,

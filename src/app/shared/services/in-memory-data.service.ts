@@ -540,7 +540,15 @@ export class InMemoryDataService implements InMemoryDbService {
         }
     ];
 
+    let tasks = [
+        {
+            id: 1,
+            name: 'File1',
+            selected: false
+        }
+    ];
 
-    return {companies, countries, industries, employeesnums, yearlyincomes, projects, contacts};
+
+    return {companies, countries, industries, employeesnums, yearlyincomes, projects, contacts, tasks};
   }
 }

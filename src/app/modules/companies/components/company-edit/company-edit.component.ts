@@ -41,6 +41,7 @@ export class CompanyEditComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
+  //Form validitás beállítása
   initform(): void{
     this.companyForm = this.fb.group({
       'companyName': [null, Validators.required],
@@ -72,7 +73,6 @@ export class CompanyEditComponent implements OnInit {
     this.sharedGetDataHandler.getProjects();
     this.sharedGetDataHandler.getContacts();
     this.initform();
-    console.log();
   }
 
   /*Kilistázzuk mind az országokat, iparokat, munkások számát és
@@ -86,7 +86,7 @@ export class CompanyEditComponent implements OnInit {
 
   //TODO: átszervezni az összes országokkal kapcsolatos mezőket.
   onChangeHqcountry(newValue){
-    let actualCountry = this.companiesDataHandler.countries.filter(x=>x.code==newValue)[0]
+    let actualCountry = this.countries.filter(x=>x.code==newValue)[0]
     if(actualCountry)
       this.company.hq_country = actualCountry.country;
     return newValue;
@@ -144,22 +144,27 @@ export class CompanyEditComponent implements OnInit {
       this.sharedAddDataHandler.addCompanyToContact(company);
   }
 
-  validateAllFormFields(formGroup: FormGroup) {         //{1}
-    Object.keys(formGroup.controls).forEach(field => {  //{2}
-      const control = formGroup.get(field);             //{3}
-      if (control instanceof FormControl) {             //{4}
+  //Úgy állítja a form iput mezőit, mintha belekattintottunk volna
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {        //{5}
-        this.validateAllFormFields(control);            //{6}
+      }
+      else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
       }
     });
   }
 
+  //Submit lenyomásakor hívódik meg
   onSubmit(company: Company){
-    if(this.companyForm.valid)
-      this.edit? this.save() : this.add(company);
+    if(this.companyForm.valid)  //Ha a validitás megfelelő
+      this.edit? this.save() : this.add(company);  //Ha az edit true, akkor a save hívódik meg, különben az add
     else
-      $(document.getElementById('maindiv')).animate({ scrollTop: 0 }, 1000);
+    {
+      $(document.getElementById('maindiv')).animate({ scrollTop: 0 }, 1000); //Felgörger az oldal tetejére
       this.validateAllFormFields(this.companyForm);
+    }
   }
 }

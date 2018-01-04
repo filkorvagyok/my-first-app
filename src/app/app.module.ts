@@ -25,6 +25,7 @@ import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 import { CompaniesModule }            from './modules/companies/companies.module';
 import { ProjectsModule }            from './modules/projects/projects.module';
 import { ContactsModule }            from './modules/contacts/contacts.module';
+import { TasksModule }            from './modules/tasks/tasks.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent }   from './modules/login/components/login.component';
@@ -62,13 +63,13 @@ import { AppRoutingModule }     from './app-routing.module';
     CompaniesModule,
     ProjectsModule,
     ContactsModule,
+    TasksModule,
     MatNativeDateModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
     DateTimePickerModule,
     NKDatetimeModule
-
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}],
   bootstrap: [AppComponent],

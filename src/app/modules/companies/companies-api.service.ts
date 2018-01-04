@@ -103,7 +103,7 @@ export class CompaniesApiService{
   céget és küld egy kérést a http.post segítségével az apinak.*/
   addCompany(company: Company): Observable<Company>{
     return this.http.post<Company>(this.companiesUrl, company, httpOptions).pipe(
-        catchError(this.handleError<Company>('addHero'))
+        catchError(this.handleError<Company>('addCompany'))
       );
   }
 
@@ -112,7 +112,7 @@ export class CompaniesApiService{
   updateCompany (company: Company): Observable<any> {
     return this.http.put(this.companiesUrl, company, httpOptions).pipe(
       tap(_ => (`updated company id=${company.id}`)),
-      catchError(this.handleError<any>('updateHero'))
+      catchError(this.handleError<any>('updateCompany'))
     );
   }
 

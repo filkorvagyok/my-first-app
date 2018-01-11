@@ -8,7 +8,7 @@ import { Yearlyincome } from '../../shared/classes/yearlyincome';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
-
+import { BaseApiService } from '../../shared/services/base/base-api.service'
 
 
 const httpOptions = {
@@ -17,7 +17,7 @@ const httpOptions = {
 
 @Injectable()
 
-export class CompaniesApiService{
+export class CompaniesApiService extends BaseApiService{
 
 	private companiesUrl = 'api/companies';
   private countriesUrl = 'api/countries';
@@ -25,14 +25,15 @@ export class CompaniesApiService{
   private employeesnumsUrl = 'api/employeesnums';
   private yearlyincomesUrl = 'api/yearlyincomes';
 
-	constructor(
-    private http: HttpClient,
-    ){}
+	constructor(private http: HttpClient)
+  {
+    super();
+  }
 
   /*Visszaad egy Observable-t a company tömbről, melyet
   a webapi-ból nyert ki. Később ha ezt a metódust meghívják
   és feliratkoznak rá, ki tudják nyerni az adatokat belőle.*/
-	getCompanies (): Observable<Company[]> {
+	getItems (): Observable<Company[]> {
     return this.http.get<Company[]>(this.companiesUrl)
       .pipe(
         tap(companies => (`fetched companies`)),
@@ -78,7 +79,7 @@ export class CompaniesApiService{
 
   /*Lásd: getCompanies, csak itt egy darab cégre végeztük el,
   melyet a paraméterben megkapott cég, vagy id alapján azonosítunk*/
-  getCompany(company: Company | number): Observable<Company> {
+  getItem(company: Company | number): Observable<Company> {
     const id = typeof company === 'number' ? company : company.id;
     const url = `${this.companiesUrl}/${id}`;
     return this.http.get<Company>(url).pipe(
@@ -89,7 +90,7 @@ export class CompaniesApiService{
 
   /*A paraméterben kapott cég vagy id alapján azonosítja a törölni
   kivánt céget és küld egy kérést a http.delete segítségével az apinak.*/
-  delete(company: Company | number): Observable<Company> {
+  delete(company: Company | number): Observable<any> {
     const id = typeof company === 'number' ? company : company.id;
     const url = `${this.companiesUrl}/${id}`;
 
@@ -101,7 +102,7 @@ export class CompaniesApiService{
 
   /*A paraméterben kapott cég alapján azonosítja a hozzáadni kívánt
   céget és küld egy kérést a http.post segítségével az apinak.*/
-  addCompany(company: Company): Observable<Company>{
+  add(company: Company): Observable<Company>{
     return this.http.post<Company>(this.companiesUrl, company, httpOptions).pipe(
         catchError(this.handleError<Company>('addCompany'))
       );
@@ -109,7 +110,7 @@ export class CompaniesApiService{
 
   /*A paraméterben kapott cég alapján azonosítja a módosítani kívánt
   céget és küld egy kérést a http.put segítségével az apinak.*/
-  updateCompany (company: Company): Observable<any> {
+  update (company: Company): Observable<any> {
     return this.http.put(this.companiesUrl, company, httpOptions).pipe(
       tap(_ => (`updated company id=${company.id}`)),
       catchError(this.handleError<any>('updateCompany'))
@@ -119,7 +120,7 @@ export class CompaniesApiService{
   
 
   //Hibakezelő
-	private handleError<T> (operation = 'operation', result?: T) {
+	handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

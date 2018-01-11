@@ -34,17 +34,17 @@ export class SharedGetDataHandler{
 	több helyről kell beszereznünk adatot és a saját apijuk ezt nem
 	tudja biztosítani.*/
 	getProjects(): void{
-		this.projectsApiService.getProjects()
+		this.projectsApiService.getItems()
 			.subscribe(projects => this.projects = projects);
 	}
 
 	getCompanies(): void{
-		this.companiesApiService.getCompanies()
+		this.companiesApiService.getItems()
 			.subscribe(companies => this.companies = companies);
 	}
 
 	getContacts(): void{
-		this.contactsApiService.getContacts()
+		this.contactsApiService.getItems()
 			.subscribe(contacts => this.contacts = contacts);
 	}
 

@@ -19,7 +19,7 @@ td.collapsed{
 	cursor: pointer;
 }
 
-td.newcompany_btn{
+td.newitem_btn{
 	padding-top: 50px;
 }
 
@@ -32,7 +32,7 @@ td.newcompany_btn{
 	font-size: 20px;
 }
 
-td.instant_company{
+td.instant_item{
 	padding-top: 43px;
 }
 

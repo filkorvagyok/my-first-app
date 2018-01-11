@@ -56,12 +56,12 @@ export class ProjectEditComponent implements OnInit {
 
 	save(): void{
 		this.addProjectTo(this.project);
-		this.projectsApiService.updateProject(this.project)
+		this.projectsApiService.update(this.project)
         	.subscribe(() => this.goBack())
 	}
 
 	add(project: Project): void{
-		this.projectsApiService.addProject(project)
+		this.projectsApiService.add(project)
 			.subscribe(() => {
 				this.addProjectTo(project);
 				this.goBack();

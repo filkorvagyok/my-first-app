@@ -20,7 +20,7 @@ export class ProjectsDataHandler{
   amire feliratkozva kinyerhetjük a projektek adatait.
   + Határidő dátummá alakítása.*/
   getProjects(): void{
-    this.projectsApiService.getProjects()
+    this.projectsApiService.getItems()
       .subscribe(projects => {
         projects.forEach(project => project.deadline = new Date(project.deadline));
         this.projects = projects;
@@ -29,10 +29,11 @@ export class ProjectsDataHandler{
   }
 
   /*A ProjectsApiService-ben meghívjuk a getProject metódust, ami egy observable névjegyet ad vissza,
-  amire feliratkozva kinyerhetjük a projekt adatait.
+  amire feliratkozva kinyerhetjük a projekt adatait. Majd ha találunk céget vagy névjegyet a projekt
+  adatai között, akkor a sharedGetDataHandler segítségével ezek adatait is kinyerjük.
   + Határidő dátummá alakítása.*/
   getProject(project: Project | number, detail: boolean): void{
-    this.projectsApiService.getProject(project)
+    this.projectsApiService.getItem(project)
       .subscribe(project => {
         project.deadline = new Date(project.deadline);
       	this.project = project;
@@ -85,7 +86,7 @@ export class ProjectsDataHandler{
 	}
 
   addProject(project: Project): void{
-    this.projectsApiService.addProject(project)
+    this.projectsApiService.add(project)
       .subscribe(project => {
         project.deadline = new Date(project.deadline);
         this.projects.push(project);

@@ -27,14 +27,15 @@ export class CompaniesDataHandler{
   /*A CompaniesApiService-ben meghívjuk a getCompanies metódust, ami egy observable cég tömböt ad vissza,
   amire feliratkozva kinyerhetjük a cégek adatait.*/
   getCompanies(): void{
-    this.companiesApiService.getCompanies()
+    this.companiesApiService.getItems()
       .subscribe(companies => {this.companies = companies; this.isLoading = false;});
   }
 
   /*A CompaniesApiService-ben meghívjuk a getCompany metódust, ami egy observable céget ad vissza,
-  amire feliratkozva kinyerhetjük a cég adatait.*/
+  amire feliratkozva kinyerhetjük a cég adatait. Majd ha találunk projektet vagy névjegyet a cég
+  adatai között, akkor a sharedGetDataHandler segítségével ezek adatait is kinyerjük.*/
   getCompany(company: Company | number, detail: boolean): void{
-    this.companiesApiService.getCompany(company)
+    this.companiesApiService.getItem(company)
       .subscribe(company => {
         this.company = company;
         if(detail)
@@ -96,7 +97,7 @@ export class CompaniesDataHandler{
   }
 
   addCompany(company: Company): void{
-    this.companiesApiService.addCompany(company)
+    this.companiesApiService.add(company)
       .subscribe(company => this.companies.push(company));
   }
 

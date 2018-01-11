@@ -4,6 +4,7 @@ import { Project } from '../../shared/classes/project';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
+import { BaseApiService } from '../../shared/services/base/base-api.service'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,19 +12,20 @@ const httpOptions = {
 
 @Injectable()
 
-export class ProjectsApiService{
+export class ProjectsApiService extends BaseApiService{
 
 	private projectsUrl = 'api/projects';
 
-	constructor(
-		private http: HttpClient,
-		){}
+	constructor(private http: HttpClient)
+	{
+		super();
+	}
 
 
 	/*Visszaad egy Observable-t a projekt tömbről, melyet
 	  a webapi-ból nyert ki. Később ha ezt a metódust meghívják
 	  és feliratkoznak rá, ki tudják nyerni az adatokat belőle.*/
-	getProjects(): Observable<Project[]> {
+	getItems(): Observable<Project[]> {
 		return this.http.get<Project[]>(this.projectsUrl)
 			.pipe(
 				tap(projects => (`fetched projects`)),
@@ -34,7 +36,7 @@ export class ProjectsApiService{
 
 	/*Lásd: getProjects, csak itt egy darab projektre végeztük el,
   	melyet a paraméterben megkapott projekt, vagy id alapján azonosítunk*/
-	getProject(project: Project | number): Observable<Project> {
+	getItem(project: Project | number): Observable<Project> {
 		const id = typeof project === 'number' ? project : project.id;
 		const url = `${this.projectsUrl}/${id}`;
 		return this.http.get<Project>(url).pipe(
@@ -59,7 +61,7 @@ export class ProjectsApiService{
 
 	/*A paraméterben kapott projekt alapján azonosítja a hozzáadni kívánt
   	projektet és küld egy kérést a http.post segítségével az apinak.*/
-	addProject(project: Project): Observable<Project>{
+	add(project: Project): Observable<Project>{
 		return this.http.post<Project>(this.projectsUrl, project, httpOptions).pipe(
 			catchError(this.handleError<Project>('addProject'))
 		);
@@ -68,7 +70,7 @@ export class ProjectsApiService{
 
 	/*A paraméterben kapott projekt alapján azonosítja a módosítani kívánt
   	projektet és küld egy kérést a http.put segítségével az apinak.*/
-	updateProject (project: Project): Observable<any> {
+	update (project: Project): Observable<any> {
 		return this.http.put(this.projectsUrl, project, httpOptions).pipe(
 			tap(_ => (`updated project id=${project.id}`)),
 			catchError(this.handleError<any>('updateProject'))
@@ -77,7 +79,7 @@ export class ProjectsApiService{
 
 
 	//Hibakezelő
-	private handleError<T> (operation = 'operation', result?: T) {
+	handleError<T> (operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
 			console.error(error); // log to console instead

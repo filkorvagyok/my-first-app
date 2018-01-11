@@ -49,12 +49,18 @@ export class CompanyEditComponent implements OnInit {
       'companyEmail': [null, Validators.pattern(EMAIL_REGEXP)],
       'companyWebsite': [null, Validators.pattern(URL_REGEXP)],
       'companyFacebook': [null, Validators.pattern(FACEBOOK_REGEXP)],
-      'companyCountry': [],
-      'companyZipcode':[],
+      'companyHqCountry': [],
+      'companyBiCountry': [],
+      'companyMailCountry': [],
+      'companyHqZipcode':[],
+      'companyBiZipcode':[],
+      'companyMailZipcode':[],
       'companyHqSettlement': [null, Validators.pattern(SETTLEMENT_REGEXP)],
       'companyBiSettlement': [null, Validators.pattern(SETTLEMENT_REGEXP)],
       'companyMailSettlement': [null, Validators.pattern(SETTLEMENT_REGEXP)],
-      'companyAddress': [],
+      'companyHqAddress': [],
+      'companyBiAddress': [],
+      'companyMailAddress': [],
       'companyBiname': [],
       'companyTaxnumber': [null, Validators.pattern(TAX_REGEXP)],
       'companyMailname': [],
@@ -101,12 +107,12 @@ export class CompanyEditComponent implements OnInit {
   }
 
   save(): void {
-      this.companiesApiService.updateCompany(this.company)
+      this.companiesApiService.update(this.company)
         .subscribe(() => this.goBack());
   }
 
   add(company: Company): void{
-    this.companiesApiService.addCompany(company)
+    this.companiesApiService.add(company)
       .subscribe(() => {
         this.addCompanyTo(company);
         this.goBack();

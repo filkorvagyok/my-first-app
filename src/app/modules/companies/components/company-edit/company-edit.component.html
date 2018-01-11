@@ -50,7 +50,7 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<mat-select formControlName="companyCountry" placeholder="Ország"
+					<mat-select formControlName="companyHqCountry" placeholder="Ország"
 					[ngModel]="company.country_code" (ngModelChange)="company.country_code = onChangeHqcountry($event)">
 						<mat-option *ngFor="let country of countries" [value]="country.code">
 							{{country.country}}
@@ -60,7 +60,7 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput [(ngModel)]="company.hq_zipcode" formControlName="companyZipcode" placeholder="Irányítószám">
+					<input matInput [(ngModel)]="company.hq_zipcode" formControlName="companyHqZipcode" placeholder="Irányítószám">
 				</mat-form-field>
 			</div>
 			<div class="inputfield">
@@ -73,7 +73,7 @@
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
-					<input matInput type="text" [(ngModel)]="company.hq_address" formControlName="companyAddress" placeholder="Cím">
+					<input matInput type="text" [(ngModel)]="company.hq_address" formControlName="companyHqAddress" placeholder="Cím">
 				</mat-form-field>
 			</div>
 			<div *ngIf="!edit">
@@ -102,7 +102,7 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<mat-select formControlName="companyCountry" placeholder="Ország"
+						<mat-select formControlName="companyBiCountry" placeholder="Ország"
 						[ngModel]="company.country_code" (ngModelChange)="company.bi_country = onChange($event)">
 							<mat-option *ngFor="let country of countries" [value]="country.code">
 								{{country.country}}
@@ -112,7 +112,7 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.bi_zipcode" formControlName="companyZipcode" placeholder="Irányítószám">
+						<input matInput [(ngModel)]="company.bi_zipcode" formControlName="companyBiZipcode" placeholder="Irányítószám">
 					</mat-form-field>
 				</div>
 				<div class="inputfield">
@@ -125,7 +125,7 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput type="text" [(ngModel)]="company.bi_address" formControlName="companyAddress" placeholder="Cím">
+						<input matInput type="text" [(ngModel)]="company.bi_address" formControlName="companyBiAddress" placeholder="Cím">
 					</mat-form-field>
 				</div>
 			</div>
@@ -154,7 +154,7 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<mat-select formControlName="companyCountry" placeholder="Ország"
+						<mat-select formControlName="companyMailCountry" placeholder="Ország"
 						[ngModel]="company.country_code" (ngModelChange)="company.mail_country = onChange($event)">
 							<mat-option *ngFor="let country of countries" [value]="country.code">
 								{{country.country}}
@@ -164,7 +164,7 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput [(ngModel)]="company.mail_zipcode" formControlName="companyZipcode" placeholder="Irányítószám">
+						<input matInput [(ngModel)]="company.mail_zipcode" formControlName="companyMailZipcode" placeholder="Irányítószám">
 					</mat-form-field>
 				</div>
 				<div class="inputfield">
@@ -177,7 +177,7 @@
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
-						<input matInput type="text" [(ngModel)]="company.mail_address" formControlName="companyAddress" placeholder="Cím">
+						<input matInput type="text" [(ngModel)]="company.mail_address" formControlName="companyMailAddress" placeholder="Cím">
 					</mat-form-field>
 				</div>
 				<div class="hr_style">

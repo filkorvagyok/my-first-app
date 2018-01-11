@@ -33,7 +33,13 @@ export class ContactEditComponent implements OnInit{
     this.contactForm = this.fb.group({
       'contactCompany': [],
       'contactFullName': [null, Validators.required],
-      'simple': [],
+      'contactForename': [],
+      'contactNickname': [],
+      'contactSurename': [],
+      'contactMiddlename': [],
+      'contactPrimComChan': [],
+      'contactRank': [],
+      'contactGreeting': [],
       'contactPhone': [null, Validators.pattern(TEL_REGEXP)],
       'contactEmail': [null, Validators.pattern(EMAIL_REGEXP)],
 
@@ -52,12 +58,12 @@ export class ContactEditComponent implements OnInit{
 
   	save(): void{
 		this.addContactTo(this.contact);
-		this.contactsApiService.updateContact(this.contact)
+		this.contactsApiService.update(this.contact)
         	.subscribe(() => this.goBack())
 	}
 
 	add(contact: Contact): void{
-		this.contactsApiService.addContact(contact)
+		this.contactsApiService.add(contact)
 			.subscribe(() => {
 				this.addContactTo(contact);
 				this.goBack();

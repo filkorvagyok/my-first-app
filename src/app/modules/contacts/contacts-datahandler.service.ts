@@ -18,14 +18,15 @@ export class ContactsDataHandler{
   /*A ContactsApiService-ben meghívjuk a getContacts metódust, ami egy observable névjegy tömböt ad vissza,
   amire feliratkozva kinyerhetjük a névjegyek adatait.*/
   getContacts(): void{
-    this.contactsApiService.getContacts()
+    this.contactsApiService.getItems()
       .subscribe(contacts => {this.contacts = contacts; this.isLoading = false;});
   }
 
   /*A ContactsApiService-ben meghívjuk a getContact metódust, ami egy observable névjegyet ad vissza,
-  amire feliratkozva kinyerhetjük a névjegy adatait.*/
+  amire feliratkozva kinyerhetjük a névjegy adatait. Majd ha találunk céget vagy projektet a névjegy
+  adatai között, akkor a sharedGetDataHandler segítségével ezek adatait is kinyerjük.*/
   getContact(contact: Contact | number, detail: boolean): void{
-    this.contactsApiService.getContact(contact)
+    this.contactsApiService.getItem(contact)
       .subscribe(contact => {
         this.contact = contact;
         if(detail)
@@ -70,7 +71,7 @@ export class ContactsDataHandler{
   }
 
   addContact(contact: Contact): void{
-    this.contactsApiService.addContact(contact)
+    this.contactsApiService.add(contact)
       .subscribe(contact => this.contacts.push(contact));
   }
 }

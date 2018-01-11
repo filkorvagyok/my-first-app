@@ -28,7 +28,7 @@ export class SharedDeleteDataHandler{
 			.filter(project => project.company.includes(company.id))
 			.forEach(project => {
 				project.company.splice(project.company.indexOf(company.id), 1);
-				this.projectsApiService.updateProject(project).subscribe();
+				this.projectsApiService.update(project).subscribe();
 			});
 	}
 
@@ -39,7 +39,7 @@ export class SharedDeleteDataHandler{
 			.filter(contact => contact.company.includes(company.id))
 			.forEach(contact => {
 				contact.company.splice(contact.company.indexOf(company.id), 1);
-				this.contactsApiService.updateContact(contact).subscribe();
+				this.contactsApiService.update(contact).subscribe();
 			});
 	}
 
@@ -51,7 +51,7 @@ export class SharedDeleteDataHandler{
 			.filter(company => company.project.includes(project.id))
 			.forEach(company => {
 				company.project.splice(company.project.indexOf(project.id), 1);
-				this.companiesApiService.updateCompany(company).subscribe();
+				this.companiesApiService.update(company).subscribe();
 			});
 	}
 
@@ -62,7 +62,7 @@ export class SharedDeleteDataHandler{
 			.filter(contact => contact.project.includes(project.id))
 			.forEach(contact => {
 				contact.project.splice(contact.project.indexOf(project.id), 1);
-				this.contactsApiService.updateContact(contact).subscribe();
+				this.contactsApiService.update(contact).subscribe();
 			});
 	}
 
@@ -73,7 +73,7 @@ export class SharedDeleteDataHandler{
 			.filter(compnay => compnay.contact.includes(contact.id))
 			.forEach(company => {
 				company.contact.splice(company.contact.indexOf(contact.id), 1);
-				this.companiesApiService.updateCompany(company).subscribe();
+				this.companiesApiService.update(company).subscribe();
 			});
 	}
 
@@ -84,25 +84,25 @@ export class SharedDeleteDataHandler{
 			.filter(project => project.accountable.includes(contact.id))
 			.forEach(project => {
 				project.accountable.splice(project.accountable.indexOf(contact.id), 1);
-				this.projectsApiService.updateProject(project).subscribe();
+				this.projectsApiService.update(project).subscribe();
 			});
 		this.sharedGetDataHandler.projects
 			.filter(project => project.owner.includes(contact.id))
 			.forEach(project => {
 				project.owner.splice(project.owner.indexOf(contact.id), 1);
-				this.projectsApiService.updateProject(project).subscribe();
+				this.projectsApiService.update(project).subscribe();
 			});
 		this.sharedGetDataHandler.projects
 			.filter(project => project.observer.includes(contact.id))
 			.forEach(project => {
 				project.observer.splice(project.observer.indexOf(contact.id), 1);
-				this.projectsApiService.updateProject(project).subscribe();
+				this.projectsApiService.update(project).subscribe();
 			});
 		this.sharedGetDataHandler.projects
 			.filter(project => project.participant.includes(contact.id))
 			.forEach(project => {
 				project.participant.splice(project.participant.indexOf(contact.id), 1);
-				this.projectsApiService.updateProject(project).subscribe();
+				this.projectsApiService.update(project).subscribe();
 			});
 	}
 }

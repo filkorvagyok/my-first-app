@@ -33,12 +33,12 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="2"  class="newcompany_btn">
+						<td colspan="2"  class="newitem_btn">
 							<button type="button" mat-raised-button color="primary" (click)="gotoNew()">
 								<i class="fa fa-plus"></i> Új névjegy hozzáadása
 							</button>
 						</td>
-						<td colspan="2" class="instant_company">
+						<td colspan="2" class="instant_item">
 							<div class="instant_input">
 							<mat-form-field>
 							    <input #contactFullName matInput name="contactFullName" placeholder="Új névjegy hozzáadása instant"/>
@@ -94,7 +94,7 @@
 			<mat-icon class="fa fa-pencil"></mat-icon>
 			<span>Szerkesztés</span>
 		</button>
-		<button mat-menu-item (click)="clickOnDeleteProductButton()">
+		<button mat-menu-item (click)="clickOnDeleteProductButton(contactsDataHandler.contacts)">
 			<mat-icon class="fa fa-trash"></mat-icon>
 			<span>Törlés</span>
 		</button>

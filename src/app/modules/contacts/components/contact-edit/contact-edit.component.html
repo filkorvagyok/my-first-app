@@ -22,22 +22,22 @@
 			</div>
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="contact.surname" formControlName="simple" placeholder="Családnév">
+				    <input matInput type="text" [(ngModel)]="contact.surname" formControlName="contactSurename" placeholder="Családnév">
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="contact.middle_name" formControlName="simple" placeholder="Középső név">
+				    <input matInput type="text" [(ngModel)]="contact.middle_name" formControlName="contactMiddlename" placeholder="Középső név">
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="contact.forename" formControlName="simple" placeholder="Utónév">
+				    <input matInput type="text" [(ngModel)]="contact.forename" formControlName="contactForename" placeholder="Utónév">
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="contact.nickname" formControlName="simple" placeholder="Bencenév">
+				    <input matInput type="text" [(ngModel)]="contact.nickname" formControlName="contactNickname" placeholder="Bencenév">
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">	
@@ -58,24 +58,24 @@
 			</div>
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="contact.primary_communication_chanel" formControlName="simple" placeholder="Elsődleges kommunikációs csatorna">
+				    <input matInput type="text" [(ngModel)]="contact.primary_communication_chanel" formControlName="contactPrimComChan" placeholder="Elsődleges kommunikációs csatorna">
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="contact.rank" formControlName="simple" placeholder="Beosztás">
+				    <input matInput type="text" [(ngModel)]="contact.rank" formControlName="contactRank" placeholder="Beosztás">
 			  	</mat-form-field>
 			</div>
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="contact.greeting" formControlName="simple" placeholder="Köszönés">
+				    <input matInput type="text" [(ngModel)]="contact.greeting" formControlName="contactGreeting" placeholder="Köszönés">
 			  	</mat-form-field>
 			</div>
 			<div class="btn_primary">
 				<button type="submit" mat-raised-button color="primary">Mentés</button>
 			</div>
 			<div class="btn_primary">
-				<button mat-raised-button href="company/list" (click)="goBack()">Mégse</button>
+				<button mat-raised-button (click)="goBack()">Mégse</button>
 			</div>
 		</div>
 	</form>

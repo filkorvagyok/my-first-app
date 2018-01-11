@@ -5,8 +5,8 @@ import { SharedGetDataHandler } from '../../../../shared/services/shared-getdata
 import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
 import { Router } from '@angular/router';
 import { Project } from '../../../../shared/classes/project';
-import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { BaseComponent } from '../../../../shared/services/base/base.component'
 
 @Component({
 	selector: 'my-projects',
@@ -14,19 +14,19 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 	styleUrls: ['../../../../shared/styles/display.component.css']
 })
 
-export class ProjectsComponent implements OnInit{
+export class ProjectsComponent extends BaseComponent implements OnInit{
 	constructor(
 		private projectsApiService: ProjectsApiService,
 		private projectsDataHandler: ProjectsDataHandler,
 		private sharedGetDataHandler: SharedGetDataHandler,
 		private sharedDeleteDataHandler: SharedDeleteDataHandler,
 		private router: Router,
-		private dialog: MatDialog
-	){}
+		protected dialog: MatDialog
+	){
+		super(dialog);
+	}
 
-	checked: boolean = false;
 	days: number;
-	disabled: boolean = true;
 	valami: Date;
 	changedate: boolean = false;
 	asd = new Date();
@@ -38,27 +38,6 @@ export class ProjectsComponent implements OnInit{
     	this.sharedGetDataHandler.getProjects();
 		this.projectsDataHandler.getProjects();
 		
-	}
-
-
-	/*Megvizsgáljuk a checkbox-okat és ha 1 vagy több 'checked'
-	állapotban van, akkor megjelenítjük a fabbutton-t, különben nem.*/
-	showChbox(): void{
-		var show = 0;
-		this.disabled = false;
-		$('input[type=checkbox]').each(function() {
-			if ($(this).is(':checked')) {
-				++show;
-			}
-		});
-		if ( show > 0 ) {
-			this.checked = true;
-			if (show > 1) {
-				this.disabled = true;
-			}
-		} else {
-			this.checked = false;
-		}
 	}
 
 	gotoDetail(project: Project): void{
@@ -76,30 +55,6 @@ export class ProjectsComponent implements OnInit{
 		let newDate = new Date();
 		newDate.setHours(0,0,0,0);
 		return Math.round((project.deadline.getTime() - newDate.getTime())/86400000);
-	}
-
-
-	/*A kiválasztott lista elem selected mezője automatikusan
-	true-ra változik. Ez alapján a törléshez kiválogatjuk azon
-	listaelemeket, melyek select-je true és ha a megjelenő DeleDialog-on
-	megerősítjük a törlést, akkor meghívjuk az adott névjegyre a törlés
-	metódust egyenként.*/
-	clickOnDeleteProductButton(): void{
-		let dialogRef = this.dialog.open(DeleteDialog);
-		dialogRef.afterClosed().subscribe(result => {
-			console.log('The dialog was closed');
-			if(result === true)
-			{
-				let array=this.projectsDataHandler.projects;
-				for (var i = 0; i < array.length; i++) {
-					if(array[i].selected)
-					{
-						this.delete(array[i]);
-					}
-				}
-				this.checked = false;
-			}
-		});
 	}
 
 	/*Tölés esetén a projekttel összekapcsolt cég(ek) és névjegy(ek) közül is ki kell törölnünk az adott projektet,
@@ -131,7 +86,7 @@ export class ProjectsComponent implements OnInit{
 
   	changeProject(project: Project)
   	{
-  		this.projectsApiService.updateProject(project).subscribe();
+  		this.projectsApiService.update(project).subscribe();
   	}
 
   	//Átírjuk a határidőt a kapott napok számával növelt mai dátumra.

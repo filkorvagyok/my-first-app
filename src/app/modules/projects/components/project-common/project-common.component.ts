@@ -2,31 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from '../../../../shared/classes/project';
 import { ProjectsDataHandler } from '../../projects-datahandler.service';
+import { BaseCommonComponent } from '../../../../shared/services/base/base-common.component';
 
 @Component({
   selector: 'project-common',
   templateUrl: './project-common.component.html',
 })
 
-export class ProjectCommonComponent implements OnInit{
-	edit = false; //Ezen mező alapján tudja a project-edit.component, hogy szerkeszteni kell vagy új projektet létrehozni
+export class ProjectCommonComponent extends BaseCommonComponent implements OnInit{
 
 	constructor(
 		private projectsDataHandler: ProjectsDataHandler,
 		private route: ActivatedRoute
-	) {}
+	) {
+		super();
+	}
 
 	ngOnInit(): void {
 		if(this.route.snapshot.routeConfig.path == "project/new")
 		{ 
 			//Ha az url "project/new"-val egyenlő, akkor teljesül
-			this.setNewContact();
+			this.setNew();
 		}
 		/*TODO: mivel így nem csak "project/new/:id" esetén hajtja ezt végre,
 		ezért ki kell javítani*/
 		else
 		{
-			this.setEditContact();
+			this.setEdit();
 		}
 	}
 
@@ -34,7 +36,7 @@ export class ProjectCommonComponent implements OnInit{
 	megnézzük a num értékét is és ha egyenlő 0-val, akkor a tömbben lévő id-kat belerakjuk a company mezőbe,
 	ha pedig 2-vel egyelnő, akkor pedig a rank értékét is megvizsgáljuk és ezek alapján vagy az accountable,
 	vagy az owner, vagy az observer, vagy pedig a participant mezőbe rakjuk a tömb értékeit.*/
-	setNewContact(): void{
+	setNew(): void{
 		this.projectsDataHandler.project = new Project;
 		this.projectsDataHandler.project = this.projectsDataHandler.setDefaultProject(this.projectsDataHandler.project);
 		switch (Number(this.route.snapshot.params['num'])) {
@@ -70,7 +72,7 @@ export class ProjectCommonComponent implements OnInit{
 	}
 
 	//Az url-ben kapott id alapján lekéri a webapiból a megfelelő projekt adatokat.
-	setEditContact(): void{
+	setEdit(): void{
 		this.edit = true;
 		this.route.paramMap.subscribe(params => this.projectsDataHandler.getProject(Number(params.get('id')), false));
 	}

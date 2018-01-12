@@ -5,6 +5,7 @@ import { Project } from '../../../../shared/classes/project';
 import { ProjectsApiService } from '../../projects-api.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
+import { BaseEditComponent } from '../../../../shared/services/base/base-edit.component';
 
 const MONEY_REGEX = /^(0|[1-9][0-9]*)$/;
 
@@ -14,14 +15,16 @@ const MONEY_REGEX = /^(0|[1-9][0-9]*)$/;
   styleUrls: [ '../../../../shared/styles/edit.component.css' ]
 })
 
-export class ProjectEditComponent implements OnInit {
+export class ProjectEditComponent extends BaseEditComponent implements OnInit {
 	constructor(
 		private projectsApiService: ProjectsApiService,
 		private sharedGetDataHandler: SharedGetDataHandler,
 		private sharedAddDataHandler: SharedAddDataHandler,
-		private location: Location,
+		protected location: Location,
 		private fb: FormBuilder
-	) {}
+	) {
+		super(location);
+	}
 
 	@Input() project: Project;
 	@Input() edit: boolean;
@@ -48,10 +51,6 @@ export class ProjectEditComponent implements OnInit {
 		this.sharedGetDataHandler.getCompanies();
 		this.sharedGetDataHandler.getContacts();
 		this.initform();
-	}
-
-	goBack(): void {
-		this.location.back();
 	}
 
 	save(): void{
@@ -98,19 +97,6 @@ export class ProjectEditComponent implements OnInit {
 
 	onChange(newValue){
 		return newValue;
-	}
-
-	//Úgy állítja a form iput mezőit, mintha belekattintottunk volna
-	validateAllFormFields(formGroup: FormGroup) {
-		Object.keys(formGroup.controls).forEach(field => {
-			const control = formGroup.get(field);
-			if (control instanceof FormControl) {
-				control.markAsTouched({ onlySelf: true });
-			}
-			else if (control instanceof FormGroup) {
-				this.validateAllFormFields(control);
-			}
-		});
 	}
 
 	//Submit lenyomásakor hívódik meg

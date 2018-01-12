@@ -40,7 +40,9 @@
 						<td class="collapsed" (click)="$event.stopPropagation();">
 							<!--{{project.deadline | date:'yyyy-MM-dd HH:mm'}}-->
 							<!--<p *ngIf="!change" (mouseover)="asd = true" (mouseleave)="asd=false">{{project.deadline | date:'yyyy.MM.dd. HH:mm'}} <mat-icon (click)="change = true" class="fa fa-pencil" *ngIf="asd"></mat-icon></p>-->
+							<div id="datetime_div">
 							<datetime [(ngModel)]="project.deadline" (ngModelChange)="changeProject(project)" [datepicker]="datepickerOpts" [timepicker]="false" [datepicker]="{ icon: 'fa fa-calendar' }" name="{{'projectDeadline' + project.id}}"></datetime>
+							</div>
 						</td>
 					</tr>
 				</tbody>

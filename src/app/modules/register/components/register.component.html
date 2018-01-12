@@ -1,47 +1,52 @@
-<form class="panel panel-default">
+<form class="panel panel-default" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 	<div class="panel-heading" color="primary">Regisztráció</div>
 	<div  class="panel-body">
-		<div class="inputpanel">
-			<div class="inputfield">	
-				<mat-form-field class="matffield">
-				    <input matInput placeholder="Név" [formControl]="nameFormControl">
-				    <mat-error *ngIf="nameFormControl.hasError('required')">
-				      Név megadása <strong>kötelező</strong>
-		    		</mat-error>
-			  	</mat-form-field>
-			</div>
-			<div class="inputfield">	
-				<mat-form-field class="matffield">
-				    <input matInput placeholder="E-mail cím" [formControl]="emailFormControl">
-				    <mat-error *ngIf="emailFormControl.hasError('pattern')">
-				      Kérjük adjnon meg valós e-mail címet!
-				    </mat-error>
-				    <mat-error *ngIf="emailFormControl.hasError('required')">
-				      Email megadása <strong>kötelező</strong>
-		    		</mat-error>
-			  	</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput placeholder="Jelszó" [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
-					<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-					<mat-error *ngIf="passwordFormControl.hasError('required')">
-				      Jelszó megadása <strong>kötelező</strong>
-		    		</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput placeholder="Jelszó újra" [type]="hide ? 'password' : 'text'" [formControl]="passwordAgainFormControl">
-					<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-					<mat-error *ngIf="passwordAgainFormControl.hasError('required')">
-				      Jelszó megadása <strong>kötelező</strong>
-		    		</mat-error>
-				</mat-form-field>
-			</div>
+		<div class="inputfield">	
+			<mat-form-field class="matffield">
+			    <input matInput formControlName="registerName" placeholder="Név*">
+		  	</mat-form-field>
+		  	<mat-error *ngIf="!registerForm.controls['registerName'].valid && registerForm.controls['registerName'].touched">
+		      A név mező megadása <strong>kötelező</strong>!
+		    </mat-error>
+		</div>
+		<div class="inputfield">	
+			<mat-form-field class="matffield">
+			    <input matInput formControlName="registerEmail" placeholder="E-mail-cím*">
+		  	</mat-form-field>
+		  	<mat-error *ngIf="registerForm.controls['registerEmail'].hasError('required') && registerForm.controls['registerEmail'].touched">
+		      Az e-mail-cím mező megadása <strong>kötelező</strong>!
+		    </mat-error>
+		    <mat-error *ngIf="registerForm.controls['registerEmail'].hasError('pattern') && registerForm.controls['registerEmail'].touched">
+		      Nem megfelelő e-mail-cím!
+		    </mat-error>
+		</div>
+		<div class="inputfield">	
+			<mat-form-field class="matffield">
+			    <input matInput formControlName="registerPassword" placeholder="Írja be jelszavát*" [type]="hidepass ? 'password' : 'text'">
+				<mat-icon matSuffix (click)="hidepass = !hidepass">
+					{{hidepass ? 'visibility_off' : 'visibility'}}
+				</mat-icon>
+		  	</mat-form-field>
+		  	<mat-error *ngIf="registerForm.controls['registerPassword'].hasError('required') && registerForm.controls['registerPassword'].touched">
+		      A jelszó mező megadása <strong>kötelező</strong>!
+		    </mat-error>
+		    <mat-error *ngIf="registerForm.controls['registerPassword'].hasError('pattern') && registerForm.controls['registerPassword'].touched">
+		      Nem megfelelő jelszó!(Legalább 8 karakter, amiből 1 nagybetűs és 1 szám)
+		    </mat-error>
+		</div>
+		<div class="inputfield">	
+			<mat-form-field class="matffield">
+			    <input matInput formControlName="registerConfirmPassword" placeholder="Erősítse meg jelszavát*" [type]="hideconfpass ? 'password' : 'text'">
+				<mat-icon matSuffix (click)="hideconfpass = !hideconfpass">
+					{{hideconfpass ? 'visibility_off' : 'visibility'}}
+				</mat-icon>
+		  	</mat-form-field>
+		  	<mat-error *ngIf="!registerForm.controls['registerConfirmPassword'].valid && registerForm.controls['registerConfirmPassword'].touched">
+		      A két jelszónak meg kell egyeznie!
+		    </mat-error>
 		</div>
 		<div class="btn_primary">
-			<button mat-raised-button color="primary">Regisztráció</button>
+			<button type="submit" mat-raised-button color="primary">Regisztráció</button>
 		</div>
 	</div>
 </form>

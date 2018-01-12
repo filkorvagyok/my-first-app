@@ -5,6 +5,7 @@ import { Contact } from '../../../../shared/classes/contact';
 import { ContactsApiService } from '../../contacts-api.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
+import { BaseEditComponent } from '../../../../shared/services/base/base-edit.component';
 
 const TEL_REGEXP = /^\s*(?:\+?\d{1,3})?[- (]*\d{3}(?:[- )]*\d{3})?[- ]*\d{4}(?: *[x/#]\d+)?\s*$/;
 const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -14,14 +15,16 @@ const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
   templateUrl: './contact-edit.component.html',
   styleUrls: [ '../../../../shared/styles/edit.component.css' ]
 })
-export class ContactEditComponent implements OnInit{
+export class ContactEditComponent extends BaseEditComponent implements OnInit{
 	constructor(
 		private contactsApiService: ContactsApiService,
 		private sharedGetDataHandler: SharedGetDataHandler,
 		private sharedAddDataHandler: SharedAddDataHandler,
-		private location: Location,
+		protected location: Location,
 		private fb: FormBuilder
-	) {}
+	) {
+		super(location);
+	}
 
 	@Input() contact: Contact;
 	@Input() edit: boolean;
@@ -29,31 +32,26 @@ export class ContactEditComponent implements OnInit{
 	contactForm: FormGroup;
 
 	//Form validitás beállítása
-  initform(): void{
-    this.contactForm = this.fb.group({
-      'contactCompany': [],
-      'contactFullName': [null, Validators.required],
-      'contactForename': [],
-      'contactNickname': [],
-      'contactSurename': [],
-      'contactMiddlename': [],
-      'contactPrimComChan': [],
-      'contactRank': [],
-      'contactGreeting': [],
-      'contactPhone': [null, Validators.pattern(TEL_REGEXP)],
-      'contactEmail': [null, Validators.pattern(EMAIL_REGEXP)],
-
-    });
-  }
+	initform(): void{
+		this.contactForm = this.fb.group({
+			'contactCompany': [],
+			'contactFullName': [null, Validators.required],
+			'contactForename': [],
+			'contactNickname': [],
+			'contactSurename': [],
+			'contactMiddlename': [],
+			'contactPrimComChan': [],
+			'contactRank': [],
+			'contactGreeting': [],
+			'contactPhone': [null, Validators.pattern(TEL_REGEXP)],
+			'contactEmail': [null, Validators.pattern(EMAIL_REGEXP)],
+		});
+	}
 
 	ngOnInit(): void{
 		this.sharedGetDataHandler.getCompanies();
 		this.sharedGetDataHandler.getProjects();
 		this.initform();
-	}
-
-	goBack(): void {
-		this.location.back();
 	}
 
   	save(): void{
@@ -87,19 +85,6 @@ export class ContactEditComponent implements OnInit{
 		{
 			this.sharedAddDataHandler.addContactToProject(contact, this.rank);
 		}
-	}
-
-	//Úgy állítja a form iput mezőit, mintha belekattintottunk volna
-	validateAllFormFields(formGroup: FormGroup) {
-		Object.keys(formGroup.controls).forEach(field => {
-			const control = formGroup.get(field);
-			if (control instanceof FormControl) {
-				control.markAsTouched({ onlySelf: true });
-			}
-			else if (control instanceof FormGroup) {
-				this.validateAllFormFields(control);
-			}
-		});
 	}
 
 	//Submit lenyomásakor hívódik meg

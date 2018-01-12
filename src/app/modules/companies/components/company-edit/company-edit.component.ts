@@ -6,6 +6,8 @@ import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
+import { BaseEditComponent } from '../../../../shared/services/base/base-edit.component';
+
 
 const TEL_REGEXP = /^\s*(?:\+?\d{1,3})?[- (]*\d{3}(?:[- )]*\d{3})?[- ]*\d{4}(?: *[x/#]\d+)?\s*$/;
 const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -21,7 +23,7 @@ const NUMBER_REGEXP = /^[0-9]*$/;
   styleUrls: [ '../../../../shared/styles/edit.component.css' ]
 })
 
-export class CompanyEditComponent implements OnInit {
+export class CompanyEditComponent extends BaseEditComponent implements OnInit {
   @Input() company: Company;
   @Input() billing: boolean;
   @Input() mail: boolean;
@@ -37,9 +39,11 @@ export class CompanyEditComponent implements OnInit {
     private companiesDataHandler: CompaniesDataHandler,
     private sharedGetDataHandler: SharedGetDataHandler,
     private sharedAddDataHandler: SharedAddDataHandler,
-    private location: Location,
+    protected location: Location,
     private fb: FormBuilder
-  ) {}
+  ) {
+    super(location);
+  }
 
   //Form validitás beállítása
   initform(): void{
@@ -102,10 +106,6 @@ export class CompanyEditComponent implements OnInit {
     return newValue;
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
   save(): void {
       this.companiesApiService.update(this.company)
         .subscribe(() => this.goBack());
@@ -148,19 +148,6 @@ export class CompanyEditComponent implements OnInit {
       this.sharedAddDataHandler.addCompanyToProject(company);
     if(company.contact.length > 0)
       this.sharedAddDataHandler.addCompanyToContact(company);
-  }
-
-  //Úgy állítja a form iput mezőit, mintha belekattintottunk volna
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if (control instanceof FormControl) {
-        control.markAsTouched({ onlySelf: true });
-      }
-      else if (control instanceof FormGroup) {
-        this.validateAllFormFields(control);
-      }
-    });
   }
 
   //Submit lenyomásakor hívódik meg

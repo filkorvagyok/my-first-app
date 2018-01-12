@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators }   from '@angular/forms';
 
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const EMAIL_REGEXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
 	selector: 'my-login',
@@ -10,10 +10,15 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 })
 
 export class LoginComponent{
-	hide = true;
-	emailFormControl = new FormControl('', [
-	    Validators.required,
-	    Validators.pattern(EMAIL_REGEX)]);
-    passwordFromControl = new FormControl('', 
-    	Validators.required);	
+	hide: boolean = true;
+	loginForm: FormGroup;
+	constructor(private fb: FormBuilder){
+		this.loginForm = fb.group({
+			'loginEmail': [null, Validators.compose([Validators.required,
+				Validators.pattern(EMAIL_REGEXP)])],
+			'loginPassword': [null, Validators.required]
+		});
+	}
+	
+	onSubmit(): void{}
 }

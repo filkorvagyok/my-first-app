@@ -1,34 +1,34 @@
-<form class="panel panel-default">
+<form class="panel panel-default" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 	<div class="panel-heading" color="primary">Bejelentkezés</div>
 	<div  class="panel-body">
-		<div class="inputpanel">
-			<div class="inputfield">	
-				<mat-form-field class="matffield">
-				    <input matInput placeholder="E-mail cím" [formControl]="emailFormControl">
-				    <mat-error *ngIf="emailFormControl.hasError('pattern')">
-				      Kérjük adjnon meg valós e-mail címet!
-				    </mat-error>
-				    <mat-error *ngIf="emailFormControl.hasError('required')">
-				      Email megadása <strong>kötelező</strong>
-		    		</mat-error>
-			  	</mat-form-field>
-			</div>
-			<div class="inputfield">
-				<mat-form-field class="matffield">
-					<input matInput placeholder="Írja be jelszavát" [type]="hide ? 'password' : 'text'" [formControl]="passwordFromControl">
-					<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-				    <mat-error *ngIf="passwordFromControl.hasError('required')">
-				      Jelszó megadása <strong>kötelező</strong>
-		    		</mat-error>
-				</mat-form-field>
-			</div>
+		<div class="inputfield">	
+			<mat-form-field class="matffield">
+			    <input matInput formControlName="loginEmail" placeholder="E-mail-cím*">
+		  	</mat-form-field>
+		  	<mat-error *ngIf="loginForm.controls['loginEmail'].hasError('required') && loginForm.controls['loginEmail'].touched">
+		      Az e-mail-cím mező megadása <strong>kötelező</strong>!
+		    </mat-error>
+		    <mat-error *ngIf="loginForm.controls['loginEmail'].hasError('pattern') && loginForm.controls['loginEmail'].touched">
+		      Nem megfelelő e-mail-cím!
+		    </mat-error>
+		</div>
+		<div class="inputfield">	
+			<mat-form-field class="matffield">
+			    <input matInput formControlName="loginPassword" placeholder="Írja be jelszavát*" [type]="hide ? 'password' : 'text'">
+				<mat-icon matSuffix (click)="hide = !hide">
+					{{hide ? 'visibility_off' : 'visibility'}}
+				</mat-icon>
+		  	</mat-form-field>
+		  	<mat-error *ngIf="!loginForm.controls['loginPassword'].valid && loginForm.controls['loginPassword'].touched">
+		      A jelszó megadása <strong>kötelező</strong>!
+		    </mat-error>
 		</div>
 		<mat-checkbox class="cb_staylogin" color="primary">Bejelentkezve marad</mat-checkbox>
 		<div class="forgotten_pass">
 			<a routerLink="../password/reset">Elfelejtetted a jelszavad?</a>
 		</div>
 		<div class="btn_primary">
-			<button mat-raised-button color="primary">Bejelentkezés</button>
+			<button type="submit" mat-raised-button color="primary">Bejelentkezés</button>
 		</div>
 	</div>
 </form>

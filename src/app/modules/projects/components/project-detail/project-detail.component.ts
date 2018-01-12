@@ -9,6 +9,7 @@ import { SharedGetDataHandler } from '../../../../shared/services/shared-getdata
 import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
 import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { BaseDetailComponent } from '../../../../shared/services/base/base-detail.component';
 
 @Component({
   selector: 'project-detail',
@@ -16,7 +17,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   styleUrls: [ '../../../../shared/styles/detail.component.css' ]
 })
 
-export class ProjectDetailComponent implements OnInit{
+export class ProjectDetailComponent extends BaseDetailComponent implements OnInit{
 
 	constructor(
 		private projectsApiService: ProjectsApiService,
@@ -24,10 +25,12 @@ export class ProjectDetailComponent implements OnInit{
 		private sharedGetDataHandler: SharedGetDataHandler,
 		private sharedDeleteDataHandler: SharedDeleteDataHandler,
 		private route: ActivatedRoute,
-		private location: Location,
-		private router: Router,
-		private dialog: MatDialog
-	) {}
+	    protected location: Location,
+	    private router: Router,
+	    protected dialog: MatDialog
+	  ) {
+	    super(location, dialog)
+	  }
 
 	ngOnInit(): void {
 		this.projectsDataHandler.isLoadingData = true;
@@ -36,26 +39,8 @@ export class ProjectDetailComponent implements OnInit{
 		this.route.paramMap.subscribe(params => this.projectsDataHandler.getProject(Number(params.get('id')), true));
 	}
 
-	goBack(): void {
-		this.location.back();
-	}
-
 	gotoEdit(): void{
 		this.router.navigate(['/project/edit', this.projectsDataHandler.project.id]);
-	}
-
-
-	/*Megjelenik a DeleteDialog és ha ott megerősítettük a törlést,
-  	akkor meghívjuk a törlés funkciót*/
-	clickOnDeleteProductButton(): void{
-		let dialogRef = this.dialog.open(DeleteDialog);
-		dialogRef.afterClosed().subscribe(result => {
-			console.log('The dialog was closed');
-			if(result === true)
-			{	
-				this.delete(this.projectsDataHandler.project);
-			}
-		});
 	}
 
 

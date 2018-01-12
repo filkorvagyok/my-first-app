@@ -34,13 +34,13 @@ export class ContactsComponent extends BaseComponent implements OnInit{
 		this.contactsDataHandler.getContacts();
 	}
 
-	gotoDetail(contact: Contact): void{
-  		this.router.navigate(['/people/shown', contact.id]);
-  	}
+  gotoDetail(contact: Contact): void{
+  	this.router.navigate(['/people/shown', contact.id]);
+  }
 
-  	gotoNew(): void{
-		this.router.navigate(["/people/new"]);
-	}
+  gotoNew(): void{
+    this.router.navigate(["/people/new"]);
+  }
 
 
 	/*Tölés esetén a névjeggyel összekapcsolt cég(ek) és projekt(ek) közül is ki kell törölnünk az adott névjegyet,

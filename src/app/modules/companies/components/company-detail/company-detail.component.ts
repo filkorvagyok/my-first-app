@@ -9,13 +9,14 @@ import { SharedGetDataHandler } from '../../../../shared/services/shared-getdata
 import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
 import { DeleteDialog } from '../../../delete-dialog/components/delete-dialog';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { BaseDetailComponent } from '../../../../shared/services/base/base-detail.component';
 
 @Component({
   selector: 'company-detail',
   templateUrl: './company-detail.component.html',
   styleUrls: [ '../../../../shared/styles/detail.component.css' ]
 })
-export class CompanyDetailComponent implements OnInit {
+export class CompanyDetailComponent extends BaseDetailComponent implements OnInit {
 
   constructor(
     private companiesApiService: CompaniesApiService,
@@ -23,10 +24,12 @@ export class CompanyDetailComponent implements OnInit {
     private sharedGetDataHandler: SharedGetDataHandler,
     private sharedDeleteDataHandler: SharedDeleteDataHandler,
     private route: ActivatedRoute,
-    private location: Location,
+    protected location: Location,
     private router: Router,
-    private dialog: MatDialog
-  ) {}
+    protected dialog: MatDialog
+  ) {
+    super(location, dialog)
+  }
 
   ngOnInit(): void {
     this.companiesDataHandler.isLoadingData = true;
@@ -35,25 +38,8 @@ export class CompanyDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => this.companiesDataHandler.getCompany(Number(params.get('id')), true));
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
   gotoEdit(): void{
     this.router.navigate(['/company/edit', this.companiesDataHandler.company.id]);
-  }
-
-  /*Megjelenik a DeleteDialog és ha ott megerősítettük a törlést,
-  akkor meghívjuk a törlés funkció*/
-  clickOnDeleteProductButton(): void{
-    let dialogRef = this.dialog.open(DeleteDialog);
-    dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-          if(result === true)
-          {
-            this.delete(this.companiesDataHandler.company);
-          }
-      });
   }
 
   /*Ha van(nak) hozzátartozó projekt(ek) vagy névjegy(ek), akkor először

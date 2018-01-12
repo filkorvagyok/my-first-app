@@ -1,29 +1,28 @@
-<div *ngIf="contactsDataHandler.isLoadingData">
+<div *ngIf="tasksDataHandler.isLoadingData">
 	<mat-spinner></mat-spinner>
 </div>
-<div *ngIf="!contactsDataHandler.isLoadingData">
-<form *ngIf="contactsDataHandler.contact; let contact" class="panel panel-default">
-	<div class="panel-heading" color="primary">{{contact.full_name}}</div>
+<div *ngIf="!tasksDataHandler.isLoadingData">
+<form *ngIf="tasksDataHandler.task; let task" class="panel panel-default">
+	<div class="panel-heading" color="primary">{{task.name}}</div>
 	<div  class="panel-body">
 		<div>
 			<table class="table">
 				<thead>
 					<tr>
+						<th></th>
+						<th>ID</th>
 						<th>Név</th>
-						<th>Telefon</th>
-						<th>E-mail</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>
-							<strong class="company_name">{{contact.full_name}}</strong>
 						</td>
 						<td>
-							{{contact.phone}}
+							{{task.id}}
 						</td>
 						<td>
-							{{contact.email}}
+							{{task.name}}
 						</td>
 					</tr>
 				</tbody>
@@ -33,29 +32,16 @@
 		<div>
 		<div id="wide">
 			<div>
-				<h3>Feladatok</h3>
+				<h3>Névjegyek</h3>
 			</div>
 		</div>
 		<div id="narrow">
 			<div>
 				<h3>Cégek</h3>
-				<p *ngFor="let company of sharedGetDataHandler.companies">
-					<a mat-list-item class="linkTo" routerLink="/company/shown/{{company.id}}" routerLinkActive="active">
-						{{company.name}}
-					</a>
-				</p>
 			</div>
 			<hr>
 			<div class="projects">
 				<h3>Projektek</h3>
-				<p *ngFor="let pfc of sharedGetDataHandler.projectsForContact">
-					<span><a mat-list-item class="linkTo" routerLink="/project/shown/{{pfc.project.id}}" routerLinkActive="active">
-						{{pfc.project.name}}
-					</a></span>
-					 - <span *ngFor="let rank of pfc.ranks; let isLast = last">
-						{{rank}}{{isLast ? '' : ', '}}
-					</span>
-				</p>
 			</div>
 		</div>
 		</div>

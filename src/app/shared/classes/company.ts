@@ -29,4 +29,36 @@ export class Company{
 	selected: boolean;
 	project: number[];
 	contact: number[];
+
+	constructor(){
+		this.bi_address = "";
+		this.bi_country = "";
+		this.bi_name = "";
+		this.bi_settlement = "";
+		this.bi_zipcode = null;
+		this.contact = [];
+		this.country_code = "";
+		this.email = "";
+		this.employeesnum_id = null;
+		this.facebook = "";
+		this.founded = null;
+		this.hq_address = "";
+		this.hq_country = "";
+		this.hq_settlement = "";
+		this.hq_zipcode = null;
+		this.industry_id = null;
+		this.logo = "";
+		this.mail_address = "";
+		this.mail_country = "";
+		this.mail_name = "";
+		this.mail_settlement = "";
+		this.mail_zipcode = null;
+		this.name = "";
+		this.phone = "";
+		this.project = [];
+		this.selected = false;
+		this.taxnumber = null;
+		this.website = "";
+		this.yearlyincome_id = null;
+	}
 }

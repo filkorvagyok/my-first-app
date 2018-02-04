@@ -1,0 +1,57 @@
+<div  class="panel-body">
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="th_td_chbx"></th>
+					<th></th>
+					<th>Cég</th>
+					<th>Telefon</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody class="clickable-tbody" *ngFor="let company of companyService.getItems()" app-company-item [company]="company">
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="panel-footer">
+	<button  type="button" mat-raised-button color="primary" tabindex="0" (click)="createNewItem()">
+		<i class="fa fa-plus"></i> Új cég hozzáadása
+	</button>
+	<div class="instant_input_">
+		<mat-form-field>
+			<input #companyName matInput name="companyName" placeholder="Új cég hozzáadása instant">
+		</mat-form-field>
+		<button #addInstantButton type="submit"  mat-raised-button color="primary" tabindex="-1" (click)="addInstant(companyName.value); companyName.value='';">
+			<i class="fa fa-plus"></i>
+		</button>
+	</div>
+</div>
+<div *ngIf="checkedArray.length>0" class="botton_right">
+	<button mat-fab [matMenuTriggerFor]="menu" color="primary">
+  		<mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
+	</button>
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item>
+			<mat-icon class="fa fa-file"></mat-icon>
+			<span>Új feladat</span>
+		</button>
+		<button mat-menu-item (click)="createNewProject()">
+			<mat-icon class="fa fa-folder"></mat-icon>
+			<span>Új projekt</span>
+		</button>
+		<button mat-menu-item (click)="createNewContact()">
+			<mat-icon class="fa fa-user-plus"></mat-icon>
+			<span>Új felhasználó</span>
+		</button>
+		<button mat-menu-item [disabled]="checkedArray.length>1" (click)="gotoEdit()">
+			<mat-icon class="fa fa-pencil"></mat-icon>
+			<span>Szerkesztés</span>
+		</button>
+		<button mat-menu-item (click)="clickOnDeleteProductButton()">
+			<mat-icon class="fa fa-trash"></mat-icon>
+			<span>Törlés</span>
+		</button>
+	</mat-menu>
+</div>

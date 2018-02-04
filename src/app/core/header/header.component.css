@@ -1,0 +1,21 @@
+.toolbar_ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.toolbar_li{
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;	
+    font-size: .875em;
+}
+
+.example-spacer {
+flex: 1 1 auto;
+}
+
+.active{
+    border-bottom: 3px solid white;
+}

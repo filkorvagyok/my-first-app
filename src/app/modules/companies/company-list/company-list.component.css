@@ -1,0 +1,11 @@
+div.instant_input_{
+    display: inline-block;
+    padding-left: 40px;
+}
+div.panel-body{
+    padding-left: 0;
+    padding-right: 0;
+}
+th.th_td_chbx{
+    min-width: 50px;
+}

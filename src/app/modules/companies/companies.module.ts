@@ -1,12 +1,14 @@
+import { CompanyService } from './company.service';
 import { NgModule, APP_INITIALIZER }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
-import { CompaniesComponent }    from './components/companies/companies.component';
+//import { CompaniesComponent }    from './components/companies/companies.component';
+import { CompaniesComponent } from './companies.component';
 import { CompanyDetailComponent }  from './components/company-detail/company-detail.component';
-import { CompanyCommonComponent }  from './components/company-common/company-common.component';
-import { CompanyEditComponent } from './components/company-edit/company-edit.component';
+//import { CompanyCommonComponent }  from './components/company-common/company-common.component';
+import { CompanyEditComponent } from './company-edit/company-edit.component';
 
 import { CompaniesApiService } from './companies-api.service';
 import { CompaniesDataHandler } from './companies-datahandler.service';
@@ -21,6 +23,8 @@ import {
   MatSelectModule
 } from '@angular/material';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CompanyListComponent } from './company-list/company-list.component';
+import { CompanyItemComponent } from './company-list/company-item/company-item.component';
 
 
 @NgModule({
@@ -42,10 +46,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   declarations: [
     CompaniesComponent,
     CompanyDetailComponent,
-    CompanyCommonComponent,
-    CompanyEditComponent
+    //CompanyCommonComponent,
+    CompanyEditComponent,
+    CompanyListComponent,
+    CompanyItemComponent
   ],
-  providers: [CompaniesApiService, CompaniesDataHandler, SharedGetDataHandler, SharedDeleteDataHandler]
+  providers: [CompaniesApiService, CompaniesDataHandler, SharedGetDataHandler, SharedDeleteDataHandler, CompanyService]
     //{provide: APP_INITIALIZER, useFactory: (cs:CompaniesService) => () => cs.getCompanies(), deps:[CompaniesService], multi: true},
 })
 export class CompaniesModule {}

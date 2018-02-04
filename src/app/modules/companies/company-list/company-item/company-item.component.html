@@ -1,0 +1,32 @@
+<tr (click)="navigateToDetail(company.id)">
+  <td rowspan="2" (click)="$event.stopPropagation();" class="td_center">
+      <mat-checkbox color="primary" value={{company.id}} (change)="showChbox();company.selected= !company.selected"></mat-checkbox>
+      <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
+  </td>
+  <td rowspan="2" *ngIf="company.logo!=''" class="td_center">
+    <span class="fa-stack fa-2x">
+      <i class="fa fa-circle fa-stack-2x icon-background2"></i>
+      <i class="fa fa-stack-1x"><img src={{company.logo}} class="logo" alt="logo"></i>
+    </span>
+  </td>
+  <td rowspan="2" *ngIf="company.logo==''" class="td_center">
+    <span class="fa-stack fa-2x">
+      <i class="fa fa-circle fa-stack-2x icon-background2"></i>
+      <i class="fa fa-stack-1x"><span class="icon_letter">{{company.name.slice(0,1)}}</span></i>
+    </span>
+  </td>
+  <td>
+    <strong class="company_name">{{company.name}}</strong>
+  </td>
+  <td rowspan="2">{{company.phone}}</td>
+  <td rowspan="2">{{company.email}}</td>
+</tr>
+<tr (click)="navigateToDetail(company.id)">
+  <td class="collapsed">
+    <span class="company_headquarter">
+      {{company.country_code}}<span *ngIf="company.country_code && company.hq_zipcode">-</span>{{company.hq_zipcode}} 
+      {{company.hq_settlement}}<span *ngIf="company.hq_settlement && company.hq_address">, </span>
+      {{company.hq_address}}
+    </span>
+  </td>
+</tr>

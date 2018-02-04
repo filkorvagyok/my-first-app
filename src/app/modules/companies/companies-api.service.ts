@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Company } from '../../shared/classes/company';
 import { Country } from '../../shared/classes/country';
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
 import { BaseApiService } from '../../shared/services/base/base-api.service'
+import { Subject } from 'rxjs/Subject';
 
 
 const httpOptions = {
@@ -17,7 +18,7 @@ const httpOptions = {
 
 @Injectable()
 
-export class CompaniesApiService extends BaseApiService{
+export class CompaniesApiService extends BaseApiService implements OnInit{
 
 	private companiesUrl = 'api/companies';
   private countriesUrl = 'api/countries';
@@ -25,9 +26,26 @@ export class CompaniesApiService extends BaseApiService{
   private employeesnumsUrl = 'api/employeesnums';
   private yearlyincomesUrl = 'api/yearlyincomes';
 
+  isLoading = true;
+  private companies: Company[];
+  checkedArray = new Subject<number[]>();
+
 	constructor(private http: HttpClient)
   {
     super();
+    this.http.get<Company[]>(this.companiesUrl)
+      .pipe(
+        tap(companies => (`fetched companies`)),
+        catchError(this.handleError('getCompanies', []))
+      )
+      .subscribe(
+        (companies: Company[]) => {this.companies = companies;
+          this.isLoading = false;
+        });
+  }
+
+  ngOnInit(){
+    
   }
 
   /*Visszaad egy Observable-t a company tömbről, melyet
@@ -39,7 +57,11 @@ export class CompaniesApiService extends BaseApiService{
         tap(companies => (`fetched companies`)),
         catchError(this.handleError('getCompanies', []))
       );
-	}
+  }
+  
+  getCompanies(){
+    return this.companies;
+  }
 
   //Lásd: getCompanies, csak itt országok tömbre végeztük el
   getCountries (): Observable<Country[]> {

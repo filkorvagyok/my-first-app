@@ -1,3 +1,4 @@
+import { HeaderComponent } from './core/header/header.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -15,7 +16,6 @@ import {
   MatMenuModule, MatSelectModule, MatNativeDateModule,
   MAT_DATE_LOCALE
 } from '@angular/material';
-import { DateTimePickerModule } from 'ng-pick-datetime';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,6 +42,7 @@ import { AppRoutingModule }     from './app-routing.module';
     RegisterComponent,
     ResetPasswordComponent,
     DeleteDialog,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +69,6 @@ import { AppRoutingModule }     from './app-routing.module';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    DateTimePickerModule,
     NKDatetimeModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}],

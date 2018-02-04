@@ -23,22 +23,24 @@ export class SharedDeleteDataHandler{
 	meg a paraméterként kapott company id-je és ezekből egyesével
 	ki is szedjük ezt az értéket, majd ProjectsApiService segítségével
 	update-ljük a projektet.*/
-	deleteCompanyFromProject(company: Company): void{
+	deleteCompanyFromProject(company: Company | number): void{
+		const id = typeof company === 'number' ? company : company.id;
 		this.sharedGetDataHandler.projects
-			.filter(project => project.company.includes(company.id))
+			.filter(project => project.company.includes(id))
 			.forEach(project => {
-				project.company.splice(project.company.indexOf(company.id), 1);
+				project.company.splice(project.company.indexOf(id), 1);
 				this.projectsApiService.update(project).subscribe();
 			});
 	}
 
 	/*Lásd: deleteCompanyFromProject, csak itt a névjegyek company mezőjét
 	vizsgáljuk.*/
-	deleteCompanyFromContact(company: Company): void{
+	deleteCompanyFromContact(company: Company | number): void{
+		const id = typeof company === 'number' ? company : company.id;
 		this.sharedGetDataHandler.contacts
-			.filter(contact => contact.company.includes(company.id))
+			.filter(contact => contact.company.includes(id))
 			.forEach(contact => {
-				contact.company.splice(contact.company.indexOf(company.id), 1);
+				contact.company.splice(contact.company.indexOf(id), 1);
 				this.contactsApiService.update(contact).subscribe();
 			});
 	}
@@ -46,62 +48,66 @@ export class SharedDeleteDataHandler{
 
 	/*Lásd: deleteCompanyFromProject, csak itt azt vizsgáljuk hogy a projekt id szerepel-e
 	a cég project mezőjében.*/
-	deleteProjectFromCompany(project: Project): void{
+	deleteProjectFromCompany(project: Project | number): void{
+		const id = typeof project === 'number' ? project : project.id;
 		this.sharedGetDataHandler.companies
-			.filter(company => company.project.includes(project.id))
+			.filter(company => company.project.includes(id))
 			.forEach(company => {
-				company.project.splice(company.project.indexOf(project.id), 1);
+				company.project.splice(company.project.indexOf(id), 1);
 				this.companiesApiService.update(company).subscribe();
 			});
 	}
 
 	/*Lásd: deleteCompanyFromProject, csak itt a névjegyek project mezőjét
 	vizsgáljuk.*/
-	deleteProjectFromContact(project: Project): void{
+	deleteProjectFromContact(project: Project | number): void{
+		const id = typeof project === 'number' ? project : project.id;
 		this.sharedGetDataHandler.contacts
-			.filter(contact => contact.project.includes(project.id))
+			.filter(contact => contact.project.includes(id))
 			.forEach(contact => {
-				contact.project.splice(contact.project.indexOf(project.id), 1);
+				contact.project.splice(contact.project.indexOf(id), 1);
 				this.contactsApiService.update(contact).subscribe();
 			});
 	}
 
 	/*Lásd: deleteCompanyFromProject, csak itt azt vizsgáljuk hogy a névjegy id szerepel-e
 	a cég contact mezőjében.*/
-	deleteContactFromCompany(contact: Contact): void{
+	deleteContactFromCompany(contact: Contact | number): void{
+		const id = typeof contact === 'number' ? contact : contact.id;
 		this.sharedGetDataHandler.companies
-			.filter(compnay => compnay.contact.includes(contact.id))
+			.filter(compnay => compnay.contact.includes(id))
 			.forEach(company => {
-				company.contact.splice(company.contact.indexOf(contact.id), 1);
+				company.contact.splice(company.contact.indexOf(id), 1);
 				this.companiesApiService.update(company).subscribe();
 			});
 	}
 
 	/*Lásd: deleteContactFromCompany, csak itt a projektek accountable, owner, observer
 	és participant mezőit vizsgáljuk.*/
-	deleteContactFromProject(contact: Contact): void{
+	deleteContactFromProject(contact: Contact | number): void{
+		const id = typeof contact === 'number' ? contact : contact.id;
 		this.sharedGetDataHandler.projects
-			.filter(project => project.accountable.includes(contact.id))
+			.filter(project => project.accountable.includes(id))
 			.forEach(project => {
-				project.accountable.splice(project.accountable.indexOf(contact.id), 1);
+				project.accountable.splice(project.accountable.indexOf(id), 1);
 				this.projectsApiService.update(project).subscribe();
 			});
 		this.sharedGetDataHandler.projects
-			.filter(project => project.owner.includes(contact.id))
+			.filter(project => project.owner.includes(id))
 			.forEach(project => {
-				project.owner.splice(project.owner.indexOf(contact.id), 1);
+				project.owner.splice(project.owner.indexOf(id), 1);
 				this.projectsApiService.update(project).subscribe();
 			});
 		this.sharedGetDataHandler.projects
-			.filter(project => project.observer.includes(contact.id))
+			.filter(project => project.observer.includes(id))
 			.forEach(project => {
-				project.observer.splice(project.observer.indexOf(contact.id), 1);
+				project.observer.splice(project.observer.indexOf(id), 1);
 				this.projectsApiService.update(project).subscribe();
 			});
 		this.sharedGetDataHandler.projects
-			.filter(project => project.participant.includes(contact.id))
+			.filter(project => project.participant.includes(id))
 			.forEach(project => {
-				project.participant.splice(project.participant.indexOf(contact.id), 1);
+				project.participant.splice(project.participant.indexOf(id), 1);
 				this.projectsApiService.update(project).subscribe();
 			});
 	}

@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~bootstrap/dist/css/bootstrap-theme.min.css';
 @import '~bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css';
 @import '~bootstrap-timepicker/css/bootstrap-timepicker.min.css';
@@ -7,19 +6,6 @@
 
 body{
 	font-family: 'Roboto', sans-serif;
-}
-
-.panel{
-	margin: 2% 22%;
-}
-
-.panel-heading{
-  background:  #f5f5f5;
-}
-
-.panel-body{
-	margin: auto;
-	width: 75%;
 }
 
 

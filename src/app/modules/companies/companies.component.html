@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <mat-spinner *ngIf="companyService.isLoading; else elseBlockOne"></mat-spinner>
+        <ng-template #elseBlockOne>
+            <div class="panel panel-default">
+                <div class="panel-heading">Cégek listája</div>
+                <div  class="panel-body text-center"
+                *ngIf="!companyService.getItems() || companyService.getItems().length < 1; else elseBlockTwo">
+                    <h1>Nincs megadva egyetlen cég sem</h1>
+                    <p>A munka megkezdése előtt ajánlott felvinned legalább egy céget, amihez a rendszer társítani tudja majd a feladatokat, névjegyeket és a többi információt.<br>
+                    Nem kötelező, de ajánlott.</p>
+                    <button mat-raised-button color="primary" (click)="createNewItem()">
+                        <i class="fa fa-plus"></i> Új cég hozzáadása
+                    </button>
+                </div>
+                <ng-template #elseBlockTwo>
+                    <app-company-list></app-company-list>
+                </ng-template>
+            </div>
+        </ng-template>
+    </div>
+</div>
+        
+

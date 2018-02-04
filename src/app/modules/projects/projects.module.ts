@@ -22,7 +22,6 @@ import {
   MatSelectModule, MatNativeDateModule, MAT_DATE_LOCALE 
 } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateTimePickerModule } from 'ng-pick-datetime';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 

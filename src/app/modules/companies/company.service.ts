@@ -4,8 +4,9 @@ import { Yearlyincome } from './../../shared/classes/yearlyincome';
 import { Employeesnum } from './../../shared/classes/employeesnum';
 import { Industry } from './../../shared/classes/industry';
 import { Country } from './../../shared/classes/country';
-import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import 'rxjs/add/observable/of';
 import { tap, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Company } from './../../shared/classes/company';
@@ -93,11 +94,28 @@ export class CompanyService{
 
     getItem(company: Company | number): Company{
         const id = typeof company === 'number' ? company : company.id;
-        return this.companies.find((company: Company) => company.id === id);
+        if(this.companies)
+            return this.companies.find((company: Company) => company.id === id);
+        else{
+            const url = `${this.companiesUrl}/${id}`;
+            this.http.get<Company>(url).pipe(
+            tap(_ => (`fetched company id=${id}`)),
+            catchError(this.handleError<Company>(`getCompany id=${id}`))
+            )
+            .subscribe(
+                (company: Company) => {
+                    this.isLoading = false;
+                    return company;
+                }
+            )
+        }
     }
 
     getCountries(): Country[] {
-        return this.countries;
+        if(this.countries)
+            return this.countries;
+        else
+            this.getStartingdatas();
     }
 
     getIndustries(): Industry[] {

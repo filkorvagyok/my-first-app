@@ -21,8 +21,6 @@ export class CompanyListComponent extends BaseComponent implements OnInit, OnDes
 
 	constructor(
 		private companyService: CompanyService,
-		private companiesApiService: CompaniesApiService,
-		private companiesDataHandler: CompaniesDataHandler,
 		private sharedGetDataHandler: SharedGetDataHandler,
 		private sharedDeleteDataHandler: SharedDeleteDataHandler,
 		private router: Router,
@@ -53,49 +51,20 @@ export class CompanyListComponent extends BaseComponent implements OnInit, OnDes
 		this.companyService.delete(id);
 	}
 
-  	gotoDetail(company: Company): void{
-  		this.router.navigate(['/company/shown', company.id]);
-  	}
-
   	gotoEdit(): void{
-  		let selectedCompany = this.companiesDataHandler.companies.filter(company => company.selected === true)[0];
-  		this.router.navigate(['/company/edit', selectedCompany.id]);
+  		const selectedCompany = this.checkedArray[0];
+  		this.router.navigate(['/company/edit', selectedCompany]);
   	}
 
   	createNewItem(): void{
   		this.router.navigate(["/company/new"]);
   	}
 
-  	/*Átadjuk a kiválasztott cégeket az új projekt létrehozásához, így
-  	automatikusan belekerülnek a projekt company mezőjébe.*/
-  	createNewProject(): void{
-  		let companiesArray: number[] = [];
-  		this.companiesDataHandler.companies.forEach( company =>{
-  			if(company.selected)
-  			{
-  				companiesArray.push(company.id);
-  			}
-  		});
-  		this.gotoNewProject(companiesArray);
-  	}
-
-  	gotoNewProject(array: number[]): void{
+  	navigateToNewProject(array: number[]): void{
   		this.router.navigate(['/project/new/', {array:array, num:0, rank:-1}]);
   	}
 
-  	//Lásd.: createNewProject, csak itt projekt helyett névjegyre alkalmazzuk
-  	createNewContact(): void {
-  		let companiesArray: number[] = [];
-  		this.companiesDataHandler.companies.forEach( company =>{
-  			if(company.selected)
-  			{
-  				companiesArray.push(company.id);
-  			}
-  		});
-  		this.gotoNewContact(companiesArray);
-  	}
-
-  	gotoNewContact(array: number[]): void{
+  	navigateToNewContact(array: number[]): void{
   		this.router.navigate(['/people/new/', {array:array, num:0, rank:-1}]);
   	}
 
@@ -104,10 +73,10 @@ export class CompanyListComponent extends BaseComponent implements OnInit, OnDes
   	//TODO: megvalósítani a focust!
   	addInstant(name: string): void{
 		let company = new Company();
-		company = this.companiesDataHandler.setDefaultCompany(company);
-  		company.name = name.trim();
-    	if (!name) { return; }
-    	this.companiesDataHandler.addCompany(company);
+		company.name = name.trim();  
+		if (!name) { return; }
+		company.id = this.companyService.getItems()[this.companyService.getItems().length - 1].id + 1;
+    	this.companyService.add(company);
 	}
 	
 	ngOnDestroy(){

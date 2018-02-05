@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 //import { CompaniesComponent }   from './components/companies/companies.component';
 import { CompaniesComponent } from './companies.component';
-import { CompanyDetailComponent } from './components/company-detail/company-detail.component';
+import { CompanyDetailComponent } from './company-detail/company-detail.component';
 //import { CompanyCommonComponent } from './components/company-common/company-common.component';
 
 const companiesRoutes: Routes = [

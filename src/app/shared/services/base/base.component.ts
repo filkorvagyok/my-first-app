@@ -62,7 +62,7 @@ export abstract class BaseComponent{
 
 	protected abstract delete(item: any | number): void;
 
-	protected abstract gotoDetail(item: any): void;
+	//protected abstract gotoDetail(item: any): void;
 
 	//protected abstract gotoNew(): void;
 

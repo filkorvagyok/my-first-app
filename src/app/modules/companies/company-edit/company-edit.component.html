@@ -1,46 +1,47 @@
-<div id="maindiv" *ngIf="company">
+<mat-spinner *ngIf="companyService.isLoading"></mat-spinner>
+<div id="maindiv" *ngIf="!companyService.isLoading && company">
 	<form class="panel panel-default" [formGroup]="companyForm" (ngSubmit)="onSubmit(company)">
 		<div class="panel-heading" color="primary">Cég</div>
-		<div  class="panel-body" >
+		<div  class="panel-body" >	
 			<div class="inputfield">	
 				<mat-form-field class="matffield">
-				    <input matInput type="text" [(ngModel)]="company.name" formControlName="companyName" placeholder="Név*">
-			  	</mat-form-field>
-			  	<mat-error *ngIf="!companyForm.controls['companyName'].valid && companyForm.controls['companyName'].touched">
-			      A név mező megadása <strong>kötelező</strong>!
-			    </mat-error>
+					<input matInput type="text" [(ngModel)]="company.name" formControlName="companyName" placeholder="Név*">
+					</mat-form-field>
+					<mat-error *ngIf="!companyForm.controls['companyName'].valid && companyForm.controls['companyName'].touched">
+					A név mező megadása <strong>kötelező</strong>!
+				</mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<input matInput type="tel" [(ngModel)]="company.phone" formControlName="companyPhone" placeholder="Telefonszám">
 				</mat-form-field>
 				<mat-error *ngIf="!companyForm.controls['companyPhone'].valid && companyForm.controls['companyPhone'].touched">
-			      Nem megfelelő telefonszám!
-			    </mat-error>
+					Nem megfelelő telefonszám!
+				</mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<input matInput type="email" [(ngModel)]="company.email" formControlName="companyEmail" placeholder="E-mail-cím">
 				</mat-form-field>
 				<mat-error *ngIf="!companyForm.controls['companyEmail'].valid && companyForm.controls['companyEmail'].touched">
-			      Nem megfelelő e-mail-cím!
-			    </mat-error>
+					Nem megfelelő e-mail-cím!
+				</mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<input matInput type="url" [(ngModel)]="company.website" formControlName="companyWebsite" placeholder="Weboldal">
 				</mat-form-field>
 				<mat-error *ngIf="!companyForm.controls['companyWebsite'].valid && companyForm.controls['companyWebsite'].touched">
-			      Nem megfelelő url!
-			    </mat-error>
+					Nem megfelelő url!
+				</mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
 					<input matInput type="url" [(ngModel)]="company.facebook" formControlName="companyFacebook" placeholder="Facebook">
 				</mat-form-field>
 				<mat-error *ngIf="!companyForm.controls['companyFacebook'].valid && companyForm.controls['companyFacebook'].touched">
-			      Nem megfelelő Facebook oldal!
-			    </mat-error>
+					Nem megfelelő Facebook oldal!
+				</mat-error>
 			</div>
 			<div class="hr_style">
 				<hr>
@@ -68,8 +69,8 @@
 					<input matInput type="text" [(ngModel)]="company.hq_settlement" formControlName="companyHqSettlement" placeholder="Település">
 				</mat-form-field>
 				<mat-error *ngIf="!companyForm.controls['companyHqSettlement'].valid && companyForm.controls['companyHqSettlement'].touched">
-			      Nem megfelelő település!
-			    </mat-error>
+					Nem megfelelő település!
+				</mat-error>
 			</div>
 			<div class="inputfield">
 				<mat-form-field class="matffield">
@@ -120,8 +121,8 @@
 						<input matInput type="text" [(ngModel)]="company.bi_settlement" formControlName="companyBiSettlement" placeholder="Település">
 					</mat-form-field>
 					<mat-error *ngIf="!companyForm.controls['companyBiSettlement'].valid && companyForm.controls['companyBiSettlement'].touched">
-				      Nem megfelelő település!
-				    </mat-error>
+						Nem megfelelő település!
+					</mat-error>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
@@ -137,8 +138,8 @@
 					<input matInput [(ngModel)]="company.taxnumber" formControlName="companyTaxnumber" placeholder="Adószám">
 				</mat-form-field>
 				<mat-error *ngIf="!companyForm.controls['companyTaxnumber'].valid && companyForm.controls['companyTaxnumber'].touched">
-			      Nem megfelelő adószám!
-			    </mat-error>
+					Nem megfelelő adószám!
+				</mat-error>
 			</div>
 			<div class="hr_style">
 				<hr>
@@ -172,8 +173,8 @@
 						<input matInput type="text" [(ngModel)]="company.mail_settlement" formControlName="companyMailSettlement" placeholder="Település">
 					</mat-form-field>
 					<mat-error *ngIf="!companyForm.controls['companyMailSettlement'].valid && companyForm.controls['companyMailSettlement'].touched">
-				      Nem megfelelő település!
-				    </mat-error>
+						Nem megfelelő település!
+					</mat-error>
 				</div>
 				<div class="inputfield">
 					<mat-form-field class="matffield">
@@ -225,8 +226,8 @@
 					<input matInput type="number" [(ngModel)]="company.founded" formControlName="companyFounded" placeholder="Alapítva">
 				</mat-form-field>
 				<mat-error *ngIf="!companyForm.controls['companyFounded'].valid && companyForm.controls['companyFounded'].touched">
-			      Nem megfelelő évszám!
-			    </mat-error>
+					Nem megfelelő évszám!
+				</mat-error>
 			</div>
 			<div class="btn_primary">
 				<button type="submit" mat-raised-button color="primary">Mentés</button>

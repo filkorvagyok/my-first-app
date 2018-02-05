@@ -4,13 +4,13 @@ import { Country } from './../../../shared/classes/country';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CompanyService } from './../company.service';
 import { Company } from './../../../shared/classes/company';
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { BaseEditComponent } from '../../../shared/services/base/base-edit.component';
 
 const TEL_REGEX = /^\s*(?:\+?\d{1,3})?[- (]*\d{3}(?:[- )]*\d{3})?[- ]*\d{4}(?: *[x/#]\d+)?\s*$/;
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const URL_REGEX = "^(http[s]?:\\/\\/){0,1}(www\\.){0,1}[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]{2,5}[\\.]{0,1}$";
+const URL_REGEX = "\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 const FACEBOOK_REGEX = /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/;
 const SETTLEMENT_REGEX = /^[a-zA-Z\u0080-\u024F\s\/\-\)\(\`\.\"\']+$/;
 const TAX_REGEX = /^[a-zA-Z0-9_/-]*$/;
@@ -21,38 +21,43 @@ const NUMBER_REGEX = /^[0-9]*$/;
   templateUrl: './company-edit.component.html',
   styleUrls: ['./company-edit.component.css']
 })
-export class CompanyEditComponent extends BaseEditComponent implements OnInit {
+export class CompanyEditComponent extends BaseEditComponent implements OnInit, AfterViewChecked,
+AfterViewInit {
 	companyForm: FormGroup;
 	company: Company;
 	edit = false;
 	billing = true;
 	mail = true;
 	countries: Country[];
+	
 
 	constructor(
 		private route: ActivatedRoute,
 		private companyService: CompanyService,
 		private fb: FormBuilder,
 		protected location: Location,
-		private sharedAddDataHandler: SharedAddDataHandler
-	) {
+		private sharedAddDataHandler: SharedAddDataHandler,
+		private changeDetector: ChangeDetectorRef
+		) {
 		super(location);
 	}
 
 	ngOnInit() {
-		this.countries = this.companyService.getCountries();
-		if(this.route.snapshot.routeConfig.path == "company/new")
-		{
-			//Ha az url "company/new"-val egyenlő, akkor teljesül
-			this.setNew();
-		}
-		/*TODO: mivel így nem csak "company/new/:id" esetén hajtja ezt végre,
-		ezért ki kell javítani*/
-		else
-		{
-			this.setEdit();
-		}
 		this.initform();
+		if(this.companyService.getItems() && !this.company){
+			this.setEditCompany();
+		}
+	}
+
+	ngAfterViewInit(){
+		this.changeDetector.detectChanges();
+	}
+
+	ngAfterViewChecked(){
+		if(!this.company){
+			this.setEditCompany();
+			console.log(this.company);
+		}
 	}
 
 	//Form validitás beállítása
@@ -86,7 +91,22 @@ export class CompanyEditComponent extends BaseEditComponent implements OnInit {
 			Validators.pattern(NUMBER_REGEX)]
 		  )],
 		});
-	  }
+	}
+
+	setEditCompany(): void{
+		if(this.route.snapshot.routeConfig.path == "company/new")
+		{
+			//Ha az url "company/new"-val egyenlő, akkor teljesül
+			this.setNew();
+		}
+		/*TODO: mivel így nem csak "company/new/:id" esetén hajtja ezt végre,
+		ezért ki kell javítani*/
+		else
+		{
+			this.setEdit();
+		}
+		this.countries = this.companyService.getCountries();
+	}
 
 	setNew(): void{
 		this.company = new Company();
@@ -102,11 +122,12 @@ export class CompanyEditComponent extends BaseEditComponent implements OnInit {
 			default:
 				break;
 		}
-		console.log(this.company);
 	}
 	
 	setEdit(): void{
-		this.route.paramMap.subscribe(params => this.companyService.getItem(Number(params.get('id'))));
+		this.route.params.subscribe(
+			(params: Params) => this.company = this.companyService.getItem(+params['id'])
+		);
 		this.edit = true;	//Ezen mező alapján tudja a company-edit.component, hogy szerkeszteni kell vagy új céget létrehozni
 		this.billing = false;
 		this.mail = false;
@@ -118,56 +139,55 @@ export class CompanyEditComponent extends BaseEditComponent implements OnInit {
 		if(actualCountry)
 		  this.company.hq_country = actualCountry.country;
 		return newValue;
-	  }
+	}
 	
-	  onChange(newValue){
+	onChange(newValue){
 		return newValue;
-	  }
+	}
 	
-	  save(): void {
+	save(): void {
 		this.companyService.update(this.company)
 		this.goBack();
-	  }
+	}
 	
-	  add(company: Company): void{
+	add(company: Company): void{
 		this.companyService.add(company)
 		this.addCompanyTo(company);
 		this.goBack();
-	  }
+	}
 	
-	  /*Ha be van pipálva, hogy a számlázási adatok azonosak,
-	  akkor hajtódik végre és lemásolja a székhely adatokat*/
-	  billing_datas(company: Company): void{
+	/*Ha be van pipálva, hogy a számlázási adatok azonosak,
+	akkor hajtódik végre és lemásolja a székhely adatokat*/
+	billing_datas(company: Company): void{
 		this.company.bi_address = company.hq_address;
 		this.company.bi_country = company.hq_country;
 		this.company.bi_name = company.name;
 		this.company.bi_settlement = company.hq_settlement;
 		this.company.bi_zipcode = company.hq_zipcode;
-	  }
+	}
 	
-	  /*Ha be van pipálva, hogy a levelezési adatok azonosak,
-	  akkor hajtódik végre és lemásolja a székhely adatokat*/
-	  mail_datas(company: Company): void{
+	/*Ha be van pipálva, hogy a levelezési adatok azonosak,
+	akkor hajtódik végre és lemásolja a székhely adatokat*/
+	mail_datas(company: Company): void{
 		this.company.mail_address = company.hq_address;
 		this.company.mail_country = company.hq_country;
 		this.company.mail_name = company.name;
 		this.company.mail_settlement = company.hq_settlement;
 		this.company.mail_zipcode = company.hq_zipcode;
-	  }
+	}
 	
-	  /*Ha a company project mezőjében letároltunk 1 vagy több projekt id-ját,
-	  akkor ez a metódus a sharedAddDataHandler segítségével rögzíti a megfelelő
-	  projekt company mezőjében ennek a cégnek az id-ját.*/
-	  addCompanyTo(company: Company)
-	  {
+	/*Ha a company project mezőjében letároltunk 1 vagy több projekt id-ját,
+	akkor ez a metódus a sharedAddDataHandler segítségével rögzíti a megfelelő
+	projekt company mezőjében ennek a cégnek az id-ját.*/
+	addCompanyTo(company: Company){
 		if(company.project.length > 0)
 		  this.sharedAddDataHandler.addCompanyToProject(company);
 		if(company.contact.length > 0)
 		  this.sharedAddDataHandler.addCompanyToContact(company);
-	  }
+	}
 	
-	  //Submit lenyomásakor hívódik meg
-	  onSubmit(company: Company){
+	//Submit lenyomásakor hívódik meg
+	onSubmit(company: Company){
 		if(this.companyForm.valid)  //Ha a validitás megfelelő
 		  this.edit? this.save() : this.add(company);  //Ha az edit true, akkor a save hívódik meg, különben az add
 		else
@@ -175,5 +195,5 @@ export class CompanyEditComponent extends BaseEditComponent implements OnInit {
 		  $(document.getElementById('maindiv')).animate({ scrollTop: 0 }, 1000); //Felgörger az oldal tetejére
 		  this.validateAllFormFields(this.companyForm);
 		}
-	  }
+	}
 }

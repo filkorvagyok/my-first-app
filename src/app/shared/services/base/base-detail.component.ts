@@ -9,7 +9,7 @@ export abstract class BaseDetailComponent{
 		this.location.back();
 	}
 
-	protected abstract gotoEdit(): void;
+	//protected abstract gotoEdit(): void;
 
 	/*Megjelenik a DeleteDialog és ha ott megerősítettük a törlést,
   	akkor meghívjuk a törlés funkciót*/

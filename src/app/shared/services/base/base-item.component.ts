@@ -1,4 +1,4 @@
-import { CompanyService } from './../../../modules/companies/company.service';
+import { CompanyService } from './../../../companies/company.service';
 
 export abstract class BaseItemComponent{
     constructor(protected companyService: CompanyService){}

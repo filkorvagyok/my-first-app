@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+      <mat-spinner *ngIf="projectService.isLoading; else elseBlockOne"></mat-spinner>
+      <ng-template #elseBlockOne>
+          <div class="panel panel-default">
+              <div class="panel-heading">Cégek listája</div>
+              <div  class="panel-body text-center"
+              *ngIf="!projectService.getItems() || projectService.getItems().length < 1; else elseBlockTwo">
+                <h1>Nincs megadva egyetlen projekt sem</h1>
+                <p>Projektek keretében számos extra dolgot tudsz a feladatokkal csinálni, például Gantt-diagramm szerint rendezheted, megjeleníthed. A projektek bevétel és költség oldalról, illetve határidők segítségével is hatékonyabbá teszik a munkavégzést.<br><br>
+                Ha egyébként nem projekt alapon dolgozol, akkor a projektek segítségével csoportosíthatod a feladatokat.<br><br>
+                A projektekhez hozzárendelheted a résztvevőket különböző szerepkörökben és könnyen, egyszerűen kommunikálhatsz velük a projekt kapcsán. Úgy az ügyfeleiddel, partnereiddel, mint a munkatársaddal.</p>
+                  <button mat-raised-button color="primary" (click)="createNewItem()">
+                      <i class="fa fa-plus"></i> Új projekt hozzáadása
+                  </button>
+              </div>
+              <ng-template #elseBlockTwo>
+                  <app-project-list></app-project-list>
+              </ng-template>
+          </div>
+      </ng-template>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { CompaniesApiService } from './../modules/companies/companies-api.service';
 import { CompanyService } from './company.service';
 import { NgModule, APP_INITIALIZER }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
@@ -10,10 +11,8 @@ import { CompanyDetailComponent }  from './company-detail/company-detail.compone
 //import { CompanyCommonComponent }  from './components/company-common/company-common.component';
 import { CompanyEditComponent } from './company-edit/company-edit.component';
 
-import { CompaniesApiService } from './companies-api.service';
-import { CompaniesDataHandler } from './companies-datahandler.service';
-import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
-import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
+import { SharedGetDataHandler } from '../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../shared/services/shared-deletedatahandler.service';
 
 import { CompanyRoutingModule } from './companies-routing.module';
 
@@ -51,7 +50,7 @@ import { CompanyItemComponent } from './company-list/company-item/company-item.c
     CompanyListComponent,
     CompanyItemComponent
   ],
-  providers: [CompaniesApiService, CompaniesDataHandler, SharedGetDataHandler, SharedDeleteDataHandler, CompanyService]
+  providers: [/*egyelőre megtartjuk a shared miatt:*/ CompaniesApiService, SharedGetDataHandler, SharedDeleteDataHandler, CompanyService]
     //{provide: APP_INITIALIZER, useFactory: (cs:CompaniesService) => () => cs.getCompanies(), deps:[CompaniesService], multi: true},
 })
 export class CompaniesModule {}

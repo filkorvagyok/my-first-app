@@ -8,8 +8,10 @@ import { Component } from '@angular/core';
     styleUrls: ['./companies.component.css']
 })
 export class CompaniesComponent{
-    constructor(private companyService: CompanyService,
-    private router: Router){
+    constructor(
+        private companyService: CompanyService,
+        private router: Router
+    ){
     }
 
     createNewItem(): void{

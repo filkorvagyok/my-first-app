@@ -1,0 +1,79 @@
+<div  class="panel-body">
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="th_td_chbx"></th>
+          <th>Név</th>
+          <th>Határidő</th>
+          <th>Bevétel</th>
+          <th>Kiadás</th>
+				</tr>
+			</thead>
+			<tbody class="clickable-tbody" *ngFor="let project of projectService.getItems()" app-project-item [project]="project">
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="panel-footer">
+	<button type="button" mat-raised-button color="primary" (click)="gotoNew()">
+    <i class="fa fa-plus"></i> Új projekt hozzáadása
+  </button>
+	<div class="instant_input_">
+		<mat-form-field>
+      <input #projectName matInput name="projectName" placeholder="Új projekt hozzáadása instant">
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary" (click)="addInstant(projectName.value); projectName.value='';">
+      <i class="fa fa-plus"></i>
+    </button>
+	</div>
+</div>
+<div *ngIf="checkedArray.length>0" class="botton_right">
+	<button mat-fab [matMenuTriggerFor]="menu" color="primary">
+    <mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon class="fa fa-check"></mat-icon>
+      <span>Kész</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon class="fa fa-file"></mat-icon>
+      <span>Új feladat</span>
+    </button>
+    <button mat-menu-item (click)="createNewCompany()">
+      <mat-icon class="fa fa-industry"></mat-icon>
+      <span>Új cég</span>
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="contact">
+      <mat-icon class="fa fa-user-plus"></mat-icon>
+      <span>Új felhasználó</span>
+    </button>
+    <button mat-menu-item [disabled]="disabled" (click)="gotoEdit()">
+      <mat-icon class="fa fa-pencil"></mat-icon>
+      <span>Szerkesztés</span>
+    </button>
+    <button mat-menu-item (click)="clickOnDeleteProductButton(projectsDataHandler.projects)">
+      <mat-icon class="fa fa-trash"></mat-icon>
+      <span>Törlés</span>
+    </button>
+  </mat-menu>
+  <mat-menu #contact="matMenu">
+    <button mat-menu-item (click)="createNewContact(0)">
+      <mat-icon class="fa fa-user-plus"></mat-icon>
+      <span>Felelős</span>
+    </button>
+    <button mat-menu-item (click)="createNewContact(1)">
+      <mat-icon class="fa fa-user-plus"></mat-icon>
+      <span>Tulajdonos</span>
+    </button>
+    <button mat-menu-item (click)="createNewContact(2)">
+      <mat-icon class="fa fa-user-plus"></mat-icon>
+      <span>Megfigyelő</span>
+    </button>
+    <button mat-menu-item (click)="createNewContact(3)">
+      <mat-icon class="fa fa-user-plus"></mat-icon>
+      <span>Résztvevő</span>
+    </button>
+  </mat-menu>
+</div>

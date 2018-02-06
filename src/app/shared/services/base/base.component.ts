@@ -66,7 +66,7 @@ export abstract class BaseComponent{
 
 	//protected abstract gotoNew(): void;
 
-	protected abstract gotoEdit(): void;
+	//protected abstract gotoEdit(): void;
 
 	protected abstract addInstant(name: string, phone?: string, email?: string): void;
 

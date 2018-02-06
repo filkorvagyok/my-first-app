@@ -3,17 +3,17 @@ import { Component, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked }
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
-import { Company }        from '../../../shared/classes/company';
-import { SharedGetDataHandler } from '../../../shared/services/shared-getdatahandler.service';
-import { SharedDeleteDataHandler } from '../../../shared/services/shared-deletedatahandler.service';
-import { DeleteDialog } from '../../delete-dialog/components/delete-dialog';
+import { Company }        from '../../shared/classes/company';
+import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
+import { DeleteDialog } from '../../modules/delete-dialog/components/delete-dialog';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { BaseDetailComponent } from '../../../shared/services/base/base-detail.component';
+import { BaseDetailComponent } from '../../shared/services/base/base-detail.component';
 
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
-  styleUrls: [ '../../../shared/styles/detail.component.css' ]
+  styleUrls: [ './company-detail.component.css' ]
 })
 export class CompanyDetailComponent extends BaseDetailComponent implements OnInit, AfterViewInit,
 AfterViewChecked {

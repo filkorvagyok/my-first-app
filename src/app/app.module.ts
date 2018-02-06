@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   
 import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 
-import { CompaniesModule }            from './modules/companies/companies.module';
+import { CompaniesModule }            from './companies/companies.module';
 import { ProjectsModule }            from './modules/projects/projects.module';
 import { ContactsModule }            from './modules/contacts/contacts.module';
 import { TasksModule }            from './modules/tasks/tasks.module';
@@ -34,6 +34,11 @@ import { ResetPasswordComponent }   from './modules/reset-password/components/re
 import { DeleteDialog }   from './modules/delete-dialog/components/delete-dialog';
 
 import { AppRoutingModule }     from './app-routing.module';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectListComponent } from './projects/project-list/project-list.component';
+import { ProjectItemComponent } from './projects/project-list/project-item/project-item.component';
+import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
+import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,12 @@ import { AppRoutingModule }     from './app-routing.module';
     RegisterComponent,
     ResetPasswordComponent,
     DeleteDialog,
-    HeaderComponent
+    HeaderComponent,
+    ProjectsComponent,
+    ProjectListComponent,
+    ProjectItemComponent,
+    ProjectEditComponent,
+    ProjectDetailComponent
   ],
   imports: [
     BrowserModule,

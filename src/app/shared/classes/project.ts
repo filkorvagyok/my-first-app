@@ -17,4 +17,24 @@ export class Project{
 	income: number;
 	expenditure: number;
 	selected: boolean;
+
+	constructor(){
+		this.accountable = [];
+		this.checklist = false;
+		this.company = [];
+		this.currency = "";
+		this.deadline = new Date();
+		this.description = "";
+		this.expenditure = null;
+		this.file = "";
+		this.income = null;
+		this.name = "";
+		this.observer = [];
+		this.owner = [];
+		this.participant = [];
+		this.priority = "";
+		this.selected = false;
+		this.status = "";
+		this.stickers = "";
+	}
 }

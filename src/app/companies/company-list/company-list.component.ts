@@ -1,13 +1,11 @@
 import { CompanyService } from './../company.service';
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Company } from '../../../shared/classes/company';
-import { CompaniesApiService } from '../companies-api.service';
-import { CompaniesDataHandler } from '../companies-datahandler.service';
-import { SharedGetDataHandler } from '../../../shared/services/shared-getdatahandler.service';
-import { SharedDeleteDataHandler } from '../../../shared/services/shared-deletedatahandler.service';
+import { Company } from '../../shared/classes/company';
+import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
 import { MatDialog } from '@angular/material';
-import { BaseComponent } from '../../../shared/services/base/base.component'
+import { BaseComponent } from '../../shared/services/base/base.component'
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -51,9 +49,8 @@ export class CompanyListComponent extends BaseComponent implements OnInit, OnDes
 		this.companyService.delete(id);
 	}
 
-  	gotoEdit(): void{
-  		const selectedCompany = this.checkedArray[0];
-  		this.router.navigate(['/company/edit', selectedCompany]);
+  	NavigateToEdit(): void{
+  		this.router.navigate(['/company/edit', this.checkedArray[0]]);
   	}
 
   	createNewItem(): void{

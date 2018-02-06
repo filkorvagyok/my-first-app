@@ -1,12 +1,12 @@
-import { SharedAddDataHandler } from './../../../shared/services/shared-adddatahandler.service';
+import { SharedAddDataHandler } from './../../shared/services/shared-adddatahandler.service';
 import { Location } from '@angular/common';
-import { Country } from './../../../shared/classes/country';
+import { Country } from './../../shared/classes/country';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CompanyService } from './../company.service';
-import { Company } from './../../../shared/classes/company';
+import { Company } from './../../shared/classes/company';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { BaseEditComponent } from '../../../shared/services/base/base-edit.component';
+import { BaseEditComponent } from '../../shared/services/base/base-edit.component';
 
 const TEL_REGEX = /^\s*(?:\+?\d{1,3})?[- (]*\d{3}(?:[- )]*\d{3})?[- ]*\d{4}(?: *[x/#]\d+)?\s*$/;
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Yearlyincome } from './../../shared/classes/yearlyincome';
-import { Employeesnum } from './../../shared/classes/employeesnum';
-import { Industry } from './../../shared/classes/industry';
-import { Country } from './../../shared/classes/country';
+import { Yearlyincome } from './../shared/classes/yearlyincome';
+import { Employeesnum } from './../shared/classes/employeesnum';
+import { Industry } from './../shared/classes/industry';
+import { Country } from './..//shared/classes/country';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/observable/of';
 import { tap, catchError } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Company } from './../../shared/classes/company';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+import { HttpClient } from '@angular/common/http';
+import { Company } from './../shared/classes/company';
 
 @Injectable()
 export class CompanyService{
@@ -99,8 +95,8 @@ export class CompanyService{
         else{
             const url = `${this.companiesUrl}/${id}`;
             this.http.get<Company>(url).pipe(
-            tap(_ => (`fetched company id=${id}`)),
-            catchError(this.handleError<Company>(`getCompany id=${id}`))
+                tap(_ => (`fetched company id=${id}`)),
+                catchError(this.handleError<Company>(`getCompany id=${id}`))
             )
             .subscribe(
                 (company: Company) => {
@@ -112,10 +108,7 @@ export class CompanyService{
     }
 
     getCountries(): Country[] {
-        if(this.countries)
-            return this.countries;
-        else
-            this.getStartingdatas();
+        return this.countries;
     }
 
     getIndustries(): Industry[] {

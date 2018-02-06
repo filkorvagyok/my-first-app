@@ -1,8 +1,8 @@
 import { CompanyService } from './../../company.service';
 import { Router } from '@angular/router';
-import { Company } from '../../../../shared/classes/company';
+import { Company } from '../../../shared/classes/company';
 import { Component, OnInit, Input } from '@angular/core';
-import { BaseItemComponent } from '../../../../shared/services/base/base-item.component'
+import { BaseItemComponent } from '../../../shared/services/base/base-item.component'
 
 @Component({
   selector: '[app-company-item]',

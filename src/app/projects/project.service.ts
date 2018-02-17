@@ -21,6 +21,7 @@ export class ProjectService{
             )
             .subscribe(
                 (projects: Project[]) => {
+                    projects.forEach(project => project.deadline = new Date(project.deadline));
                     this.projects = projects;
                     this.isLoading = false;
                 }

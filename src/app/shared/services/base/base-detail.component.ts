@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 export abstract class BaseDetailComponent{
 	constructor(protected location: Location, protected dialog: MatDialog){}
 
-	goBack(): void {
+	navigateBack(): void {
 		this.location.back();
 	}
 

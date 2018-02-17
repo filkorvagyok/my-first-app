@@ -1,6 +1,6 @@
 <tr (click)="navigateToDetail(company.id)">
   <td rowspan="2" (click)="$event.stopPropagation();" class="td_center">
-      <mat-checkbox color="primary" value={{company.id}} (change)="showChbox();company.selected= !company.selected"></mat-checkbox>
+      <mat-checkbox color="primary" value={{company.id}} (change)="showChbox()"></mat-checkbox>
       <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
   </td>
   <td rowspan="2" *ngIf="company.logo!=''" class="td_center">

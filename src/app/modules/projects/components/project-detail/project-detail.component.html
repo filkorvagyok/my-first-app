@@ -17,22 +17,17 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td rowspan="2">
+						<td>
 							<strong class="company_name">{{project.name}}</strong>
 						</td>
 						<td>
-							<strong class="company_name">{{project.greater}}</strong>
+							{{project.deadline | date:'yyyy-MM-dd HH:mm'}}
 						</td>
-						<td rowspan="2">
+						<td>
 							{{project.income}}
 						</td>
-						<td rowspan="2">
+						<td>
 							{{project.expenditure}}
-						</td>
-					</tr>
-					<tr>
-						<td class="collapsed">
-							{{project.deadline | date:'yyyy-MM-dd HH:mm'}}
 						</td>
 					</tr>
 				</tbody>

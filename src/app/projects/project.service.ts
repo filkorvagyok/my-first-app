@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
 
-Injectable()
+@Injectable()
 export class ProjectService{
     private projects: Project[];
     isLoading = true;
@@ -20,7 +20,10 @@ export class ProjectService{
         		catchError(this.handleError('getProjects', []))
             )
             .subscribe(
-                (projects: Project[]) => this.projects = projects
+                (projects: Project[]) => {
+                    this.projects = projects;
+                    this.isLoading = false;
+                }
             )
     }
 

@@ -1,3 +1,111 @@
-<p>
-  project-edit works!
-</p>
+<mat-spinner *ngIf="projectService.isLoading"></mat-spinner>
+<div id="maindiv" *ngIf='!projectService.isLoading && project'>
+	<form class="panel panel-default" [formGroup]="projectForm" (ngSubmit)="onSubmit(project)">
+		<div class="panel-heading" color="primary">Projekt</div>
+		<div  class="panel-body">
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.name" formControlName="projectName" placeholder="Név*">
+			  	</mat-form-field>
+			  	<mat-error *ngIf="!projectForm.controls['projectName'].valid && projectForm.controls['projectName'].touched">
+			      A név mező megadása <strong>kötelező</strong>!
+			    </mat-error>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+				  <textarea matInput [(ngModel)]="project.description" formControlName="projectDescription" placeholder="Leírás" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-checkbox [ngModel]="project.checklist" (ngModelChange)="project.checklist = onChange($event)"formControlName="projectChecklist" color="primary">
+					Feladatlista
+				</mat-checkbox>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+					<mat-select [(ngModel)]="project.company" [ngModelOptions]="{standalone: true}" name="projectCompany" placeholder="Cég" multiple>
+						<mat-option *ngFor="let company of sharedGetDataHandler.companies" [value]="company.id">{{company.name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.file" formControlName="projectFile" placeholder="Fájlok">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+					<mat-select [(ngModel)]="project.accountable" [ngModelOptions]="{standalone: true}" name="projectAccountable" placeholder="Felelős" multiple>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+					<mat-select [(ngModel)]="project.owner" [ngModelOptions]="{standalone: true}" name="projectOwner" placeholder="Tulajdonos" multiple>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+					<mat-select [(ngModel)]="project.observer" [ngModelOptions]="{standalone: true}" name="projectObserver" placeholder="Megfigyelő" multiple>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<mat-form-field class="matffield">
+					<mat-select [(ngModel)]="project.participant" [ngModelOptions]="{standalone: true}" name="projectParticipant" placeholder="Résztvevő" multiple>
+						<mat-option *ngFor="let contact of sharedGetDataHandler.contacts" [value]="contact.id">{{contact.full_name}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="inputfield">
+				<datetime [(ngModel)]="project.deadline" [ngModelOptions]="{standalone: true}" name="projectDeadline" [datepicker]="datepickerOpts" [timepicker]="{ icon: 'fa fa-clock-o' }" [datepicker]="{ icon: 'fa fa-calendar' }"></datetime>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.status" formControlName="projectStatus" placeholder="Státusz">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.priority" formControlName="projectPriority" placeholder="Prioritás">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.stickers" formControlName="projectStickers" placeholder="Cimkék">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.currency" formControlName="projectCurrency" placeholder="Pénznem">
+			  	</mat-form-field>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.income" formControlName="projectIncome" placeholder="Bevétel">
+			  	</mat-form-field>
+			  	<mat-error *ngIf="!projectForm.controls['projectIncome'].valid && projectForm.controls['projectIncome'].touched">
+			      Nem megfelelő formátum!
+			    </mat-error>
+			</div>
+			<div class="inputfield">	
+				<mat-form-field class="matffield">
+				    <input matInput [(ngModel)]="project.expenditure" formControlName="projectExpenditure" placeholder="Kiadás">
+			  	</mat-form-field>
+			  	<mat-error *ngIf="!projectForm.controls['projectExpenditure'].valid && projectForm.controls['projectExpenditure'].touched">
+			      Nem megfelelő formátum!
+			    </mat-error>
+			</div>
+			<div class="btn_primary">
+				<button type="submit" mat-raised-button color="primary">Mentés</button>
+			</div>
+			<div class="btn_primary">
+				<button mat-raised-button (click)="goBack(); $event.preventDefault();">Mégse</button>
+			</div>
+		</div>
+	</form>
+</div>

@@ -56,7 +56,6 @@ AfterViewInit {
 	ngAfterViewChecked(){
 		if(!this.company){
 			this.setEditCompany();
-			console.log(this.company);
 		}
 	}
 
@@ -125,9 +124,7 @@ AfterViewInit {
 	}
 	
 	setEdit(): void{
-		this.route.params.subscribe(
-			(params: Params) => this.company = this.companyService.getItem(+params['id'])
-		);
+		this.company = this.companyService.getItem(+this.route.snapshot.params['id'])
 		this.edit = true;	//Ezen mező alapján tudja a company-edit.component, hogy szerkeszteni kell vagy új céget létrehozni
 		this.billing = false;
 		this.mail = false;

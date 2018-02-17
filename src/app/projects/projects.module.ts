@@ -1,18 +1,19 @@
+import { ProjectItemComponent } from './project-list/project-item/project-item.component';
+import { ProjectListComponent } from './project-list/project-list.component';
+import { ProjectService } from './project.service';
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
-import { ProjectsComponent }    from './components/projects/projects.component';
-import { ProjectDetailComponent }  from './components/project-detail/project-detail.component';
-import { ProjectCommonComponent }  from './components/project-common/project-common.component';
-import { ProjectEditComponent } from './components/project-edit/project-edit.component';
+import { ProjectsComponent }    from './projects.component';
+import { ProjectDetailComponent }  from './project-detail/project-detail.component';
+import { ProjectEditComponent } from './project-edit/project-edit.component';
 
-import { ProjectsApiService } from './projects-api.service';
-import { ProjectsDataHandler } from './projects-datahandler.service';
-import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
-import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
-import { SharedAddDataHandler } from '../../shared/services/shared-adddatahandler.service';
+import { ProjectsApiService } from './../modules/projects/projects-api.service';
+import { SharedGetDataHandler } from '../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../shared/services/shared-deletedatahandler.service';
+import { SharedAddDataHandler } from '../shared/services/shared-adddatahandler.service';
 
 import { ProjectRoutingModule } from './projects-routing.module';
 
@@ -47,10 +48,11 @@ import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
   declarations: [
     ProjectsComponent,
     ProjectDetailComponent,
-    ProjectCommonComponent,
-    ProjectEditComponent
+    ProjectEditComponent,
+    ProjectListComponent,
+    ProjectItemComponent
   ],
-  providers: [ProjectsApiService, ProjectsDataHandler, SharedGetDataHandler,
+  providers: [ProjectService, ProjectsApiService, SharedGetDataHandler,
   SharedDeleteDataHandler, SharedAddDataHandler, {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'}]
 })
 export class ProjectsModule {}

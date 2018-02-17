@@ -1,3 +1,40 @@
-<p>
-  project-item works!
-</p>
+<tr>
+  <td rowspan="2" class="td_center">
+      <mat-checkbox color="primary" value={{project.id}} (change)="showChbox()"></mat-checkbox>
+      <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
+  </td>
+  <td rowspan="2" (click)="navigateToDetail(project.id)">
+    <strong class="projectName">{{project.name}}</strong>
+  </td>
+  <td>
+    <p><input #projectCount matInput [ngModel]="count(project)"
+      name="{{'projectCount' + project.id}}" (focusout)="changeDate(project, projectCount.value)"
+      (keyup.enter)="projectCount.blur()" style="width: 32px; text-align: right;">
+      <span> nap</span>
+    </p>
+  </td>
+  <td rowspan="2">
+    <!--<p (click)="editIncome = true">{{project.income}}</p>-->
+    <input #projectIncome matInput [(ngModel)]="project.income"
+    name="{{'projectIncome' + project.id}}" (focusout)="changeProject(project)"
+    (keyup.enter)="projectIncome.blur()" style="width: inherit;">
+  </td>
+  <td rowspan="2">
+    <!--{{project.expenditure}}-->
+    <input #projectExpenditure matInput [(ngModel)]="project.expenditure"
+    name="{{'projectExpenditure' + project.id}}" (focusout)="changeProject(project)"
+    (keyup.enter)="projectExpenditure.blur()" style="width: inherit;">
+  </td>
+</tr>
+<tr>
+  <td class="collapsed">
+    <!--{{project.deadline | date:'yyyy-MM-dd HH:mm'}}-->
+    <!--<p *ngIf="!change" (mouseover)="asd = true" (mouseleave)="asd=false">{{project.deadline | date:'yyyy.MM.dd. HH:mm'}} <mat-icon (click)="change = true" class="fa fa-pencil" *ngIf="asd"></mat-icon></p>-->
+    <div id="datetime_div">
+      <datetime [(ngModel)]="project.deadline" (ngModelChange)="changeProject(project)"
+      [datepicker]="datepickerOpts" [timepicker]="false"
+      [datepicker]="{ icon: 'fa fa-calendar' }" name="{{'projectDeadline' + project.id}}">
+      </datetime>
+    </div>
+  </td>
+</tr>

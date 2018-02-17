@@ -36,9 +36,7 @@ AfterViewChecked {
     this.sharedGetDataHandler.getProjects();
     this.sharedGetDataHandler.getContacts();
     if(this.companyService.getItems() && !this.company){
-			this.route.params.subscribe(
-        (params: Params) => this.company = this.companyService.getItem(+params['id'])
-      );
+			this.company = this.companyService.getItem(+this.route.snapshot.params['id'])
 		}
   }
 
@@ -48,9 +46,7 @@ AfterViewChecked {
 
 	ngAfterViewChecked(){
 		if(!this.company){
-			this.route.params.subscribe(
-        (params: Params) => this.company = this.companyService.getItem(+params['id'])
-      );
+			this.company = this.companyService.getItem(+this.route.snapshot.params['id'])
 		}
 	}
 

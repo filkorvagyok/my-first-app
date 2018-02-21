@@ -122,15 +122,23 @@ export class ProjectEditComponent extends BaseEditComponent implements OnInit, A
   }
 
   save(): void{
-		this.addProjectTo(this.project);
 		this.projectService.update(this.project)
-    this.goBack();
+		if(this.project.company.length > 0)
+			this.sharedAddDataHandler.addProjectToCompany(this.project);
+		if(this.project.accountable.length > 0 || this.project.owner.length > 0 ||
+			this.project.observer.length > 0 || this.project.participant.length > 0)
+			this.sharedAddDataHandler.addProjectToContact(this.project);
+    this.navigateBack();
 	}
 
 	add(project: Project): void{
 		this.projectService.add(project)
-    this.addProjectTo(project);
-    this.goBack();
+		if(project.company.length > 0)
+			this.sharedAddDataHandler.addProjectToCompany(project);
+		if(project.accountable.length > 0 || project.owner.length > 0 ||
+			project.observer.length > 0 || project.participant.length > 0)
+			this.sharedAddDataHandler.addProjectToContact(project);
+    this.navigateBack();
   }
   
   /*Ha a project company mezőjében letároltunk 1 vagy több cég id-ját,
@@ -139,14 +147,6 @@ export class ProjectEditComponent extends BaseEditComponent implements OnInit, A
 	a project accountable, owner,observer vagy participant mezőjében lárolunk
 	legalább 1 névjegy id-t, csak ott a névjegy project mezőjébe szúrjuk be a
 	project id-ját.*/
-	addProjectTo(project: Project)
-	{
-		if(project.company.length > 0)
-			this.sharedAddDataHandler.addProjectToCompany(project);
-		if(project.accountable.length > 0 || project.owner.length > 0 ||
-			project.observer.length > 0 || project.participant.length > 0)
-			this.sharedAddDataHandler.addProjectToContact(project);
-	}
 
 	//Dátumválasztó beállítása
 	datepickerOpts = {

@@ -1,0 +1,15 @@
+<tr (click)="navigateToDetail(contact.id)">
+  <td (click)="$event.stopPropagation();">
+      <mat-checkbox color="primary" value={{contact.id}} (change)="showChbox()"></mat-checkbox>
+      <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
+  </td>
+  <td>
+    <strong class="company_name">{{contact.full_name}}</strong>
+  </td>
+  <td>
+    {{contact.phone}}
+  </td>
+  <td>
+    {{contact.email}}
+  </td>
+</tr>

@@ -12,8 +12,10 @@ import { BaseItemComponent } from '../../../shared/services/base/base-item.compo
 export class CompanyItemComponent extends BaseItemComponent implements OnInit {
   @Input() company: Company;
 
-  constructor(protected companyService: CompanyService,
-  private router: Router) {
+  constructor(
+    protected companyService: CompanyService,
+    private router: Router
+  ) {
     super(companyService);
   }
 

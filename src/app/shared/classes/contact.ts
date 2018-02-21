@@ -13,4 +13,20 @@ export class Contact{
 	greeting: string;
 	selected: boolean;
 	project: number[];
+
+	constructor(){
+		this.company = [];
+		this.email = "";
+		this.forename = "";
+		this.full_name = "";
+		this.greeting = "";
+		this.middle_name = "";
+		this.nickname = "";
+		this.project = [];
+		this.phone = "";
+		this.primary_communication_chanel = "";
+		this.rank = "";
+		this.selected = false;
+		this.surname = "";
+	}
 }

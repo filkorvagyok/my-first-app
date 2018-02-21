@@ -144,13 +144,19 @@ AfterViewInit {
 	
 	save(): void {
 		this.companyService.update(this.company)
-		this.goBack();
+		this.navigateBack();
 	}
 	
+	/*Ha a company project mezőjében letároltunk 1 vagy több projekt id-ját,
+	akkor ez a metódus a sharedAddDataHandler segítségével rögzíti a megfelelő
+	projekt company mezőjében ennek a cégnek az id-ját.*/
 	add(company: Company): void{
 		this.companyService.add(company)
-		this.addCompanyTo(company);
-		this.goBack();
+		if(company.project.length > 0)
+		  this.sharedAddDataHandler.addCompanyToProject(company);
+		if(company.contact.length > 0)
+		  this.sharedAddDataHandler.addCompanyToContact(company);
+		this.navigateBack();
 	}
 	
 	/*Ha be van pipálva, hogy a számlázási adatok azonosak,
@@ -173,15 +179,6 @@ AfterViewInit {
 		this.company.mail_zipcode = company.hq_zipcode;
 	}
 	
-	/*Ha a company project mezőjében letároltunk 1 vagy több projekt id-ját,
-	akkor ez a metódus a sharedAddDataHandler segítségével rögzíti a megfelelő
-	projekt company mezőjében ennek a cégnek az id-ját.*/
-	addCompanyTo(company: Company){
-		if(company.project.length > 0)
-		  this.sharedAddDataHandler.addCompanyToProject(company);
-		if(company.contact.length > 0)
-		  this.sharedAddDataHandler.addCompanyToContact(company);
-	}
 	
 	//Submit lenyomásakor hívódik meg
 	onSubmit(company: Company){

@@ -6,7 +6,7 @@ export abstract class BaseEditComponent{
 
 	protected abstract initform(): void;
 
-	goBack(): void {
+	navigateBack(): void {
 		this.location.back();
 	}
 

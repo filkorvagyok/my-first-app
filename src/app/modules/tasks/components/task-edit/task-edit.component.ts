@@ -41,13 +41,13 @@ export class TaskEditComponent extends BaseEditComponent implements OnInit {
 
 	save(): void{
 		this.tasksApiService.update(this.task)
-        	.subscribe(() => this.goBack())
+        	.subscribe(() => this.navigateBack())
 	}
 
 	add(task: Task): void{
 		this.tasksApiService.add(task)
 			.subscribe(() => {
-				this.goBack();
+				this.navigateBack();
 			});
 	}
 

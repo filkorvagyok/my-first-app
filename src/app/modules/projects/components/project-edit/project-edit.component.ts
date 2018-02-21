@@ -56,14 +56,14 @@ export class ProjectEditComponent extends BaseEditComponent implements OnInit {
 	save(): void{
 		this.addProjectTo(this.project);
 		this.projectsApiService.update(this.project)
-        	.subscribe(() => this.goBack())
+        	.subscribe(() => this.navigateBack())
 	}
 
 	add(project: Project): void{
 		this.projectsApiService.add(project)
 			.subscribe(() => {
 				this.addProjectTo(project);
-				this.goBack();
+				this.navigateBack();
 			});
 	}
 

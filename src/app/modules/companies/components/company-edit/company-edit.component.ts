@@ -108,14 +108,14 @@ export class CompanyEditComponent extends BaseEditComponent implements OnInit {
 
   save(): void {
       this.companiesApiService.update(this.company)
-        .subscribe(() => this.goBack());
+        .subscribe(() => this.navigateBack());
   }
 
   add(company: Company): void{
     this.companiesApiService.add(company)
       .subscribe(() => {
         this.addCompanyTo(company);
-        this.goBack();
+        this.navigateBack();
       });
   }
 

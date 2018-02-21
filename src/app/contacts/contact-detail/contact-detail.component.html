@@ -1,0 +1,108 @@
+<mat-spinner *ngIf="contactService.isLoading || !sharedGetDataHandler.companies || !sharedGetDataHandler.projects"></mat-spinner>
+<form *ngIf="!contactService.isLoading && contact" class="panel panel-default">
+  <div class="panel-heading" color="primary">{{contact.full_name}}</div>
+  <div  class="panel-body">
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Név</th>
+            <th>Telefon</th>
+            <th>E-mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong class="company_name">{{contact.full_name}}</strong>
+            </td>
+            <td>
+              {{contact.phone}}
+            </td>
+            <td>
+              {{contact.email}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <div>
+      <div id="wide">
+        <div>
+          <h3>Feladatok</h3>
+        </div>
+      </div>
+      <div id="narrow">
+        <div>
+          <h3>Cégek</h3>
+          <p *ngFor="let company of sharedGetDataHandler.companies">
+            <a mat-list-item class="linkTo" routerLink="/company/shown/{{company.id}}" routerLinkActive="active">
+              {{company.name}}
+            </a>
+          </p>
+        </div>
+        <hr>
+        <div class="projects">
+          <h3>Projektek</h3>
+          <p *ngFor="let pfc of sharedGetDataHandler.projectsForContact">
+            <span><a mat-list-item class="linkTo" routerLink="/project/shown/{{pfc.project.id}}" routerLinkActive="active">
+              {{pfc.project.name}}
+            </a></span>
+              - <span *ngFor="let rank of pfc.ranks; let isLast = last">
+              {{rank}}{{isLast ? '' : ', '}}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="botton_right">
+    <button mat-fab [matMenuTriggerFor]="menu" color="primary">
+      <mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon class="fa fa-file"></mat-icon>
+          <span>Új feladat</span>
+        </button>
+        <button mat-menu-item [matMenuTriggerFor]="project">
+          <mat-icon class="fa fa-folder"></mat-icon>
+          <span>Új projekt</span>
+        </button>
+        <button mat-menu-item (click)="createNewCompany()">
+          <mat-icon class="fa fa-industry"></mat-icon>
+          <span>Új cég</span>
+        </button>
+        <button mat-menu-item (click)="gotoEdit()">
+          <mat-icon class="fa fa-pencil"></mat-icon>
+          <span>Szerkesztés</span>
+        </button>
+        <button mat-menu-item (click)="clickOnDeleteProductButton(companiesDataHandler.company)">
+          <mat-icon class="fa fa-trash"></mat-icon>
+          <span>Törlés</span>
+        </button>
+    </mat-menu>
+    <mat-menu #project="matMenu">
+      <button mat-menu-item (click)="createNewProject(0)">
+        <mat-icon class="fa fa-folder"></mat-icon>
+        <span>Mint felelős</span>
+      </button>
+      <button mat-menu-item (click)="createNewProject(1)">
+        <mat-icon class="fa fa-folder"></mat-icon>
+        <span>Mint tulajdonos</span>
+      </button>
+      <button mat-menu-item (click)="createNewProject(2)">
+        <mat-icon class="fa fa-folder"></mat-icon>
+        <span>Mint megfigyelő</span>
+      </button>
+      <button mat-menu-item (click)="createNewProject(3)">
+        <mat-icon class="fa fa-folder"></mat-icon>
+        <span>Mint résztvevő</span>
+      </button>
+    </mat-menu>
+  </div>
+</form>
+<div id="back">
+	<button mat-raised-button color="primary" (click)="navigateBack()">Vissza</button>
+</div>

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+      <mat-spinner *ngIf="contactService.isLoading; else elseBlockOne"></mat-spinner>
+      <ng-template #elseBlockOne>
+          <div class="panel panel-default">
+              <div class="panel-heading">Névjegyek listája</div>
+              <div  class="panel-body text-center"
+              *ngIf="!contactService.getItems() || contactService.getItems().length < 1; else elseBlockTwo">
+              <h1>Nincs megadva egyetlen névjegy sem</h1>
+              <p>A munka megkezdése előtt ajánlott felvinned legalább egy névjegyet, amihez a rendszer társítani tudja majd feladatokat és a többi információt.<br><br>
+              Nem kötelező, de ajánlott.<br><br>
+              A névjegyek segítségével kommunikálhatsz az ügyfeleiddel, partnereiddel. Például küldhetsz nekik értesítő e-mailt egy feladattal vagy projekttel kapcsolatban.</p>
+                  <button mat-raised-button color="primary" (click)="createNewItem()">
+                      <i class="fa fa-plus"></i> Új névjegy hozzáadása
+                  </button>
+              </div>
+              <ng-template #elseBlockTwo>
+                  <app-contact-list></app-contact-list>
+              </ng-template>
+          </div>
+      </ng-template>
+  </div>
+</div>

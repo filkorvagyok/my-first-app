@@ -3,7 +3,7 @@
       <mat-spinner *ngIf="projectService.isLoading; else elseBlockOne"></mat-spinner>
       <ng-template #elseBlockOne>
           <div class="panel panel-default">
-              <div class="panel-heading">Cégek listája</div>
+              <div class="panel-heading">Projektek listája</div>
               <div  class="panel-body text-center"
               *ngIf="!projectService.getItems() || projectService.getItems().length < 1; else elseBlockTwo">
                 <h1>Nincs megadva egyetlen projekt sem</h1>

@@ -16,7 +16,7 @@
 				</thead>
 				<tbody class="clickable-tbody" *ngFor="let contact of contactsDataHandler.contacts" (click)="gotoDetail(contact)">
 					<tr>
-						<td rowspan="2" (click)="$event.stopPropagation();">
+						<td (click)="$event.stopPropagation();">
 							  <mat-checkbox color="primary" value={{contact.id}} (change)="showChbox();contact.selected= !contact.selected"></mat-checkbox>
 							  <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
 						</td>

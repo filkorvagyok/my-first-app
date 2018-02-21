@@ -41,16 +41,16 @@ export class ProjectListComponent extends BaseComponent implements OnInit, OnDes
     this.router.navigate(['/project/edit', this.checkedArray[0]]);
   }
 
-  createNewItem(): void{
+  navigateToNewItem(): void{
     this.router.navigate(["/project/new"]);
   }
 
-  navigateToNewCompany(array: number[]): void{
-    this.router.navigate(['/company/new/', {array:array, num:1}]);
+  navigateToNewCompany(): void{
+    this.router.navigate(['/company/new/', {array: this.checkedArray, num: 1}]);
   }
 
-  navigateToNewContact(array: number[], rank: number): void{
-    this.router.navigate(['/people/new/', {array:array, num:1, rank:rank}]);
+  navigateToNewContact(rank: number): void{
+    this.router.navigate(['/people/new/', {array: this.checkedArray, num: 1, rank: rank}]);
   }
 
   addInstant(name: string): void{

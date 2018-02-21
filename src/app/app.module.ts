@@ -24,7 +24,7 @@ import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 
 import { CompaniesModule }            from './companies/companies.module';
 import { ProjectsModule }            from './projects/projects.module';
-import { ContactsModule }            from './modules/contacts/contacts.module';
+import { ContactsModule }            from './contacts/contacts.module';
 import { TasksModule }            from './modules/tasks/tasks.module';
 
 import { AppComponent } from './app.component';

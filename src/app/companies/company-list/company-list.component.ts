@@ -49,20 +49,20 @@ export class CompanyListComponent extends BaseComponent implements OnInit, OnDes
 		this.companyService.delete(id);
 	}
 
-  	NavigateToEdit(): void{
+  	navigateToEdit(): void{
   		this.router.navigate(['/company/edit', this.checkedArray[0]]);
   	}
 
-  	createNewItem(): void{
+  	navigateToNewItem(): void{
   		this.router.navigate(["/company/new"]);
   	}
 
-  	navigateToNewProject(array: number[]): void{
-  		this.router.navigate(['/project/new/', {array:array, num:0, rank:-1}]);
+  	navigateToNewProject(): void{
+  		this.router.navigate(['/project/new/', {array: this.checkedArray, num: 0, rank: -1}]);
   	}
 
-  	navigateToNewContact(array: number[]): void{
-  		this.router.navigate(['/people/new/', {array:array, num:0, rank:-1}]);
+  	navigateToNewContact(): void{
+  		this.router.navigate(['/people/new/', {array: this.checkedArray, num: 0, rank: -1}]);
   	}
 
   	/*A lista nézetben egy név mező kitöltésével tudunk létrehozni

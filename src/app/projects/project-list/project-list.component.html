@@ -10,13 +10,13 @@
           <th>Kiadás</th>
 				</tr>
 			</thead>
-			<tbody class="clickable-tbody" *ngFor="let project of projectService.getItems()" app-project-item [project]="project">
+			<tbody *ngFor="let project of projectService.getItems()" app-project-item [project]="project">
 			</tbody>
 		</table>
 	</div>
 </div>
 <div class="panel-footer">
-	<button type="button" mat-raised-button color="primary" (click)="gotoNew()">
+	<button type="button" mat-raised-button color="primary" (click)="navigateToNewItem()">
     <i class="fa fa-plus"></i> Új projekt hozzáadása
   </button>
 	<div class="instant_input_">
@@ -41,7 +41,7 @@
       <mat-icon class="fa fa-file"></mat-icon>
       <span>Új feladat</span>
     </button>
-    <button mat-menu-item (click)="createNewCompany()">
+    <button mat-menu-item (click)="navigateToNewCompany()">
       <mat-icon class="fa fa-industry"></mat-icon>
       <span>Új cég</span>
     </button>
@@ -49,29 +49,29 @@
       <mat-icon class="fa fa-user-plus"></mat-icon>
       <span>Új felhasználó</span>
     </button>
-    <button mat-menu-item [disabled]="disabled" (click)="gotoEdit()">
+    <button mat-menu-item [disabled]="disabled" (click)="navigateToEdit()">
       <mat-icon class="fa fa-pencil"></mat-icon>
       <span>Szerkesztés</span>
     </button>
-    <button mat-menu-item (click)="clickOnDeleteProductButton(projectsDataHandler.projects)">
+    <button mat-menu-item (click)="clickOnDeleteProductButton()">
       <mat-icon class="fa fa-trash"></mat-icon>
       <span>Törlés</span>
     </button>
   </mat-menu>
   <mat-menu #contact="matMenu">
-    <button mat-menu-item (click)="createNewContact(0)">
+    <button mat-menu-item (click)="navigateToNewContact(0)">
       <mat-icon class="fa fa-user-plus"></mat-icon>
       <span>Felelős</span>
     </button>
-    <button mat-menu-item (click)="createNewContact(1)">
+    <button mat-menu-item (click)="navigateToNewContact(1)">
       <mat-icon class="fa fa-user-plus"></mat-icon>
       <span>Tulajdonos</span>
     </button>
-    <button mat-menu-item (click)="createNewContact(2)">
+    <button mat-menu-item (click)="navigateToNewContact(2)">
       <mat-icon class="fa fa-user-plus"></mat-icon>
       <span>Megfigyelő</span>
     </button>
-    <button mat-menu-item (click)="createNewContact(3)">
+    <button mat-menu-item (click)="navigateToNewContact(3)">
       <mat-icon class="fa fa-user-plus"></mat-icon>
       <span>Résztvevő</span>
     </button>

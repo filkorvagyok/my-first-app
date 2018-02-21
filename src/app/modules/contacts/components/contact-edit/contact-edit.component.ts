@@ -57,14 +57,14 @@ export class ContactEditComponent extends BaseEditComponent implements OnInit{
   	save(): void{
 		this.addContactTo(this.contact);
 		this.contactsApiService.update(this.contact)
-        	.subscribe(() => this.goBack())
+        	.subscribe(() => this.navigateBack())
 	}
 
 	add(contact: Contact): void{
 		this.contactsApiService.add(contact)
 			.subscribe(() => {
 				this.addContactTo(contact);
-				this.goBack();
+				this.navigateBack();
 			});
 	}
 

@@ -146,6 +146,7 @@ export class CompanyService{
         )
         .subscribe(
             (addedCompany: Company) => { */
+                company.id = this.companies[this.companies.length - 1].id + 1;
                 this.companies.push(company);
             /* }
         ); */

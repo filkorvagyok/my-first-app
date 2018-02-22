@@ -2,7 +2,7 @@ import { Project } from './../../shared/classes/project';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from './../project.service';
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { SharedAddDataHandler } from './../../shared/services/shared-adddatahandler.service';
 import { SharedGetDataHandler } from './../../shared/services/shared-getdatahandler.service';
 import { BaseEditComponent } from '../../shared/services/base/base-edit.component';
@@ -16,7 +16,7 @@ const MONEY_REGEX = /^(0|[1-9][0-9]*)$/;
   templateUrl: './project-edit.component.html',
   styleUrls: ['./project-edit.component.css']
 })
-export class ProjectEditComponent extends BaseEditComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class ProjectEditComponent extends BaseEditComponent implements OnInit, AfterViewChecked {
   projectForm: FormGroup;
   project: Project;
 	edit = false;
@@ -58,14 +58,11 @@ export class ProjectEditComponent extends BaseEditComponent implements OnInit, A
     }
   }
 
-	ngAfterViewInit(){
-		this.changeDetector.detectChanges();
-	}
-
 	ngAfterViewChecked(){
 		if(!this.project){
 			this.setEditProject();
 		}
+		this.changeDetector.detectChanges();
 	}
 
   setEditProject(): void{

@@ -1,10 +1,10 @@
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Project } from './../../shared/classes/project';
 import { ProjectService } from './../project.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedDeleteDataHandler } from './../../shared/services/shared-deletedatahandler.service';
 import { SharedGetDataHandler } from './../../shared/services/shared-getdatahandler.service';
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Location } from '@angular/common';
 import { BaseDetailComponent } from '../../shared/services/base/base-detail.component';
 
@@ -13,8 +13,7 @@ import { BaseDetailComponent } from '../../shared/services/base/base-detail.comp
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.css']
 })
-export class ProjectDetailComponent extends BaseDetailComponent implements OnInit, AfterViewInit,
-AfterViewChecked {
+export class ProjectDetailComponent extends BaseDetailComponent implements OnInit, AfterViewChecked {
   project: Project;
 
   constructor(
@@ -34,18 +33,15 @@ AfterViewChecked {
     this.sharedGetDataHandler.getCompanies();
     this.sharedGetDataHandler.getContacts();
     if(this.projectService.getItems() && !this.project){
-			this.project = this.projectService.getItem(+this.route.snapshot.params['id'])
-		}
+			this.project = this.projectService.getItem(+this.route.snapshot.params['id']);
+    }
   }
-
-  ngAfterViewInit(){
-		this.changeDetector.detectChanges();
-	}
 
 	ngAfterViewChecked(){
 		if(!this.project){
 			this.project = this.projectService.getItem(+this.route.snapshot.params['id'])
-		}
+    }
+    this.changeDetector.detectChanges();
 	}
 
   navigateToEdit(): void{

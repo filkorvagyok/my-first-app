@@ -1,0 +1,55 @@
+<div  class="panel-body">
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+        <tr>
+            <td></td>
+						<th>ID</th>
+						<th>Név</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let task of taskService.getItems()" app-task-item [task]="task">
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="panel-footer">
+  <button  type="button" mat-raised-button color="primary" tabindex="0" (click)="navigateToNewItem()">
+    <i class="fa fa-plus"></i> Új feladat hozzáadása
+  </button>
+  <div class="instant_input">
+    <mat-form-field>
+      <input #taskName matInput name="taskName" placeholder="Új feladat hozzáadása instant">
+    </mat-form-field>
+    <button #addInstantButton type="submit"  mat-raised-button color="primary" tabindex="-1" (click)="addInstant(taskName.value); taskName.value='';">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+</div>
+<div *ngIf="checkedArray.length > 0" class="botton_right">
+    <button mat-fab [matMenuTriggerFor]="menu" color="primary">
+        <mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon class="fa fa-industry"></mat-icon>
+        <span>Új cég</span>
+      </button>
+      <button mat-menu-item (click)="navigateToNewProject()">
+        <mat-icon class="fa fa-folder"></mat-icon>
+        <span>Új projekt</span>
+      </button>
+      <button mat-menu-item (click)="navigateToNewContact()">
+        <mat-icon class="fa fa-user-plus"></mat-icon>
+        <span>Új felhasználó</span>
+      </button>
+      <button mat-menu-item [disabled]="checkedArray.length > 1" (click)="navigateToEdit()">
+        <mat-icon class="fa fa-pencil"></mat-icon>
+        <span>Szerkesztés</span>
+      </button>
+      <button mat-menu-item (click)="clickOnDeleteProductButton()">
+        <mat-icon class="fa fa-trash"></mat-icon>
+        <span>Törlés</span>
+      </button>
+    </mat-menu>
+  </div>

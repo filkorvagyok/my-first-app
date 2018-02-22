@@ -59,6 +59,7 @@ export class ProjectService{
     }
 
     add(project: Project): void{
+        project.id = this.projects[this.projects.length - 1].id + 1;
         this.projects.push(project);
     }
 

@@ -1,0 +1,22 @@
+<mat-spinner *ngIf="taskService.isLoading"></mat-spinner>
+<div id="maindiv" *ngIf="!taskService.isLoading && task">
+  <form class="panel panel-default" [formGroup]="taskForm" (ngSubmit)="onSubmit(task)">
+    <div class="panel-heading" color="primary">Feladat</div>
+    <div  class="panel-body">
+      <div class="inputfield">
+        <mat-form-field class="matffield">
+            <input matInput [(ngModel)]="task.name" formControlName="taskName" placeholder="Név*">
+          </mat-form-field>
+          <mat-error *ngIf="!taskForm.controls['taskName'].valid && taskForm.controls['taskName'].touched">
+            A név mező megadása <strong>kötelező</strong>!
+          </mat-error>
+      </div>
+      <div class="btn_primary">
+        <button type="submit" mat-raised-button color="primary">Mentés</button>
+      </div>
+      <div class="btn_primary">
+        <button mat-raised-button (click)="navigateBack(); $event.preventDefault();">Mégse</button>
+      </div>
+    </div>
+  </form>
+</div>

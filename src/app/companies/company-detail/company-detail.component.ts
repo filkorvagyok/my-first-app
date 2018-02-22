@@ -1,13 +1,11 @@
 import { CompanyService } from './../company.service';
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location }                 from '@angular/common';
-import { Router } from '@angular/router';
 import { Company }        from '../../shared/classes/company';
 import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
 import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
-import { DeleteDialog } from '../../modules/delete-dialog/components/delete-dialog';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { BaseDetailComponent } from '../../shared/services/base/base-detail.component';
 
 @Component({
@@ -15,8 +13,7 @@ import { BaseDetailComponent } from '../../shared/services/base/base-detail.comp
   templateUrl: './company-detail.component.html',
   styleUrls: [ './company-detail.component.css' ]
 })
-export class CompanyDetailComponent extends BaseDetailComponent implements OnInit, AfterViewInit,
-AfterViewChecked {
+export class CompanyDetailComponent extends BaseDetailComponent implements OnInit, AfterViewChecked {
   company: Company;
 
   constructor(
@@ -40,14 +37,11 @@ AfterViewChecked {
 		}
   }
 
-  ngAfterViewInit(){
-		this.changeDetector.detectChanges();
-	}
-
 	ngAfterViewChecked(){
 		if(!this.company){
 			this.company = this.companyService.getItem(+this.route.snapshot.params['id'])
-		}
+    }
+    this.changeDetector.detectChanges();
 	}
 
   navigateToEdit(): void{

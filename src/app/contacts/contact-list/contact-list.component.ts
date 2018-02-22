@@ -59,7 +59,6 @@ export class ContactListComponent extends BaseComponent implements OnInit, OnDes
     contact.phone = phone.trim();
     contact.email = email.trim();
     if (!full_name) { return; }
-    contact.id = this.contactService.getItems()[this.contactService.getItems().length - 1].id + 1;
     this.contactService.add(contact);
   }
 

@@ -28,7 +28,7 @@
     </button>
 	</div>
 </div>
-<div *ngIf="checkedArray.length>0" class="botton_right">
+<div *ngIf="checkedArray.length > 0" class="botton_right">
 	<button mat-fab [matMenuTriggerFor]="menu" color="primary">
     <mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
   </button>
@@ -49,7 +49,7 @@
       <mat-icon class="fa fa-user-plus"></mat-icon>
       <span>Új felhasználó</span>
     </button>
-    <button mat-menu-item [disabled]="disabled" (click)="navigateToEdit()">
+    <button mat-menu-item [disabled]="checkedArray.length > 1" (click)="navigateToEdit()">
       <mat-icon class="fa fa-pencil"></mat-icon>
       <span>Szerkesztés</span>
     </button>

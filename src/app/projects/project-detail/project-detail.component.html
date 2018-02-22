@@ -1,4 +1,4 @@
-<mat-spinner *ngIf="projectService.isLoading || !sharedGetDataHandler.company ||
+<mat-spinner *ngIf="projectService.isLoading || !sharedGetDataHandler.companies ||
 !sharedGetDataHandler.contacts"></mat-spinner>
 <form *ngIf="!projectService.isLoading && project" class="panel panel-default">
 	<div class="panel-heading" color="primary">{{project.name}}</div>
@@ -50,7 +50,7 @@
 			<hr>
 			<div>
 				<h3 class="contact">Névjegyek</h3>
-				<ng-template [ngIf]="sharedGetDataHandler.accountables.length == 1"><h4>Felelős:</h4></ng-template>
+				<!-- <ng-template [ngIf]="sharedGetDataHandler.accountables.length == 1"><h4>Felelős:</h4></ng-template>
 				<ng-template [ngIf]="sharedGetDataHandler.accountables.length > 1"><h4>Felelősök:</h4></ng-template>
 				<ul *ngFor="let accountable of sharedGetDataHandler.accountables">
 					<li>
@@ -85,7 +85,7 @@
 							{{participant.full_name}}
 						</a>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 		</div>
 		</div>

@@ -72,7 +72,6 @@ export class CompanyListComponent extends BaseComponent implements OnInit, OnDes
 		let company = new Company();
 		company.name = name.trim();  
 		if (!name) { return; }
-		company.id = this.companyService.getItems()[this.companyService.getItems().length - 1].id + 1;
     	this.companyService.add(company);
 	}
 	

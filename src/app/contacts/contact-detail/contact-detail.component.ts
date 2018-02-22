@@ -1,6 +1,6 @@
 import { ContactService } from './../contact.service';
 import { Contact } from './../../shared/classes/contact';
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
@@ -13,8 +13,7 @@ import { BaseDetailComponent } from '../../shared/services/base/base-detail.comp
   templateUrl: './contact-detail.component.html',
   styleUrls: ['./contact-detail.component.css']
 })
-export class ContactDetailComponent extends BaseDetailComponent implements OnInit, AfterViewInit,
-AfterViewChecked {
+export class ContactDetailComponent extends BaseDetailComponent implements OnInit, AfterViewChecked {
   contact: Contact;
 
   constructor(
@@ -38,14 +37,11 @@ AfterViewChecked {
 		}
   }
 
-  ngAfterViewInit(){
-		this.changeDetector.detectChanges();
-	}
-
 	ngAfterViewChecked(){
 		if(!this.contact){
 			this.contact = this.contactService.getItem(+this.route.snapshot.params['id'])
-		}
+    }
+    this.changeDetector.detectChanges();
   }
   
   navigateToEdit(): void{

@@ -1,0 +1,72 @@
+<mat-spinner *ngIf="taskService.isLoading"></mat-spinner>
+<form *ngIf="!taskService.isLoading && task" class="panel panel-default">
+  <div class="panel-heading" color="primary">{{task.name}}</div>
+  <div  class="panel-body">
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Név</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+            </td>
+            <td>
+              {{task.id}}
+            </td>
+            <td>
+              {{task.name}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <div>
+    <div id="wide">
+      <div>
+        <h3>Névjegyek</h3>
+      </div>
+    </div>
+    <div id="narrow">
+      <div>
+        <h3>Cégek</h3>
+      </div>
+      <hr>
+      <div class="projects">
+        <h3>Projektek</h3>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="botton_right">
+    <button mat-fab [matMenuTriggerFor]="menu" color="primary">
+        <mat-icon class="fa fa-bolt fa-lg" aria-hidden="true"></mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon class="fa fa-folder"></mat-icon>
+        <span>Új projekt</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon class="fa fa-industry"></mat-icon>
+        <span>Új cég</span>
+      </button>
+      <button mat-menu-item (click)="navigateToEdit()">
+        <mat-icon class="fa fa-pencil"></mat-icon>
+        <span>Szerkesztés</span>
+      </button>
+      <button mat-menu-item (click)="clickOnDeleteProductButton()">
+        <mat-icon class="fa fa-trash"></mat-icon>
+        <span>Törlés</span>
+      </button>
+    </mat-menu>
+  </div>
+</form>
+<div id="back">
+  <button mat-raised-button color="primary" (click)="navigateBack()">Vissza</button>
+</div>

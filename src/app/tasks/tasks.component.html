@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+      <mat-spinner *ngIf="taskService.isLoading; else elseBlockOne"></mat-spinner>
+      <ng-template #elseBlockOne>
+          <div class="panel panel-default">
+              <div class="panel-heading">Feladatok listája</div>
+              <div  class="panel-body text-center"
+              *ngIf="!taskService.getItems() || taskService.getItems().length < 1; else elseBlockTwo">
+              <h1>Nincs megadva egyetlen feladat sem</h1>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vestibulum quam quis ex sodales, ac pretium dui venenatis. Sed eget gravida erat, ac interdum ante. Curabitur placerat elementum tortor, a porta arcu sodales et. Duis at dapibus risus, vel porta mauris. Curabitur tincidunt magna ipsum, vitae commodo orci ultrices sit amet.<br><br>
+                Donec quis leo sed lectus tristique finibus nec a enim. Morbi lacus ex, dictum posuere gravida id, molestie ac ligula. Mauris vel porta ligula. In nec nunc ornare mi rhoncus ullamcorper malesuada ac ligula. Praesent et laoreet ex. Integer a mi volutpat, rutrum nunc id, suscipit neque.</p>
+                  <button mat-raised-button color="primary" (click)="createNewItem()">
+                      <i class="fa fa-plus"></i> Új feladat hozzáadása
+                  </button>
+              </div>
+              <ng-template #elseBlockTwo>
+                  <app-task-list></app-task-list>
+              </ng-template>
+          </div>
+      </ng-template>
+  </div>
+</div>

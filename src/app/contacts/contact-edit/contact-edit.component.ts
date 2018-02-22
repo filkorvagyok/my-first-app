@@ -1,7 +1,7 @@
 import { Contact } from './../../shared/classes/contact';
 import { SharedGetDataHandler } from './../../shared/services/shared-getdatahandler.service';
 import { ContactService } from './../contact.service';
-import { Component, OnInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { BaseEditComponent } from '../../shared/services/base/base-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,8 +16,7 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
   templateUrl: './contact-edit.component.html',
   styleUrls: ['./contact-edit.component.css']
 })
-export class ContactEditComponent extends BaseEditComponent implements OnInit, AfterViewChecked,
-AfterViewInit {
+export class ContactEditComponent extends BaseEditComponent implements OnInit, AfterViewChecked {
   contactForm: FormGroup;
   contact: Contact;
   rank: number;
@@ -44,14 +43,11 @@ AfterViewInit {
 		}
 	}
 
-	ngAfterViewInit(){
-		this.changeDetector.detectChanges();
-	}
-
 	ngAfterViewChecked(){
 		if(!this.contact){
 			this.setEditContact();
 		}
+		this.changeDetector.detectChanges();
   }
 
   //Form validitás beállítása

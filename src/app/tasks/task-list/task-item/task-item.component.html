@@ -1,0 +1,8 @@
+<tr (click)="navigateToDetail(task.id)">
+  <td (click)="$event.stopPropagation();">
+    <mat-checkbox color="primary" value={{task.id}} (change)="showChbox();task.selected= !task.selected"></mat-checkbox>
+    <!--<input type="checkbox" value={{company.id}} (change)="showChbox()">-->
+  </td>
+  <td>{{task.id}}</td>
+  <td>{{task.name}}</td>
+</tr>

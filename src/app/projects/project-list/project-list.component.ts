@@ -58,7 +58,6 @@ export class ProjectListComponent extends BaseComponent implements OnInit, OnDes
     project.deadline = new Date(project.deadline);
     project.name = name.trim();
     if (!name) { return; }
-    project.id = this.projectService.getItems()[this.projectService.getItems().length - 1].id + 1;
     this.projectService.add(project);
   }
 

@@ -28,7 +28,7 @@ export class TasksApiService extends BaseApiService{
     return this.http.get<Task[]>(this.tasksUrl)
       .pipe(
         tap(tasks => (`fetched tasks`)),
-        catchError(this.handleError('getCompanies', []))
+        catchError(this.handleError('getTasks', []))
       );
 	}
 

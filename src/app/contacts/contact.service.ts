@@ -55,6 +55,7 @@ export class ContactService{
     }
 
     add(contact: Contact): void{
+        contact.id = this.contacts[this.contacts.length - 1].id + 1;
         this.contacts.push(contact);
     }
 

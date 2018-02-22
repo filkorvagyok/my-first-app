@@ -5,7 +5,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CompanyService } from './../company.service';
 import { Company } from './../../shared/classes/company';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Component, OnInit, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { BaseEditComponent } from '../../shared/services/base/base-edit.component';
 
 const TEL_REGEX = /^\s*(?:\+?\d{1,3})?[- (]*\d{3}(?:[- )]*\d{3})?[- ]*\d{4}(?: *[x/#]\d+)?\s*$/;
@@ -21,8 +21,7 @@ const NUMBER_REGEX = /^[0-9]*$/;
   templateUrl: './company-edit.component.html',
   styleUrls: ['./company-edit.component.css']
 })
-export class CompanyEditComponent extends BaseEditComponent implements OnInit, AfterViewChecked,
-AfterViewInit {
+export class CompanyEditComponent extends BaseEditComponent implements OnInit, AfterViewChecked {
 	companyForm: FormGroup;
 	company: Company;
 	edit = false;
@@ -49,14 +48,11 @@ AfterViewInit {
 		}
 	}
 
-	ngAfterViewInit(){
-		this.changeDetector.detectChanges();
-	}
-
 	ngAfterViewChecked(){
 		if(!this.company){
 			this.setEditCompany();
 		}
+		this.changeDetector.detectChanges();
 	}
 
 	//Form validitás beállítása

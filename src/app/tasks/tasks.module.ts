@@ -1,17 +1,18 @@
+import { TaskService } from './task.service';
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import * as $ from 'jquery';
 
-import { TasksComponent }    from './components/tasks/tasks.component';
-import { TaskDetailComponent }  from './components/task-detail/task-detail.component';
-import { TaskCommonComponent }  from './components/task-common/task-common.component';
-import { TaskEditComponent } from './components/task-edit/task-edit.component';
+import { TasksComponent }    from './tasks.component';
+import { TaskDetailComponent }  from './task-detail/task-detail.component';
+import { TaskEditComponent } from './task-edit/task-edit.component';
+import { TaskItemComponent } from './task-list/task-item/task-item.component';
+import { TaskListComponent } from './task-list/task-list.component';
 
-import { TasksApiService } from './tasks-api.service';
-import { TasksDataHandler } from './tasks-datahandler.service';
-import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
-import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
+import { TasksApiService } from '../modules/tasks/tasks-api.service';
+import { SharedGetDataHandler } from '../shared/services/shared-getdatahandler.service';
+import { SharedDeleteDataHandler } from '../shared/services/shared-deletedatahandler.service';
 
 import { TaskRoutingModule } from './tasks-routing.module';
 
@@ -42,9 +43,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   declarations: [
     TasksComponent,
     TaskDetailComponent,
-    TaskCommonComponent,
-    TaskEditComponent
+    TaskEditComponent,
+    TaskListComponent,
+    TaskItemComponent
   ],
-  providers: [TasksApiService, TasksDataHandler, SharedGetDataHandler, SharedDeleteDataHandler]
+  providers: [TasksApiService, TaskService, SharedGetDataHandler, SharedDeleteDataHandler]
 })
 export class TasksModule {}

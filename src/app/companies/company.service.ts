@@ -1,15 +1,18 @@
+import { Task } from '../tasks/task';
+import { Project } from '../projects/project';
+import { Contact } from '../contacts/contact';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Yearlyincome } from './../shared/classes/yearlyincome';
-import { Employeesnum } from './../shared/classes/employeesnum';
-import { Industry } from './../shared/classes/industry';
-import { Country } from './..//shared/classes/country';
+import { Yearlyincome } from './models/yearlyincome';
+import { Employeesnum } from './models/employeesnum';
+import { Industry } from './models/industry';
+import { Country } from './models/country';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/observable/of';
 import { tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Company } from './../shared/classes/company';
+import { Company } from './company';
 
 @Injectable()
 export class CompanyService{
@@ -164,6 +167,90 @@ export class CompanyService{
                 this.companies.find(oldCompany => oldCompany.id === company.id)[0] = company;
            /*  }
         ); */
+    }
+
+    getCertainItems(item: Contact | Project | Task): Company[]{
+        let companies: Company[] = [];
+        if(item.company.length > 0){
+            item.company.forEach(companyID => {
+                companies.push(this.companies.find(company => company.id === companyID));
+            });
+        }
+        return companies;
+    }
+
+    modifyItemInCompany(item: Contact | Project | Task): void{
+        if(item instanceof Contact){
+            let companyToBeModified = this.companies
+                .filter(x => x.contact.includes(item.id))
+                .filter(company => !item.company.includes(company.id));
+            companyToBeModified.forEach(company => {
+                company.contact.splice(company.contact.indexOf(item.id), 1);
+            });
+            if(item.company.length > 0){
+                item.company.forEach(companyID => {
+                    const actualCompany = this.companies.find(company => company.id === companyID);
+                    if(!actualCompany.contact.includes(item.id)){
+                        actualCompany.contact.push(item.id);
+                        this.update(actualCompany);
+                    }
+                })
+            }
+        } else if(item instanceof Project) {
+            let companyToBeModified = this.companies
+                .filter(x => x.project.includes(item.id))
+                .filter(company => !item.company.includes(company.id));
+            companyToBeModified.forEach(company => {
+                company.project.splice(company.project.indexOf(item.id), 1);
+            });
+            if(item.company.length > 0){
+                item.company.forEach(companyID => {
+                    const actualCompany = this.companies.find(company => company.id === companyID);
+                    if(!actualCompany.project.includes(item.id)){
+                        actualCompany.project.push(item.id);
+                        this.update(actualCompany);
+                    }
+                })
+            }
+        } else if(item instanceof Task) {
+            let companyToBeModified = this.companies
+                .filter(x => x.task.includes(item.id))
+                .filter(company => !item.company.includes(company.id));
+            companyToBeModified.forEach(company => {
+                company.task.splice(company.task.indexOf(item.id), 1);
+            });
+            if(item.company.length > 0){
+                item.company.forEach(companyID => {
+                    const actualCompany = this.companies.find(company => company.id === companyID);
+                    if(!actualCompany.task.includes(item.id)){
+                        actualCompany.task.push(item.id);
+                        this.update(actualCompany);
+                    }
+                })
+            }
+        }
+    }
+
+    deleteItemFormCompany(item: Contact | Project | Task): void{
+        if(item instanceof Contact){
+            this.companies.filter(companies => companies.contact.includes(item.id))
+            .forEach(company => {
+                company.contact.splice(company.contact.indexOf(item.id), 1);
+                this.update(company);
+            });
+        } else if(item instanceof Project) {
+            this.companies.filter(companies => companies.project.includes(item.id))
+            .forEach(company => {
+                company.project.splice(company.project.indexOf(item.id), 1);
+                this.update(company);
+            });
+        } else if(item instanceof Task) {
+            this.companies.filter(companies => companies.task.includes(item.id))
+            .forEach(company => {
+                company.task.splice(company.task.indexOf(item.id), 1);
+                this.update(company);
+            });
+        }
     }
 
     //Hibakezelő

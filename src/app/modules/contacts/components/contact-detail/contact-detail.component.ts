@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
-import { Contact } from '../../../../shared/classes/contact';
+import { Contact } from '../../../../contacts/contact';
 import { ContactsApiService } from '../../contacts-api.service';
 import { ContactsDataHandler } from '../../contacts-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-import { Project } from './../../shared/classes/project';
+import { Project } from './../project';
 import { ProjectService } from './../project.service';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';

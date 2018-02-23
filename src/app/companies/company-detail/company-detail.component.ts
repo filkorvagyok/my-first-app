@@ -1,8 +1,8 @@
 import { CompanyService } from './../company.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location }                 from '@angular/common';
-import { Company }        from '../../shared/classes/company';
+import { Location } from '@angular/common';
+import { Company } from '../company';
 import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service';
 import { SharedDeleteDataHandler } from '../../shared/services/shared-deletedatahandler.service';
 import { MatDialog } from '@angular/material';

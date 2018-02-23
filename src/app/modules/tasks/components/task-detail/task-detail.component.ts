@@ -2,7 +2,7 @@ import { Component, OnInit }        from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
-import { Task }        from '../../../../shared/classes/task';
+import { Task }        from '../../../../tasks/task';
 import { TasksApiService } from '../../tasks-api.service';
 import { TasksDataHandler } from '../../tasks-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';

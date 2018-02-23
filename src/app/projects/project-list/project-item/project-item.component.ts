@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { ProjectService } from './../../project.service';
-import { Project } from './../../../shared/classes/project';
+import { Project } from './../../project';
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseItemComponent } from '../../../shared/services/base/base-item.component';
 

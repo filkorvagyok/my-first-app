@@ -1,4 +1,4 @@
-import { Project } from './../../shared/classes/project';
+import { Project } from './../project';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { SharedDeleteDataHandler } from './../../shared/services/shared-deletedatahandler.service';

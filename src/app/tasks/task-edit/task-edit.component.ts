@@ -2,7 +2,7 @@ import { SharedAddDataHandler } from './../../shared/services/shared-adddatahand
 import { SharedGetDataHandler } from './../../shared/services/shared-getdatahandler.service';
 import { TaskService } from './../task.service';
 import { ActivatedRoute } from '@angular/router';
-import { Task } from './../../shared/classes/task';
+import { Task } from './../task';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { BaseEditComponent } from '../../shared/services/base/base-edit.component';

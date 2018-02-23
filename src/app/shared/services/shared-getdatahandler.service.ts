@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Company } from '../classes/company';
-import { Project } from '../classes/project';
-import { Contact } from '../classes/contact';
+import { Company } from '../../companies/company';
+import { Project } from '../../projects/project';
+import { Contact } from '../../contacts/contact';
 import { CompaniesApiService } from '../../modules/companies/companies-api.service';
 import { ProjectsApiService } from '../../modules/projects/projects-api.service';
 import { ContactsApiService } from '../../modules/contacts/contacts-api.service';

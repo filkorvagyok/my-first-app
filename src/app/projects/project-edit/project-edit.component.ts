@@ -1,4 +1,4 @@
-import { Project } from './../../shared/classes/project';
+import { Project } from './../project';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from './../project.service';

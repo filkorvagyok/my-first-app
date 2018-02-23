@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Company } from '../classes/company';
-import { Project } from '../classes/project';
-import { Contact } from '../classes/contact';
+import { Company } from '../../companies/company';
+import { Project } from '../../projects/project';
+import { Contact } from '../../contacts/contact';
 import { Observable } from 'rxjs/Observable';
 import { SharedGetDataHandler } from './shared-getdatahandler.service';
 import { CompaniesApiService } from '../../modules/companies/companies-api.service';

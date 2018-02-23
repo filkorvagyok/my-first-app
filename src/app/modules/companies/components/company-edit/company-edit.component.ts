@@ -1,7 +1,7 @@
 import { Component, OnInit, Input }        from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators }   from '@angular/forms';
 import { Location }                 from '@angular/common';
-import { Company }        from '../../../../shared/classes/company';
+import { Company }        from '../../../../companies/company';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';

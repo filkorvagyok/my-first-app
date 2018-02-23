@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Company } from '../../shared/classes/company';
-import { Country } from '../../shared/classes/country';
-import { Industry } from '../../shared/classes/industry';
-import { Employeesnum } from '../../shared/classes/employeesnum';
-import { Yearlyincome } from '../../shared/classes/yearlyincome';
+import { Company } from '../../companies/company';
+import { Country } from '../../companies/models/country';
+import { Industry } from '../../companies/models/industry';
+import { Employeesnum } from '../../companies/models/employeesnum';
+import { Yearlyincome } from '../../companies/models/yearlyincome';
 import { CompaniesApiService } from './companies-api.service';
 import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service'
 

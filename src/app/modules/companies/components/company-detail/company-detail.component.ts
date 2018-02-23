@@ -2,7 +2,7 @@ import { Component, OnInit }        from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location }                 from '@angular/common';
 import { Router } from '@angular/router';
-import { Company }        from '../../../../shared/classes/company';
+import { Company }        from '../../../../companies/company';
 import { CompaniesApiService } from '../../companies-api.service';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';

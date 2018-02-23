@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedDeleteDataHandler } from './../../shared/services/shared-deletedatahandler.service';
 import { SharedGetDataHandler } from './../../shared/services/shared-getdatahandler.service';
-import { Task } from './../../shared/classes/task';
+import { Task } from './../task';
 import { TaskService } from './../task.service';
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { BaseDetailComponent } from '../../shared/services/base/base-detail.component';

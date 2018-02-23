@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Project } from '../../shared/classes/project';
+import { Project } from '../../projects/project';
 import { ProjectsApiService } from './projects-api.service';
 import { SharedGetDataHandler } from '../../shared/services/shared-getdatahandler.service'
 

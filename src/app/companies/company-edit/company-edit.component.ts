@@ -1,9 +1,9 @@
 import { SharedAddDataHandler } from './../../shared/services/shared-adddatahandler.service';
 import { Location } from '@angular/common';
-import { Country } from './../../shared/classes/country';
+import { Country } from './../models/country';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CompanyService } from './../company.service';
-import { Company } from './../../shared/classes/company';
+import { Company } from './../company';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { BaseEditComponent } from '../../shared/services/base/base-edit.component';

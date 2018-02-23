@@ -4,7 +4,7 @@ import { ProjectsDataHandler } from '../../projects-datahandler.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedDeleteDataHandler } from '../../../../shared/services/shared-deletedatahandler.service';
 import { Router } from '@angular/router';
-import { Project } from '../../../../shared/classes/project';
+import { Project } from '../../../../projects/project';
 import { MatDialog } from '@angular/material';
 import { BaseComponent } from '../../../../shared/services/base/base.component'
 

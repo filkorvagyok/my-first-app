@@ -1,5 +1,8 @@
+import { Task } from '../tasks/task';
+import { Project } from '../projects/project';
+import { Company } from '../companies/company';
 import { Subject } from 'rxjs/Subject';
-import { Contact } from './../shared/classes/contact';
+import { Contact } from './contact';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -61,6 +64,155 @@ export class ContactService{
 
     update (contact: Contact): void{
         this.contacts.find(oldContact => oldContact.id === contact.id)[0] = contact;
+    }
+
+    getCertainItems(item: Company | Project | Task, rank?: number): Contact[]{
+        let contacts: Contact[] = [];
+        if(item instanceof Project){
+            switch (rank){
+                case 0:{
+                    if(item.accountable.length > 0){
+                        item.accountable.forEach(contactID => {
+                            contacts.push(this.contacts.find(contact => contact.id === contactID));
+                        });
+                        return contacts;
+                    }
+                }
+                case 1:{
+                    if(item.observer.length > 0){
+                        item.observer.forEach(contactID => {
+                            contacts.push(this.contacts.find(contact => contact.id === contactID));
+                        });
+                        return contacts;
+                    }
+                }
+                case 2:{
+                    if(item.owner.length > 0){
+                        item.owner.forEach(contactID => {
+                            contacts.push(this.contacts.find(contact => contact.id === contactID));
+                        });
+                        return contacts;
+                    }
+                }
+                case 3:{
+                    if(item.participant.length > 0){
+                        item.participant.forEach(contactID => {
+                            contacts.push(this.contacts.find(contact => contact.id === contactID));
+                        });
+                        return contacts;
+                    }
+                }
+                default:
+                    break;
+            }
+
+        }
+        else if(item.contact.length > 0){
+            item.contact.forEach(contactID => {
+                contacts.push(this.contacts.find(contact => contact.id === contactID));
+            });
+        }
+        return contacts;
+    }
+
+    modifyItemInContact(item: Company | Project | Task): void{
+        if(item instanceof Company){
+            let contactToBeModified = this.contacts
+                .filter(x => x.company.includes(item.id))
+                .filter(contact => !item.contact.includes(contact.id));
+            contactToBeModified.forEach(contact => {
+                contact.company.splice(contact.company.indexOf(item.id), 1);
+            });
+            if(item.contact.length > 0){
+                item.contact.forEach(contactID => {
+                    const actualContact = this.contacts.find(contact => contact.id === contactID);
+                    if(!actualContact.company.includes(item.id)){
+                        actualContact.company.push(item.id);
+                        this.update(actualContact);
+                    }
+                });
+            }
+        } else if(item instanceof Project) {
+            let contactToBeModified = this.contacts
+                .filter(x => x.project.includes(item.id))
+                .filter(contact => (!item.accountable.includes(contact.id) &&
+                !item.observer.includes(contact.id) && !item.owner.includes(contact.id) &&
+                item.participant.includes(contact.id)));
+            contactToBeModified.forEach(contact => {
+                contact.project.splice(contact.project.indexOf(item.id), 1);
+            });
+            if(item.accountable.length > 0){
+                item.accountable.forEach(contactID => {
+                    const actualContact = this.contacts.find(contact => contact.id === contactID);
+                    if(!actualContact.project.includes(item.id)){
+                        actualContact.project.push(item.id);
+                        this.update(actualContact);
+                    }
+                });
+            } else if(item.observer.length > 0){
+                item.observer.forEach(contactID => {
+                    const actualContact = this.contacts.find(contact => contact.id === contactID);
+                    if(!actualContact.project.includes(item.id)){
+                        actualContact.project.push(item.id);
+                        this.update(actualContact);
+                    }
+                });
+            } else if(item.owner.length > 0){
+                item.owner.forEach(contactID => {
+                    const actualContact = this.contacts.find(contact => contact.id === contactID);
+                    if(!actualContact.project.includes(item.id)){
+                        actualContact.project.push(item.id);
+                        this.update(actualContact);
+                    }
+                });
+            } else if(item.participant.length > 0){
+                item.participant.forEach(contactID => {
+                    const actualContact = this.contacts.find(contact => contact.id === contactID);
+                    if(!actualContact.project.includes(item.id)){
+                        actualContact.project.push(item.id);
+                        this.update(actualContact);
+                    }
+                });
+            }
+        } else if(item instanceof Task) {
+            let contactToBeModified = this.contacts
+                .filter(x => x.task.includes(item.id))
+                .filter(contact => !item.contact.includes(contact.id));
+            contactToBeModified.forEach(contact => {
+                contact.task.splice(contact.task.indexOf(item.id), 1);
+            });
+            if(item.contact.length > 0){
+                item.contact.forEach(contactID => {
+                    const actualContact = this.contacts.find(contact => contact.id === contactID);
+                    if(!actualContact.task.includes(item.id)){
+                        actualContact.task.push(item.id);
+                        this.update(actualContact);
+                    }
+                })
+            }
+        }
+    }
+
+    deleteItemFormContact(item: Company | Project | Task): void{
+        if(item instanceof Company){
+            this.contacts.filter(contacts => contacts.company.includes(item.id))
+            .forEach(contact => {
+                contact.company.splice(contact.company.indexOf(item.id), 1);
+                this.update(contact);
+            });
+        } else if(item instanceof Project) {
+            this.contacts.filter(contacts => contacts.project.includes(item.id))
+            .forEach(contact => {
+                contact.project.splice(contact.project.indexOf(item.id), 1);
+                this.update(contact);
+            });
+        } else if(item instanceof Task) {
+            this.contacts.filter(contacts => contacts.task.includes(item.id))
+            .forEach(contact => {
+                contact.task.splice(contact.task.indexOf(item.id), 1);
+                this.update(contact);
+            });
+        }
     }
     
     //Hibakezelő

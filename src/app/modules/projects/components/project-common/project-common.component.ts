@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Project } from '../../../../shared/classes/project';
+import { Project } from '../../../../projects/project';
 import { ProjectsDataHandler } from '../../projects-datahandler.service';
 import { BaseCommonComponent } from '../../../../shared/services/base/base-common.component';
 

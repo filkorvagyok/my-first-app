@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Company } from '../../../../shared/classes/company';
+import { Company } from '../../../../companies/company';
 import { CompaniesDataHandler } from '../../companies-datahandler.service';
 import { BaseCommonComponent } from '../../../../shared/services/base/base-common.component';
 

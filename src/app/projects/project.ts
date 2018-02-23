@@ -17,6 +17,7 @@ export class Project{
 	income: number;
 	expenditure: number;
 	selected: boolean;
+	task: number[];
 
 	constructor(){
 		this.accountable = [];
@@ -36,5 +37,6 @@ export class Project{
 		this.selected = false;
 		this.status = "";
 		this.stickers = "";
+		this.task = [];
 	}
 }

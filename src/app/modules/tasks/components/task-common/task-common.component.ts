@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Task } from '../../../../shared/classes/task';
+import { Task } from '../../../../tasks/task';
 import { TasksDataHandler } from '../../tasks-datahandler.service';
 import { BaseCommonComponent } from '../../../../shared/services/base/base-common.component';
 

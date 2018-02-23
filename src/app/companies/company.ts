@@ -29,6 +29,7 @@ export class Company{
 	selected: boolean;
 	project: number[];
 	contact: number[];
+	task: number[];
 
 	constructor(){
 		this.bi_address = "";
@@ -60,5 +61,6 @@ export class Company{
 		this.taxnumber = null;
 		this.website = "";
 		this.yearlyincome_id = null;
+		this.task = [];
 	}
 }

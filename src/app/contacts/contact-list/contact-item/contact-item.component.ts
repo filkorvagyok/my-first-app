@@ -1,4 +1,4 @@
-import { Contact } from './../../../shared/classes/contact';
+import { Contact } from './../../contact';
 import { ContactService } from './../../contact.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseItemComponent } from '../../../shared/services/base/base-item.component';

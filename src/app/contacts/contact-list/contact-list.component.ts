@@ -1,4 +1,4 @@
-import { Contact } from './../../shared/classes/contact';
+import { Contact } from './../contact';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';

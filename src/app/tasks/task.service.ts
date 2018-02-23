@@ -1,6 +1,9 @@
+import { Project } from './../projects/project';
+import { Contact } from './../contacts/contact';
+import { Company } from './../companies/company';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
-import { Task } from './../shared/classes/task';
+import { Task } from './task';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -64,6 +67,14 @@ export class TaskService{
 
     update (task: Task): void{
         this.tasks.find(oldTask => oldTask.id === task.id)[0] = task;
+    }
+
+    getCertainItems(item: Company | Contact | Project): Task[]{
+        let tasks: Task[];
+        item.task.forEach(taskID => {
+            tasks.push(this.tasks.find(task => task.id === taskID));
+        });
+        return tasks;
     }
 
     //Hibakezelő

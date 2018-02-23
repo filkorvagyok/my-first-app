@@ -1,4 +1,4 @@
-import { Contact } from './../../shared/classes/contact';
+import { Contact } from './../contact';
 import { SharedGetDataHandler } from './../../shared/services/shared-getdatahandler.service';
 import { ContactService } from './../contact.service';
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';

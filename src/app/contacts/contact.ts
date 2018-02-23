@@ -13,6 +13,7 @@ export class Contact{
 	greeting: string;
 	selected: boolean;
 	project: number[];
+	task: number[];
 
 	constructor(){
 		this.company = [];
@@ -28,5 +29,6 @@ export class Contact{
 		this.rank = "";
 		this.selected = false;
 		this.surname = "";
+		this.task = [];
 	}
 }

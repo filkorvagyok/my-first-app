@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators }   from '@angular/forms';
 import { Location } from '@angular/common';
-import { Project } from '../../../../shared/classes/project';
+import { Project } from '../../../../projects/project';
 import { ProjectsApiService } from '../../projects-api.service';
 import { SharedGetDataHandler } from '../../../../shared/services/shared-getdatahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';

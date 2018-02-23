@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Contact } from '../../../../shared/classes/contact';
+import { Contact } from '../../../../contacts/contact';
 import { ContactsDataHandler } from '../../contacts-datahandler.service';
 import { SharedAddDataHandler } from '../../../../shared/services/shared-adddatahandler.service';
 import { BaseCommonComponent } from '../../../../shared/services/base/base-common.component';

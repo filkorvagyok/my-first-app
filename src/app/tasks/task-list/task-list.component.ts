@@ -1,4 +1,4 @@
-import { Task } from './../../shared/classes/task';
+import { Task } from './../task';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { SharedDeleteDataHandler } from './../../shared/services/shared-deletedatahandler.service';
